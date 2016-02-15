@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="hd_emenuModelStoreContainer" CdmEntityContainer="hd_emenuEntities">
+    <EntitySetMapping Name="tables">
+      <EntityTypeMapping TypeName="hd_emenuModel.table">
+        <MappingFragment StoreEntitySet="table">
+          <ScalarProperty Name="table_id" ColumnName="table_id" />
+          <ScalarProperty Name="table_number" ColumnName="table_number" />
+          <ScalarProperty Name="table_password" ColumnName="table_password" />
+          <ScalarProperty Name="table_is_occupied" ColumnName="table_is_occupied" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

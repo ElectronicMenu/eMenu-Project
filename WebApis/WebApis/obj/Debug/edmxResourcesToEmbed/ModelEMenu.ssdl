@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="hd_emenuModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="table">
+    <Key>
+      <PropertyRef Name="table_id" />
+    </Key>
+    <Property Name="table_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="table_number" Type="int" Nullable="false" />
+    <Property Name="table_password" Type="nvarchar" MaxLength="50" />
+    <Property Name="table_is_occupied" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="hd_emenuModelStoreContainer">
+    <EntitySet Name="table" EntityType="Self.table" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>
