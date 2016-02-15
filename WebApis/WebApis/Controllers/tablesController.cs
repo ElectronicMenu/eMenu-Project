@@ -17,11 +17,37 @@ namespace WebApis.Controllers
         private hd_emenuEntities db = new hd_emenuEntities();
 
         // GET: api/tables
+        /// <summary>
+        /// Get the list of all the tables in the restaurant
+        /// </summary>
+        /// <returns></returns>
         public dynamic Gettables()
         {
             return new { table = db.tables };
         }
 
+        // POST: api/tables
+        /// <summary>
+        /// Get the table details that matches the table number and password
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(table))]
+        public dynamic Posttable(table table)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            table tmptable = db.tables.SingleOrDefault(item => item.table_number == table.table_number && item.table_password == table.table_password);
+            if (tmptable == null)
+            {
+                return Ok(0);
+            }
+            return Ok(tmptable);
+        }
+
+        /*
         // GET: api/tables/5
         [ResponseType(typeof(table))]
         public IHttpActionResult Gettable(int id)
@@ -70,21 +96,7 @@ namespace WebApis.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/tables
-        [ResponseType(typeof(table))]
-        public dynamic Posttable(table table)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            table tmptable = db.tables.SingleOrDefault(item => item.table_number == table.table_number && item.table_password == table.table_password);
-            if (tmptable == null)
-            {
-                return Ok(0);
-            }
-            return Ok(tmptable);
-        }
+        
 
         // DELETE: api/tables/5
         [ResponseType(typeof(table))]
@@ -101,6 +113,7 @@ namespace WebApis.Controllers
 
             return Ok(table);
         }
+         */
 
         protected override void Dispose(bool disposing)
         {
