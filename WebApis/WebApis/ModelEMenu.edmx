@@ -4,7 +4,17 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="hd_emenuModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="hd_emenuModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="language">
+          <Key>
+            <PropertyRef Name="language_id" />
+          </Key>
+          <Property Name="language_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="language_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="language_short_name" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="language_flag" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="language_is_active" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="table">
           <Key>
             <PropertyRef Name="table_id" />
@@ -14,11 +24,21 @@
           <Property Name="table_password" Type="nvarchar" MaxLength="50" />
           <Property Name="table_is_occupied" Type="bit" Nullable="false" />
         </EntityType>
+        <Function Name="sp_language_readAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
+        <Function Name="sp_language_readAllActive" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
+        <Function Name="sp_language_readByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi">
+          <Parameter Name="language_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_table_readAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
+        <Function Name="sp_table_readByTableNumberAndPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi">
+          <Parameter Name="table_number" Type="int" Mode="In" />
+          <Parameter Name="table_password" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="hd_emenuModelStoreContainer">
+          <EntitySet Name="language" EntityType="Self.language" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="table" EntityType="Self.table" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="hd_emenuModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -33,7 +53,61 @@
         </EntityType>
         <EntityContainer Name="hd_emenuEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tables" EntityType="Self.table" />
+          <EntitySet Name="languages" EntityType="hd_emenuModel.language" />
+          <FunctionImport Name="sp_language_readAll" ReturnType="Collection(hd_emenuModel.sp_language_readAll_Result)" />
+          <FunctionImport Name="sp_language_readAllActive" ReturnType="Collection(hd_emenuModel.sp_language_readAllActive_Result)" />
+          <FunctionImport Name="sp_language_readByID" ReturnType="Collection(hd_emenuModel.sp_language_readByID_Result)">
+            <Parameter Name="language_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_table_readAll" ReturnType="Collection(hd_emenuModel.sp_table_readAll_Result)" />
+          <FunctionImport Name="sp_table_readByTableNumberAndPassword" ReturnType="Collection(hd_emenuModel.sp_table_readByTableNumberAndPassword_Result)">
+            <Parameter Name="table_number" Mode="In" Type="Int32" />
+            <Parameter Name="table_password" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
+        <EntityType Name="language">
+          <Key>
+            <PropertyRef Name="language_id" />
+          </Key>
+          <Property Name="language_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="language_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="language_short_name" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="language_flag" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="language_is_active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <ComplexType Name="sp_language_readAll_Result">
+          <Property Type="Int32" Name="language_id" Nullable="false" />
+          <Property Type="String" Name="language_name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="language_short_name" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="language_flag" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="language_is_active" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_language_readAllActive_Result">
+          <Property Type="Int32" Name="language_id" Nullable="false" />
+          <Property Type="String" Name="language_name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="language_short_name" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="language_flag" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="language_is_active" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_language_readByID_Result">
+          <Property Type="Int32" Name="language_id" Nullable="false" />
+          <Property Type="String" Name="language_name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="language_short_name" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="language_flag" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="language_is_active" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_table_readAll_Result">
+          <Property Type="Int32" Name="table_id" Nullable="false" />
+          <Property Type="Int32" Name="table_number" Nullable="false" />
+          <Property Type="String" Name="table_password" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="table_is_occupied" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_table_readByTableNumberAndPassword_Result">
+          <Property Type="Int32" Name="table_id" Nullable="false" />
+          <Property Type="Int32" Name="table_number" Nullable="false" />
+          <Property Type="String" Name="table_password" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="table_is_occupied" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -50,6 +124,70 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="languages">
+            <EntityTypeMapping TypeName="hd_emenuModel.language">
+              <MappingFragment StoreEntitySet="language">
+                <ScalarProperty Name="language_is_active" ColumnName="language_is_active" />
+                <ScalarProperty Name="language_flag" ColumnName="language_flag" />
+                <ScalarProperty Name="language_short_name" ColumnName="language_short_name" />
+                <ScalarProperty Name="language_name" ColumnName="language_name" />
+                <ScalarProperty Name="language_id" ColumnName="language_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_language_readAll" FunctionName="hd_emenuModel.Store.sp_language_readAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="hd_emenuModel.sp_language_readAll_Result">
+                <ScalarProperty Name="language_id" ColumnName="language_id" />
+                <ScalarProperty Name="language_name" ColumnName="language_name" />
+                <ScalarProperty Name="language_short_name" ColumnName="language_short_name" />
+                <ScalarProperty Name="language_flag" ColumnName="language_flag" />
+                <ScalarProperty Name="language_is_active" ColumnName="language_is_active" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_language_readAllActive" FunctionName="hd_emenuModel.Store.sp_language_readAllActive">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="hd_emenuModel.sp_language_readAllActive_Result">
+                <ScalarProperty Name="language_id" ColumnName="language_id" />
+                <ScalarProperty Name="language_name" ColumnName="language_name" />
+                <ScalarProperty Name="language_short_name" ColumnName="language_short_name" />
+                <ScalarProperty Name="language_flag" ColumnName="language_flag" />
+                <ScalarProperty Name="language_is_active" ColumnName="language_is_active" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_language_readByID" FunctionName="hd_emenuModel.Store.sp_language_readByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="hd_emenuModel.sp_language_readByID_Result">
+                <ScalarProperty Name="language_id" ColumnName="language_id" />
+                <ScalarProperty Name="language_name" ColumnName="language_name" />
+                <ScalarProperty Name="language_short_name" ColumnName="language_short_name" />
+                <ScalarProperty Name="language_flag" ColumnName="language_flag" />
+                <ScalarProperty Name="language_is_active" ColumnName="language_is_active" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_table_readAll" FunctionName="hd_emenuModel.Store.sp_table_readAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="hd_emenuModel.sp_table_readAll_Result">
+                <ScalarProperty Name="table_id" ColumnName="table_id" />
+                <ScalarProperty Name="table_number" ColumnName="table_number" />
+                <ScalarProperty Name="table_password" ColumnName="table_password" />
+                <ScalarProperty Name="table_is_occupied" ColumnName="table_is_occupied" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_table_readByTableNumberAndPassword" FunctionName="hd_emenuModel.Store.sp_table_readByTableNumberAndPassword">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="hd_emenuModel.sp_table_readByTableNumberAndPassword_Result">
+                <ScalarProperty Name="table_id" ColumnName="table_id" />
+                <ScalarProperty Name="table_number" ColumnName="table_number" />
+                <ScalarProperty Name="table_password" ColumnName="table_password" />
+                <ScalarProperty Name="table_is_occupied" ColumnName="table_is_occupied" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

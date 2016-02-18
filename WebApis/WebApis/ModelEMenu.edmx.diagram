@@ -6,6 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="257c8c9396174b8e891b0fb58b868e07" Name="Diagram1">
         <EntityTypeShape EntityType="hd_emenuModel.table" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="hd_emenuModel.language" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

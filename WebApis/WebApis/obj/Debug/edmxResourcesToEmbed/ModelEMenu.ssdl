@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="hd_emenuModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="language">
+    <Key>
+      <PropertyRef Name="language_id" />
+    </Key>
+    <Property Name="language_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="language_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="language_short_name" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="language_flag" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="language_is_active" Type="bit" Nullable="false" />
+  </EntityType>
   <EntityType Name="table">
     <Key>
       <PropertyRef Name="table_id" />
@@ -9,7 +19,18 @@
     <Property Name="table_password" Type="nvarchar" MaxLength="50" />
     <Property Name="table_is_occupied" Type="bit" Nullable="false" />
   </EntityType>
+  <Function Name="sp_language_readAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
+  <Function Name="sp_language_readAllActive" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
+  <Function Name="sp_language_readByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi">
+    <Parameter Name="language_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_table_readAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
+  <Function Name="sp_table_readByTableNumberAndPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi">
+    <Parameter Name="table_number" Type="int" Mode="In" />
+    <Parameter Name="table_password" Type="nvarchar" Mode="In" />
+  </Function>
   <EntityContainer Name="hd_emenuModelStoreContainer">
+    <EntitySet Name="language" EntityType="Self.language" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="table" EntityType="Self.table" Schema="dbo" store:Type="Tables" />
   </EntityContainer>
 </Schema>
