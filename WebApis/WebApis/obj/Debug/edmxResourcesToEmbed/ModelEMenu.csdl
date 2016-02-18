@@ -11,5 +11,59 @@
   </EntityType>
   <EntityContainer Name="hd_emenuEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="tables" EntityType="Self.table" />
+    <EntitySet Name="languages" EntityType="hd_emenuModel.language" />
+    <FunctionImport Name="sp_language_readAll" ReturnType="Collection(hd_emenuModel.sp_language_readAll_Result)" />
+    <FunctionImport Name="sp_language_readAllActive" ReturnType="Collection(hd_emenuModel.sp_language_readAllActive_Result)" />
+    <FunctionImport Name="sp_language_readByID" ReturnType="Collection(hd_emenuModel.sp_language_readByID_Result)">
+      <Parameter Name="language_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_table_readAll" ReturnType="Collection(hd_emenuModel.sp_table_readAll_Result)" />
+    <FunctionImport Name="sp_table_readByTableNumberAndPassword" ReturnType="Collection(hd_emenuModel.sp_table_readByTableNumberAndPassword_Result)">
+      <Parameter Name="table_number" Mode="In" Type="Int32" />
+      <Parameter Name="table_password" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
+  <EntityType Name="language">
+    <Key>
+      <PropertyRef Name="language_id" />
+    </Key>
+    <Property Name="language_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="language_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="language_short_name" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="language_flag" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="language_is_active" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <ComplexType Name="sp_language_readAll_Result">
+    <Property Type="Int32" Name="language_id" Nullable="false" />
+    <Property Type="String" Name="language_name" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="language_short_name" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="language_flag" Nullable="false" MaxLength="50" />
+    <Property Type="Boolean" Name="language_is_active" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="sp_language_readAllActive_Result">
+    <Property Type="Int32" Name="language_id" Nullable="false" />
+    <Property Type="String" Name="language_name" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="language_short_name" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="language_flag" Nullable="false" MaxLength="50" />
+    <Property Type="Boolean" Name="language_is_active" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="sp_language_readByID_Result">
+    <Property Type="Int32" Name="language_id" Nullable="false" />
+    <Property Type="String" Name="language_name" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="language_short_name" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="language_flag" Nullable="false" MaxLength="50" />
+    <Property Type="Boolean" Name="language_is_active" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="sp_table_readAll_Result">
+    <Property Type="Int32" Name="table_id" Nullable="false" />
+    <Property Type="Int32" Name="table_number" Nullable="false" />
+    <Property Type="String" Name="table_password" Nullable="true" MaxLength="50" />
+    <Property Type="Boolean" Name="table_is_occupied" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="sp_table_readByTableNumberAndPassword_Result">
+    <Property Type="Int32" Name="table_id" Nullable="false" />
+    <Property Type="Int32" Name="table_number" Nullable="false" />
+    <Property Type="String" Name="table_password" Nullable="true" MaxLength="50" />
+    <Property Type="Boolean" Name="table_is_occupied" Nullable="false" />
+  </ComplexType>
 </Schema>

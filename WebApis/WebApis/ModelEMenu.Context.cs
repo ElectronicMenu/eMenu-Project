@@ -12,6 +12,8 @@ namespace WebApis
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class hd_emenuEntities : DbContext
     {
@@ -27,5 +29,43 @@ namespace WebApis
         }
     
         public virtual DbSet<table> tables { get; set; }
+        public virtual DbSet<language> languages { get; set; }
+    
+        public virtual ObjectResult<sp_language_readAll_Result> sp_language_readAll()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_language_readAll_Result>("sp_language_readAll");
+        }
+    
+        public virtual ObjectResult<sp_language_readAllActive_Result> sp_language_readAllActive()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_language_readAllActive_Result>("sp_language_readAllActive");
+        }
+    
+        public virtual ObjectResult<sp_language_readByID_Result> sp_language_readByID(Nullable<int> language_id)
+        {
+            var language_idParameter = language_id.HasValue ?
+                new ObjectParameter("language_id", language_id) :
+                new ObjectParameter("language_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_language_readByID_Result>("sp_language_readByID", language_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_table_readAll_Result> sp_table_readAll()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_table_readAll_Result>("sp_table_readAll");
+        }
+    
+        public virtual ObjectResult<sp_table_readByTableNumberAndPassword_Result> sp_table_readByTableNumberAndPassword(Nullable<int> table_number, string table_password)
+        {
+            var table_numberParameter = table_number.HasValue ?
+                new ObjectParameter("table_number", table_number) :
+                new ObjectParameter("table_number", typeof(int));
+    
+            var table_passwordParameter = table_password != null ?
+                new ObjectParameter("table_password", table_password) :
+                new ObjectParameter("table_password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_table_readByTableNumberAndPassword_Result>("sp_table_readByTableNumberAndPassword", table_numberParameter, table_passwordParameter);
+        }
     }
 }
