@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_beverages" android:icon="@drawable/beverages_icon"
+            android:title="Beverages" />
+        <item android:id="@+id/nav_main_course" android:icon="@drawable/main_course_icon"
+            android:title="Main Course" />
+        <item android:id="@+id/nav_desserts" android:icon="@drawable/deserts_icon"
+            android:title="Desserts" />
+    </group>
+
+    <item android:title="Services">
+        <menu>
+            <item android:id="@+id/nav_call_attendant" android:icon="@drawable/call_attendant_icon"
+                android:title="Call Attendant" />
+            <item android:id="@+id/nav_check_out" android:icon="@drawable/check_out_icon"
+                android:title="Check-out" />
+        </menu>
+    </item>
+
+</menu>
