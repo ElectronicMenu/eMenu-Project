@@ -11,5 +11,69 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="languages">
+      <EntityTypeMapping TypeName="hd_emenuModel.language">
+        <MappingFragment StoreEntitySet="language">
+          <ScalarProperty Name="language_is_active" ColumnName="language_is_active" />
+          <ScalarProperty Name="language_flag" ColumnName="language_flag" />
+          <ScalarProperty Name="language_short_name" ColumnName="language_short_name" />
+          <ScalarProperty Name="language_name" ColumnName="language_name" />
+          <ScalarProperty Name="language_id" ColumnName="language_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_language_readAll" FunctionName="hd_emenuModel.Store.sp_language_readAll">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_language_readAll_Result">
+          <ScalarProperty Name="language_id" ColumnName="language_id" />
+          <ScalarProperty Name="language_name" ColumnName="language_name" />
+          <ScalarProperty Name="language_short_name" ColumnName="language_short_name" />
+          <ScalarProperty Name="language_flag" ColumnName="language_flag" />
+          <ScalarProperty Name="language_is_active" ColumnName="language_is_active" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_language_readAllActive" FunctionName="hd_emenuModel.Store.sp_language_readAllActive">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_language_readAllActive_Result">
+          <ScalarProperty Name="language_id" ColumnName="language_id" />
+          <ScalarProperty Name="language_name" ColumnName="language_name" />
+          <ScalarProperty Name="language_short_name" ColumnName="language_short_name" />
+          <ScalarProperty Name="language_flag" ColumnName="language_flag" />
+          <ScalarProperty Name="language_is_active" ColumnName="language_is_active" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_language_readByID" FunctionName="hd_emenuModel.Store.sp_language_readByID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_language_readByID_Result">
+          <ScalarProperty Name="language_id" ColumnName="language_id" />
+          <ScalarProperty Name="language_name" ColumnName="language_name" />
+          <ScalarProperty Name="language_short_name" ColumnName="language_short_name" />
+          <ScalarProperty Name="language_flag" ColumnName="language_flag" />
+          <ScalarProperty Name="language_is_active" ColumnName="language_is_active" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_table_readAll" FunctionName="hd_emenuModel.Store.sp_table_readAll">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_table_readAll_Result">
+          <ScalarProperty Name="table_id" ColumnName="table_id" />
+          <ScalarProperty Name="table_number" ColumnName="table_number" />
+          <ScalarProperty Name="table_password" ColumnName="table_password" />
+          <ScalarProperty Name="table_is_occupied" ColumnName="table_is_occupied" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_table_readByTableNumberAndPassword" FunctionName="hd_emenuModel.Store.sp_table_readByTableNumberAndPassword">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_table_readByTableNumberAndPassword_Result">
+          <ScalarProperty Name="table_id" ColumnName="table_id" />
+          <ScalarProperty Name="table_number" ColumnName="table_number" />
+          <ScalarProperty Name="table_password" ColumnName="table_password" />
+          <ScalarProperty Name="table_is_occupied" ColumnName="table_is_occupied" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

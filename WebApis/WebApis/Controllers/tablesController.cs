@@ -23,7 +23,7 @@ namespace WebApis.Controllers
         /// <returns></returns>
         public dynamic Gettables()
         {
-            return new { table = db.tables };
+            return new { table = db.sp_table_readAll() };
         }
 
         // POST: api/tables
@@ -39,12 +39,7 @@ namespace WebApis.Controllers
             {
                 return BadRequest(ModelState);
             }
-            table tmptable = db.tables.SingleOrDefault(item => item.table_number == table.table_number && item.table_password == table.table_password);
-            if (tmptable == null)
-            {
-                return Ok(0);
-            }
-            return Ok(tmptable);
+            return Ok(new { table = db.sp_table_readByTableNumberAndPassword(table.table_number, table.table_password) } );
         }
 
         /*
