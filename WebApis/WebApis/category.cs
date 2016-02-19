@@ -12,18 +12,16 @@ namespace WebApis
     using System;
     using System.Collections.Generic;
     
-    public partial class language
+    public partial class category
     {
-        public language()
+        public category()
         {
             this.category_language = new HashSet<category_language>();
         }
     
-        public int language_id { get; set; }
-        public string language_name { get; set; }
-        public string language_short_name { get; set; }
-        public string language_flag { get; set; }
-        public bool language_is_active { get; set; }
+        public int category_id { get; set; }
+        public string category_image { get; set; }
+        public string category_icon { get; set; }
     
         public virtual ICollection<category_language> category_language { get; set; }
     }

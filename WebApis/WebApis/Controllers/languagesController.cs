@@ -21,18 +21,17 @@ namespace WebApis.Controllers
         /// <summary>
         /// Get the list of all the languages
         /// </summary>
-        /// <param name="table"></param>
         /// <returns></returns>
         public dynamic Getlanguages()
         {
             return new { language = db.sp_language_readAll() };
         }
 
-        // GET: api/languages
+        // GET: api/languages?active={active}
         /// <summary>
         /// Get the list of all the languages which are set active
         /// </summary>
-        /// <param name="table"></param>
+        /// <param name="active"></param>
         /// <returns></returns>
         public dynamic Getlanguages(bool active)
         {
@@ -43,17 +42,11 @@ namespace WebApis.Controllers
         /// <summary>
         /// Get the language details that matches the id
         /// </summary>
-        /// <param name="table"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [ResponseType(typeof(language))]
-        public async Task<IHttpActionResult> Getlanguage(int id)
+        public dynamic Getlanguage(int id)
         {
-            language language = await db.languages.FindAsync(id);
-            if (language == null)
-            {
-                return NotFound();
-            }
-
             return Ok(new { language = db.sp_language_readByID(id) } );
         }
 

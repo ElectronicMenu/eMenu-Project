@@ -22,6 +22,30 @@
       <Parameter Name="table_number" Mode="In" Type="Int32" />
       <Parameter Name="table_password" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="sp_category_category_language_readAllByLangguageID" ReturnType="Collection(hd_emenuModel.sp_category_category_language_readAllByLangguageID_Result)">
+      <Parameter Name="language_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_category_category_language_readByID" ReturnType="Collection(hd_emenuModel.sp_category_category_language_readByID_Result)">
+      <Parameter Name="category_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="categories" EntityType="hd_emenuModel.category" />
+    <EntitySet Name="category_language" EntityType="hd_emenuModel.category_language" />
+    <AssociationSet Name="FK_category_language_category" Association="hd_emenuModel.FK_category_language_category">
+      <End Role="category" EntitySet="categories" />
+      <End Role="category_language" EntitySet="category_language" />
+    </AssociationSet>
+    <AssociationSet Name="FK_category_language_language" Association="hd_emenuModel.FK_category_language_language">
+      <End Role="language" EntitySet="languages" />
+      <End Role="category_language" EntitySet="category_language" />
+    </AssociationSet>
+    <FunctionImport Name="sp_category_category_language_readAll" ReturnType="Collection(hd_emenuModel.sp_category_category_language_readAll_Result)" />
+    <FunctionImport Name="sp_category_category_language_readByCategoryID" ReturnType="Collection(hd_emenuModel.sp_category_category_language_readByCategoryID_Result)">
+      <Parameter Name="category_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_category_category_language_readByCategoryIDAndLanguageID" ReturnType="Collection(hd_emenuModel.sp_category_category_language_readByCategoryIDAndLanguageID_Result)">
+      <Parameter Name="category_id" Mode="In" Type="Int32" />
+      <Parameter Name="language_id" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="language">
     <Key>
@@ -32,6 +56,7 @@
     <Property Name="language_short_name" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
     <Property Name="language_flag" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="language_is_active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="category_language" Relationship="hd_emenuModel.FK_category_language_language" FromRole="language" ToRole="category_language" />
   </EntityType>
   <ComplexType Name="sp_language_readAll_Result">
     <Property Type="Int32" Name="language_id" Nullable="false" />
@@ -65,5 +90,85 @@
     <Property Type="Int32" Name="table_number" Nullable="false" />
     <Property Type="String" Name="table_password" Nullable="true" MaxLength="50" />
     <Property Type="Boolean" Name="table_is_occupied" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="sp_category_category_language_readAllByLangguageID_Result">
+    <Property Type="Int32" Name="category_id" Nullable="false" />
+    <Property Type="String" Name="category_image" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="category_icon" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="language_id" Nullable="false" />
+    <Property Type="String" Name="category_name" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="sp_category_category_language_readByID_Result">
+    <Property Type="Int32" Name="category_id" Nullable="false" />
+    <Property Type="String" Name="category_image" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="category_icon" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="language_id" Nullable="false" />
+    <Property Type="String" Name="category_name" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <EntityType Name="category">
+    <Key>
+      <PropertyRef Name="category_id" />
+    </Key>
+    <Property Name="category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="category_image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="category_icon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="category_language" Relationship="hd_emenuModel.FK_category_language_category" FromRole="category" ToRole="category_language" />
+  </EntityType>
+  <EntityType Name="category_language">
+    <Key>
+      <PropertyRef Name="category_id" />
+      <PropertyRef Name="language_id" />
+      <PropertyRef Name="category_name" />
+    </Key>
+    <Property Name="category_id" Type="Int32" Nullable="false" />
+    <Property Name="language_id" Type="Int32" Nullable="false" />
+    <Property Name="category_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="category" Relationship="hd_emenuModel.FK_category_language_category" FromRole="category_language" ToRole="category" />
+    <NavigationProperty Name="language" Relationship="hd_emenuModel.FK_category_language_language" FromRole="category_language" ToRole="language" />
+  </EntityType>
+  <Association Name="FK_category_language_category">
+    <End Type="hd_emenuModel.category" Role="category" Multiplicity="1" />
+    <End Type="hd_emenuModel.category_language" Role="category_language" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category">
+        <PropertyRef Name="category_id" />
+      </Principal>
+      <Dependent Role="category_language">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_category_language_language">
+    <End Type="hd_emenuModel.language" Role="language" Multiplicity="1" />
+    <End Type="hd_emenuModel.category_language" Role="category_language" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="language">
+        <PropertyRef Name="language_id" />
+      </Principal>
+      <Dependent Role="category_language">
+        <PropertyRef Name="language_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="sp_category_category_language_readAll_Result">
+    <Property Type="Int32" Name="category_id" Nullable="false" />
+    <Property Type="String" Name="category_image" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="category_icon" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="language_id" Nullable="false" />
+    <Property Type="String" Name="category_name" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="sp_category_category_language_readByCategoryID_Result">
+    <Property Type="Int32" Name="category_id" Nullable="false" />
+    <Property Type="String" Name="category_image" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="category_icon" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="language_id" Nullable="false" />
+    <Property Type="String" Name="category_name" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="sp_category_category_language_readByCategoryIDAndLanguageID_Result">
+    <Property Type="Int32" Name="category_id" Nullable="false" />
+    <Property Type="String" Name="category_image" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="category_icon" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="language_id" Nullable="false" />
+    <Property Type="String" Name="category_name" Nullable="false" MaxLength="50" />
   </ComplexType>
 </Schema>

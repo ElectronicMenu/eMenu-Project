@@ -481,25 +481,52 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:WebApis.Controllers.categoriesController.Getcategories">
+            <summary>
+            Get the list of all the categories
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.categoriesController.Getcategories(System.Int32)">
+            <summary>
+            Get the list of all the categories based on the language ID
+            </summary>
+            <param name="language_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.categoriesController.Getcategory(System.Int32)">
+            <summary>
+             Get the category details that matches the id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.categoriesController.Getcategory(System.Int32,System.Int32)">
+            <summary>
+             Get the category details that matches the category id and language id
+            </summary>
+            <param name="category_id"></param>
+            <param name="language_id"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApis.Controllers.languagesController.Getlanguages">
             <summary>
             Get the list of all the languages
             </summary>
-            <param name="table"></param>
             <returns></returns>
         </member>
         <member name="M:WebApis.Controllers.languagesController.Getlanguages(System.Boolean)">
             <summary>
             Get the list of all the languages which are set active
             </summary>
-            <param name="table"></param>
+            <param name="active"></param>
             <returns></returns>
         </member>
         <member name="M:WebApis.Controllers.languagesController.Getlanguage(System.Int32)">
             <summary>
             Get the language details that matches the id
             </summary>
-            <param name="table"></param>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:WebApis.Controllers.tablesController.Gettables">
