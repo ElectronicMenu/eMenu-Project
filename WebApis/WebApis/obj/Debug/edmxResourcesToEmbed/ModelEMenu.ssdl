@@ -1,5 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="hd_emenuModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="category">
+    <Key>
+      <PropertyRef Name="category_id" />
+    </Key>
+    <Property Name="category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="category_image" Type="nvarchar" MaxLength="50" />
+    <Property Name="category_icon" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'hd_emenu.dbo.category_language' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="category_language">
+    <Key>
+      <PropertyRef Name="category_id" />
+      <PropertyRef Name="language_id" />
+      <PropertyRef Name="category_name" />
+    </Key>
+    <Property Name="category_id" Type="int" Nullable="false" />
+    <Property Name="language_id" Type="int" Nullable="false" />
+    <Property Name="category_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
   <EntityType Name="language">
     <Key>
       <PropertyRef Name="language_id" />
@@ -19,6 +39,30 @@
     <Property Name="table_password" Type="nvarchar" MaxLength="50" />
     <Property Name="table_is_occupied" Type="bit" Nullable="false" />
   </EntityType>
+  <Association Name="FK_category_language_category">
+    <End Role="category" Type="Self.category" Multiplicity="1" />
+    <End Role="category_language" Type="Self.category_language" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category">
+        <PropertyRef Name="category_id" />
+      </Principal>
+      <Dependent Role="category_language">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_category_language_language">
+    <End Role="language" Type="Self.language" Multiplicity="1" />
+    <End Role="category_language" Type="Self.category_language" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="language">
+        <PropertyRef Name="language_id" />
+      </Principal>
+      <Dependent Role="category_language">
+        <PropertyRef Name="language_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Function Name="sp_language_readAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
   <Function Name="sp_language_readAllActive" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
   <Function Name="sp_language_readByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi">
@@ -29,8 +73,35 @@
     <Parameter Name="table_number" Type="int" Mode="In" />
     <Parameter Name="table_password" Type="nvarchar" Mode="In" />
   </Function>
+  <Function Name="sp_category_category_language_readAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu" />
+  <Function Name="sp_category_category_language_readAllByLangguageID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="language_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_category_category_language_readByCategoryID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="category_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_category_category_language_readByCategoryIDAndLanguageID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="category_id" Type="int" Mode="In" />
+    <Parameter Name="language_id" Type="int" Mode="In" />
+  </Function>
   <EntityContainer Name="hd_emenuModelStoreContainer">
+    <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="language" EntityType="Self.language" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="table" EntityType="Self.table" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="category_language" EntityType="Self.category_language" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [category_language].[category_id] AS [category_id], 
+    [category_language].[language_id] AS [language_id], 
+    [category_language].[category_name] AS [category_name]
+    FROM [dbo].[category_language] AS [category_language]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_category_language_category" Association="Self.FK_category_language_category">
+      <End Role="category" EntitySet="category" />
+      <End Role="category_language" EntitySet="category_language" />
+    </AssociationSet>
+    <AssociationSet Name="FK_category_language_language" Association="Self.FK_category_language_language">
+      <End Role="language" EntitySet="language" />
+      <End Role="category_language" EntitySet="category_language" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>
