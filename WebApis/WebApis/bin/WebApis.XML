@@ -529,6 +529,22 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApis.Controllers.productsController.Getproducts(System.Int32,System.Int32)">
+            <summary>
+            Get the list of all active products based on the category ID and language ID
+            </summary>
+            <param name="category_id"></param>
+            <param name="language_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.productsController.Getproduct(System.Int32,System.Int32)">
+            <summary>
+            Get the product details based on product ID and language ID
+            </summary>
+            <param name="product_id"></param>
+            <param name="language_id"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApis.Controllers.tablesController.Gettables">
             <summary>
             Get the list of all the tables in the restaurant

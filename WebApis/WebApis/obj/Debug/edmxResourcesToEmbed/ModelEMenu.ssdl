@@ -30,6 +30,34 @@ warning 6002: The table/view 'hd_emenu.dbo.category_language' does not have a pr
     <Property Name="language_flag" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="language_is_active" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="product">
+    <Key>
+      <PropertyRef Name="product_id" />
+    </Key>
+    <Property Name="product_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="product_image" Type="nvarchar" MaxLength="50" />
+    <Property Name="product_is_veg" Type="bit" Nullable="false" />
+    <Property Name="product_is_active" Type="bit" Nullable="false" />
+    <Property Name="product_price" Type="float" Nullable="false" />
+    <Property Name="product_discount_type" Type="int" Nullable="false" />
+    <Property Name="product_discount" Type="float" Nullable="false" />
+    <Property Name="product_final_price" Type="float" StoreGeneratedPattern="Computed" />
+    <Property Name="category_id" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="product_language">
+    <Key>
+      <PropertyRef Name="product_id" />
+      <PropertyRef Name="language_id" />
+      <PropertyRef Name="product_name" />
+      <PropertyRef Name="product_description" />
+    </Key>
+    <Property Name="product_id" Type="int" Nullable="false" />
+    <Property Name="language_id" Type="int" Nullable="false" />
+    <Property Name="product_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="product_description" Type="nvarchar" MaxLength="1000" Nullable="false" />
+  </EntityType>
   <EntityType Name="table">
     <Key>
       <PropertyRef Name="table_id" />
@@ -63,6 +91,42 @@ warning 6002: The table/view 'hd_emenu.dbo.category_language' does not have a pr
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_product_category">
+    <End Role="category" Type="Self.category" Multiplicity="1" />
+    <End Role="product" Type="Self.product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category">
+        <PropertyRef Name="category_id" />
+      </Principal>
+      <Dependent Role="product">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_product_language_language">
+    <End Role="language" Type="Self.language" Multiplicity="1" />
+    <End Role="product_language" Type="Self.product_language" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="language">
+        <PropertyRef Name="language_id" />
+      </Principal>
+      <Dependent Role="product_language">
+        <PropertyRef Name="language_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_product_language_product">
+    <End Role="product" Type="Self.product" Multiplicity="1" />
+    <End Role="product_language" Type="Self.product_language" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="product_language">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Function Name="sp_language_readAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
   <Function Name="sp_language_readAllActive" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
   <Function Name="sp_language_readByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi">
@@ -84,9 +148,18 @@ warning 6002: The table/view 'hd_emenu.dbo.category_language' does not have a pr
     <Parameter Name="category_id" Type="int" Mode="In" />
     <Parameter Name="language_id" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_product_readAllActiveByCategoryIDAndLanguageID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="category_id" Type="int" Mode="In" />
+    <Parameter Name="language_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_product_readByProductIDAndLanguageID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="product_id" Type="int" Mode="In" />
+    <Parameter Name="language_id" Type="int" Mode="In" />
+  </Function>
   <EntityContainer Name="hd_emenuModelStoreContainer">
     <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="language" EntityType="Self.language" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="table" EntityType="Self.table" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="category_language" EntityType="Self.category_language" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -95,6 +168,14 @@ warning 6002: The table/view 'hd_emenu.dbo.category_language' does not have a pr
     [category_language].[category_name] AS [category_name]
     FROM [dbo].[category_language] AS [category_language]</DefiningQuery>
     </EntitySet>
+    <EntitySet Name="product_language" EntityType="Self.product_language" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [product_language].[product_id] AS [product_id], 
+    [product_language].[language_id] AS [language_id], 
+    [product_language].[product_name] AS [product_name], 
+    [product_language].[product_description] AS [product_description]
+    FROM [dbo].[product_language] AS [product_language]</DefiningQuery>
+    </EntitySet>
     <AssociationSet Name="FK_category_language_category" Association="Self.FK_category_language_category">
       <End Role="category" EntitySet="category" />
       <End Role="category_language" EntitySet="category_language" />
@@ -102,6 +183,18 @@ warning 6002: The table/view 'hd_emenu.dbo.category_language' does not have a pr
     <AssociationSet Name="FK_category_language_language" Association="Self.FK_category_language_language">
       <End Role="language" EntitySet="language" />
       <End Role="category_language" EntitySet="category_language" />
+    </AssociationSet>
+    <AssociationSet Name="FK_product_category" Association="Self.FK_product_category">
+      <End Role="category" EntitySet="category" />
+      <End Role="product" EntitySet="product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_product_language_language" Association="Self.FK_product_language_language">
+      <End Role="language" EntitySet="language" />
+      <End Role="product_language" EntitySet="product_language" />
+    </AssociationSet>
+    <AssociationSet Name="FK_product_language_product" Association="Self.FK_product_language_product">
+      <End Role="product" EntitySet="product" />
+      <End Role="product_language" EntitySet="product_language" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

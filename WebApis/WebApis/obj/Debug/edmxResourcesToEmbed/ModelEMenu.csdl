@@ -46,6 +46,28 @@
       <Parameter Name="category_id" Mode="In" Type="Int32" />
       <Parameter Name="language_id" Mode="In" Type="Int32" />
     </FunctionImport>
+    <EntitySet Name="products" EntityType="hd_emenuModel.product" />
+    <EntitySet Name="product_language" EntityType="hd_emenuModel.product_language" />
+    <AssociationSet Name="FK_product_category" Association="hd_emenuModel.FK_product_category">
+      <End Role="category" EntitySet="categories" />
+      <End Role="product" EntitySet="products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_product_language_language" Association="hd_emenuModel.FK_product_language_language">
+      <End Role="language" EntitySet="languages" />
+      <End Role="product_language" EntitySet="product_language" />
+    </AssociationSet>
+    <AssociationSet Name="FK_product_language_product" Association="hd_emenuModel.FK_product_language_product">
+      <End Role="product" EntitySet="products" />
+      <End Role="product_language" EntitySet="product_language" />
+    </AssociationSet>
+    <FunctionImport Name="sp_product_readAllActiveByCategoryIDAndLanguageID" ReturnType="Collection(hd_emenuModel.sp_product_readAllActiveByCategoryIDAndLanguageID_Result)">
+      <Parameter Name="category_id" Mode="In" Type="Int32" />
+      <Parameter Name="language_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_product_readByProductIDAndLanguageID" ReturnType="Collection(hd_emenuModel.sp_product_readByProductIDAndLanguageID_Result)">
+      <Parameter Name="product_id" Mode="In" Type="Int32" />
+      <Parameter Name="language_id" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="language">
     <Key>
@@ -57,6 +79,7 @@
     <Property Name="language_flag" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="language_is_active" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="category_language" Relationship="hd_emenuModel.FK_category_language_language" FromRole="language" ToRole="category_language" />
+    <NavigationProperty Name="product_language" Relationship="hd_emenuModel.FK_product_language_language" FromRole="language" ToRole="product_language" />
   </EntityType>
   <ComplexType Name="sp_language_readAll_Result">
     <Property Type="Int32" Name="language_id" Nullable="false" />
@@ -113,6 +136,7 @@
     <Property Name="category_image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="category_icon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="category_language" Relationship="hd_emenuModel.FK_category_language_category" FromRole="category" ToRole="category_language" />
+    <NavigationProperty Name="products" Relationship="hd_emenuModel.FK_product_category" FromRole="category" ToRole="product" />
   </EntityType>
   <EntityType Name="category_language">
     <Key>
@@ -170,5 +194,95 @@
     <Property Type="String" Name="category_icon" Nullable="true" MaxLength="50" />
     <Property Type="Int32" Name="language_id" Nullable="false" />
     <Property Type="String" Name="category_name" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <EntityType Name="product">
+    <Key>
+      <PropertyRef Name="product_id" />
+    </Key>
+    <Property Name="product_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="product_image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="product_is_veg" Type="Boolean" Nullable="false" />
+    <Property Name="product_is_active" Type="Boolean" Nullable="false" />
+    <Property Name="product_price" Type="Double" Nullable="false" />
+    <Property Name="product_discount_type" Type="Int32" Nullable="false" />
+    <Property Name="product_discount" Type="Double" Nullable="false" />
+    <Property Name="product_final_price" Type="Double" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="category_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="category" Relationship="hd_emenuModel.FK_product_category" FromRole="product" ToRole="category" />
+    <NavigationProperty Name="product_language" Relationship="hd_emenuModel.FK_product_language_product" FromRole="product" ToRole="product_language" />
+  </EntityType>
+  <EntityType Name="product_language">
+    <Key>
+      <PropertyRef Name="product_id" />
+      <PropertyRef Name="language_id" />
+      <PropertyRef Name="product_name" />
+      <PropertyRef Name="product_description" />
+    </Key>
+    <Property Name="product_id" Type="Int32" Nullable="false" />
+    <Property Name="language_id" Type="Int32" Nullable="false" />
+    <Property Name="product_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="product_description" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="language" Relationship="hd_emenuModel.FK_product_language_language" FromRole="product_language" ToRole="language" />
+    <NavigationProperty Name="product" Relationship="hd_emenuModel.FK_product_language_product" FromRole="product_language" ToRole="product" />
+  </EntityType>
+  <Association Name="FK_product_category">
+    <End Type="hd_emenuModel.category" Role="category" Multiplicity="1" />
+    <End Type="hd_emenuModel.product" Role="product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category">
+        <PropertyRef Name="category_id" />
+      </Principal>
+      <Dependent Role="product">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_product_language_language">
+    <End Type="hd_emenuModel.language" Role="language" Multiplicity="1" />
+    <End Type="hd_emenuModel.product_language" Role="product_language" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="language">
+        <PropertyRef Name="language_id" />
+      </Principal>
+      <Dependent Role="product_language">
+        <PropertyRef Name="language_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_product_language_product">
+    <End Type="hd_emenuModel.product" Role="product" Multiplicity="1" />
+    <End Type="hd_emenuModel.product_language" Role="product_language" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="product_language">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="sp_product_readAllActiveByCategoryIDAndLanguageID_Result">
+    <Property Type="Int32" Name="product_id" Nullable="false" />
+    <Property Type="String" Name="product_name" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="product_description" Nullable="false" MaxLength="1000" />
+    <Property Type="String" Name="product_image" Nullable="true" MaxLength="50" />
+    <Property Type="Boolean" Name="product_is_veg" Nullable="false" />
+    <Property Type="Boolean" Name="product_is_active" Nullable="false" />
+    <Property Type="Double" Name="product_price" Nullable="false" />
+    <Property Type="Int32" Name="product_discount_type" Nullable="false" />
+    <Property Type="Double" Name="product_discount" Nullable="false" />
+    <Property Type="Double" Name="product_final_price" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_product_readByProductIDAndLanguageID_Result">
+    <Property Type="Int32" Name="product_id" Nullable="false" />
+    <Property Type="String" Name="product_name" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="product_description" Nullable="false" MaxLength="1000" />
+    <Property Type="String" Name="product_image" Nullable="true" MaxLength="50" />
+    <Property Type="Boolean" Name="product_is_veg" Nullable="false" />
+    <Property Type="Boolean" Name="product_is_active" Nullable="false" />
+    <Property Type="Double" Name="product_price" Nullable="false" />
+    <Property Type="Int32" Name="product_discount_type" Nullable="false" />
+    <Property Type="Double" Name="product_discount" Nullable="false" />
+    <Property Type="Double" Name="product_final_price" Nullable="true" />
   </ComplexType>
 </Schema>

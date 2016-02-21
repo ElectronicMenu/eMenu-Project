@@ -12,21 +12,24 @@ namespace WebApis
     using System;
     using System.Collections.Generic;
     
-    public partial class language
+    public partial class product
     {
-        public language()
+        public product()
         {
-            this.category_language = new HashSet<category_language>();
             this.product_language = new HashSet<product_language>();
         }
     
-        public int language_id { get; set; }
-        public string language_name { get; set; }
-        public string language_short_name { get; set; }
-        public string language_flag { get; set; }
-        public bool language_is_active { get; set; }
+        public int product_id { get; set; }
+        public string product_image { get; set; }
+        public bool product_is_veg { get; set; }
+        public bool product_is_active { get; set; }
+        public double product_price { get; set; }
+        public int product_discount_type { get; set; }
+        public double product_discount { get; set; }
+        public Nullable<double> product_final_price { get; set; }
+        public int category_id { get; set; }
     
-        public virtual ICollection<category_language> category_language { get; set; }
+        public virtual category category { get; set; }
         public virtual ICollection<product_language> product_language { get; set; }
     }
 }

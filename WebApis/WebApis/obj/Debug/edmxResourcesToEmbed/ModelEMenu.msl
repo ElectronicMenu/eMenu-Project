@@ -137,5 +137,62 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="products">
+      <EntityTypeMapping TypeName="hd_emenuModel.product">
+        <MappingFragment StoreEntitySet="product">
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+          <ScalarProperty Name="product_final_price" ColumnName="product_final_price" />
+          <ScalarProperty Name="product_discount" ColumnName="product_discount" />
+          <ScalarProperty Name="product_discount_type" ColumnName="product_discount_type" />
+          <ScalarProperty Name="product_price" ColumnName="product_price" />
+          <ScalarProperty Name="product_is_active" ColumnName="product_is_active" />
+          <ScalarProperty Name="product_is_veg" ColumnName="product_is_veg" />
+          <ScalarProperty Name="product_image" ColumnName="product_image" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="product_language">
+      <EntityTypeMapping TypeName="hd_emenuModel.product_language">
+        <MappingFragment StoreEntitySet="product_language">
+          <ScalarProperty Name="product_description" ColumnName="product_description" />
+          <ScalarProperty Name="product_name" ColumnName="product_name" />
+          <ScalarProperty Name="language_id" ColumnName="language_id" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_product_readAllActiveByCategoryIDAndLanguageID" FunctionName="hd_emenuModel.Store.sp_product_readAllActiveByCategoryIDAndLanguageID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_product_readAllActiveByCategoryIDAndLanguageID_Result">
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="product_name" ColumnName="product_name" />
+          <ScalarProperty Name="product_description" ColumnName="product_description" />
+          <ScalarProperty Name="product_image" ColumnName="product_image" />
+          <ScalarProperty Name="product_is_veg" ColumnName="product_is_veg" />
+          <ScalarProperty Name="product_is_active" ColumnName="product_is_active" />
+          <ScalarProperty Name="product_price" ColumnName="product_price" />
+          <ScalarProperty Name="product_discount_type" ColumnName="product_discount_type" />
+          <ScalarProperty Name="product_discount" ColumnName="product_discount" />
+          <ScalarProperty Name="product_final_price" ColumnName="product_final_price" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_product_readByProductIDAndLanguageID" FunctionName="hd_emenuModel.Store.sp_product_readByProductIDAndLanguageID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_product_readByProductIDAndLanguageID_Result">
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="product_name" ColumnName="product_name" />
+          <ScalarProperty Name="product_description" ColumnName="product_description" />
+          <ScalarProperty Name="product_image" ColumnName="product_image" />
+          <ScalarProperty Name="product_is_veg" ColumnName="product_is_veg" />
+          <ScalarProperty Name="product_is_active" ColumnName="product_is_active" />
+          <ScalarProperty Name="product_price" ColumnName="product_price" />
+          <ScalarProperty Name="product_discount_type" ColumnName="product_discount_type" />
+          <ScalarProperty Name="product_discount" ColumnName="product_discount" />
+          <ScalarProperty Name="product_final_price" ColumnName="product_final_price" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>
