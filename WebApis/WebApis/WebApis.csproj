@@ -231,6 +231,7 @@
     <Compile Include="Controllers\categoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\languagesController.cs" />
+    <Compile Include="Controllers\productsController.cs" />
     <Compile Include="Controllers\tablesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -256,6 +257,12 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="product.cs">
+      <DependentUpon>ModelEMenu.tt</DependentUpon>
+    </Compile>
+    <Compile Include="product_language.cs">
+      <DependentUpon>ModelEMenu.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -271,6 +278,9 @@
     <Compile Include="sp_category_category_language_readByCategoryID_Result.cs">
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_category_category_language_readByID_Result.cs">
+      <DependentUpon>ModelEMenu.tt</DependentUpon>
+    </Compile>
     <Compile Include="sp_language_readAllActive_Result.cs">
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
@@ -278,6 +288,12 @@
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_language_readByID_Result.cs">
+      <DependentUpon>ModelEMenu.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_product_readAllActiveByCategoryIDAndLanguageID_Result.cs">
+      <DependentUpon>ModelEMenu.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_product_readByProductIDAndLanguageID_Result.cs">
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_table_readAll_Result.cs">

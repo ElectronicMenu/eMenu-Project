@@ -10,21 +10,13 @@
 namespace WebApis
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class category
+    public partial class sp_category_category_language_readByID_Result
     {
-        public category()
-        {
-            this.category_language = new HashSet<category_language>();
-            this.products = new HashSet<product>();
-        }
-    
         public int category_id { get; set; }
         public string category_image { get; set; }
         public string category_icon { get; set; }
-    
-        public virtual ICollection<category_language> category_language { get; set; }
-        public virtual ICollection<product> products { get; set; }
+        public int language_id { get; set; }
+        public string category_name { get; set; }
     }
 }

@@ -11,6 +11,11 @@
         <EntityTypeShape EntityType="hd_emenuModel.category_language" Width="1.5" PointX="5.625" PointY="0.875" />
         <AssociationConnector Association="hd_emenuModel.FK_category_language_category" />
         <AssociationConnector Association="hd_emenuModel.FK_category_language_language" />
+        <EntityTypeShape EntityType="hd_emenuModel.product" Width="1.5" PointX="5.625" PointY="4.375" />
+        <EntityTypeShape EntityType="hd_emenuModel.product_language" Width="1.5" PointX="7.875" PointY="3.125" />
+        <AssociationConnector Association="hd_emenuModel.FK_product_category" />
+        <AssociationConnector Association="hd_emenuModel.FK_product_language_language" />
+        <AssociationConnector Association="hd_emenuModel.FK_product_language_product" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

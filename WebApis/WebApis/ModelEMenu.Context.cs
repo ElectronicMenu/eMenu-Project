@@ -32,6 +32,8 @@ namespace WebApis
         public virtual DbSet<language> languages { get; set; }
         public virtual DbSet<category> categories { get; set; }
         public virtual DbSet<category_language> category_language { get; set; }
+        public virtual DbSet<product> products { get; set; }
+        public virtual DbSet<product_language> product_language { get; set; }
     
         public virtual ObjectResult<sp_language_readAll_Result> sp_language_readAll()
         {
@@ -79,6 +81,15 @@ namespace WebApis
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_category_category_language_readAllByLangguageID_Result>("sp_category_category_language_readAllByLangguageID", language_idParameter);
         }
     
+        public virtual ObjectResult<sp_category_category_language_readByID_Result> sp_category_category_language_readByID(Nullable<int> category_id)
+        {
+            var category_idParameter = category_id.HasValue ?
+                new ObjectParameter("category_id", category_id) :
+                new ObjectParameter("category_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_category_category_language_readByID_Result>("sp_category_category_language_readByID", category_idParameter);
+        }
+    
         public virtual ObjectResult<sp_category_category_language_readAll_Result> sp_category_category_language_readAll()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_category_category_language_readAll_Result>("sp_category_category_language_readAll");
@@ -104,6 +115,32 @@ namespace WebApis
                 new ObjectParameter("language_id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_category_category_language_readByCategoryIDAndLanguageID_Result>("sp_category_category_language_readByCategoryIDAndLanguageID", category_idParameter, language_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_product_readAllActiveByCategoryIDAndLanguageID_Result> sp_product_readAllActiveByCategoryIDAndLanguageID(Nullable<int> category_id, Nullable<int> language_id)
+        {
+            var category_idParameter = category_id.HasValue ?
+                new ObjectParameter("category_id", category_id) :
+                new ObjectParameter("category_id", typeof(int));
+    
+            var language_idParameter = language_id.HasValue ?
+                new ObjectParameter("language_id", language_id) :
+                new ObjectParameter("language_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_product_readAllActiveByCategoryIDAndLanguageID_Result>("sp_product_readAllActiveByCategoryIDAndLanguageID", category_idParameter, language_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_product_readByProductIDAndLanguageID_Result> sp_product_readByProductIDAndLanguageID(Nullable<int> product_id, Nullable<int> language_id)
+        {
+            var product_idParameter = product_id.HasValue ?
+                new ObjectParameter("product_id", product_id) :
+                new ObjectParameter("product_id", typeof(int));
+    
+            var language_idParameter = language_id.HasValue ?
+                new ObjectParameter("language_id", language_id) :
+                new ObjectParameter("language_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_product_readByProductIDAndLanguageID_Result>("sp_product_readByProductIDAndLanguageID", product_idParameter, language_idParameter);
         }
     }
 }
