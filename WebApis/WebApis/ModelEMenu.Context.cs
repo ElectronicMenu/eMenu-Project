@@ -34,6 +34,7 @@ namespace WebApis
         public virtual DbSet<category_language> category_language { get; set; }
         public virtual DbSet<product> products { get; set; }
         public virtual DbSet<product_language> product_language { get; set; }
+        public virtual DbSet<cart> carts { get; set; }
     
         public virtual ObjectResult<sp_language_readAll_Result> sp_language_readAll()
         {
@@ -141,6 +142,32 @@ namespace WebApis
                 new ObjectParameter("language_id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_product_readByProductIDAndLanguageID_Result>("sp_product_readByProductIDAndLanguageID", product_idParameter, language_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_cart_insert_Result> sp_cart_insert(Nullable<int> table_id, Nullable<int> user_id)
+        {
+            var table_idParameter = table_id.HasValue ?
+                new ObjectParameter("table_id", table_id) :
+                new ObjectParameter("table_id", typeof(int));
+    
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_cart_insert_Result>("sp_cart_insert", table_idParameter, user_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_cart_readByTableIDAndUserID_Result> sp_cart_readByTableIDAndUserID(Nullable<int> table_id, Nullable<int> user_id)
+        {
+            var table_idParameter = table_id.HasValue ?
+                new ObjectParameter("table_id", table_id) :
+                new ObjectParameter("table_id", typeof(int));
+    
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_cart_readByTableIDAndUserID_Result>("sp_cart_readByTableIDAndUserID", table_idParameter, user_idParameter);
         }
     }
 }

@@ -14,9 +14,16 @@ namespace WebApis
     
     public partial class table
     {
+        public table()
+        {
+            this.carts = new HashSet<cart>();
+        }
+    
         public int table_id { get; set; }
         public int table_number { get; set; }
         public string table_password { get; set; }
         public bool table_is_occupied { get; set; }
+    
+        public virtual ICollection<cart> carts { get; set; }
     }
 }
