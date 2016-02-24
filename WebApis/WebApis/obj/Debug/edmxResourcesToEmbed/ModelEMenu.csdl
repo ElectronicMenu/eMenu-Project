@@ -8,6 +8,7 @@
     <Property Name="table_number" Type="Int32" Nullable="false" />
     <Property Name="table_password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="table_is_occupied" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="carts" Relationship="hd_emenuModel.FK_cart_table" FromRole="table" ToRole="cart" />
   </EntityType>
   <EntityContainer Name="hd_emenuEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="tables" EntityType="Self.table" />
@@ -67,6 +68,19 @@
     <FunctionImport Name="sp_product_readByProductIDAndLanguageID" ReturnType="Collection(hd_emenuModel.sp_product_readByProductIDAndLanguageID_Result)">
       <Parameter Name="product_id" Mode="In" Type="Int32" />
       <Parameter Name="language_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="carts" EntityType="hd_emenuModel.cart" />
+    <AssociationSet Name="FK_cart_table" Association="hd_emenuModel.FK_cart_table">
+      <End Role="table" EntitySet="tables" />
+      <End Role="cart" EntitySet="carts" />
+    </AssociationSet>
+    <FunctionImport Name="sp_cart_insert" ReturnType="Collection(hd_emenuModel.sp_cart_insert_Result)">
+      <Parameter Name="table_id" Mode="In" Type="Int32" />
+      <Parameter Name="user_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_cart_readByTableIDAndUserID" ReturnType="Collection(hd_emenuModel.sp_cart_readByTableIDAndUserID_Result)">
+      <Parameter Name="table_id" Mode="In" Type="Int32" />
+      <Parameter Name="user_id" Mode="In" Type="Int32" />
     </FunctionImport>
   </EntityContainer>
   <EntityType Name="language">
@@ -284,5 +298,39 @@
     <Property Type="Int32" Name="product_discount_type" Nullable="false" />
     <Property Type="Double" Name="product_discount" Nullable="false" />
     <Property Type="Double" Name="product_final_price" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="cart">
+    <Key>
+      <PropertyRef Name="cart_id" />
+    </Key>
+    <Property Name="cart_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="table_id" Type="Int32" Nullable="false" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="cart_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="table" Relationship="hd_emenuModel.FK_cart_table" FromRole="cart" ToRole="table" />
+  </EntityType>
+  <Association Name="FK_cart_table">
+    <End Type="hd_emenuModel.table" Role="table" Multiplicity="1" />
+    <End Type="hd_emenuModel.cart" Role="cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="table">
+        <PropertyRef Name="table_id" />
+      </Principal>
+      <Dependent Role="cart">
+        <PropertyRef Name="table_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="sp_cart_insert_Result">
+    <Property Type="Int32" Name="cart_id" Nullable="false" />
+    <Property Type="Int32" Name="table_id" Nullable="false" />
+    <Property Type="Int32" Name="user_id" Nullable="false" />
+    <Property Type="String" Name="cart_date" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="sp_cart_readByTableIDAndUserID_Result">
+    <Property Type="Int32" Name="cart_id" Nullable="false" />
+    <Property Type="Int32" Name="table_id" Nullable="false" />
+    <Property Type="Int32" Name="user_id" Nullable="false" />
+    <Property Type="String" Name="cart_date" Nullable="true" MaxLength="50" />
   </ComplexType>
 </Schema>

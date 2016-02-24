@@ -481,6 +481,29 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:WebApis.Controllers.cartsController.Getcart(System.Int32,System.Int32)">
+            <summary>
+            Get the cart details based on table id and user id 
+            </summary>
+            <param name="table_id"></param>
+            <param name="user_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.cartsController.Insertcart(System.Int32,System.Int32)">
+            <summary>
+             Insert into cart using table id and user id and return the result of the last inserted row
+            </summary>
+            <param name="table_id"></param>
+            <param name="user_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.cartsController.Deletecart(System.Int32)">
+            <summary>
+            Delete the Cart based on the cart_id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApis.Controllers.categoriesController.Getcategories">
             <summary>
             Get the list of all the categories
