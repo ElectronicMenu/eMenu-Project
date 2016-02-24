@@ -9,6 +9,19 @@
     <Property Name="user_id" Type="int" Nullable="false" />
     <Property Name="cart_date" Type="varchar" MaxLength="50" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'hd_emenu.dbo.cart_product' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="cart_product">
+    <Key>
+      <PropertyRef Name="cart_id" />
+      <PropertyRef Name="product_id" />
+      <PropertyRef Name="quantity" />
+    </Key>
+    <Property Name="cart_id" Type="int" Nullable="false" />
+    <Property Name="product_id" Type="int" Nullable="false" />
+    <Property Name="quantity" Type="int" Nullable="false" />
+    <Property Name="total" Type="int" StoreGeneratedPattern="Computed" />
+  </EntityType>
   <EntityType Name="category">
     <Key>
       <PropertyRef Name="category_id" />
@@ -76,6 +89,30 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
     <Property Name="table_password" Type="nvarchar" MaxLength="50" />
     <Property Name="table_is_occupied" Type="bit" Nullable="false" />
   </EntityType>
+  <Association Name="FK_cart_product_cart">
+    <End Role="cart" Type="Self.cart" Multiplicity="1" />
+    <End Role="cart_product" Type="Self.cart_product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cart">
+        <PropertyRef Name="cart_id" />
+      </Principal>
+      <Dependent Role="cart_product">
+        <PropertyRef Name="cart_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_cart_product_product">
+    <End Role="product" Type="Self.product" Multiplicity="1" />
+    <End Role="cart_product" Type="Self.cart_product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="cart_product">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_cart_table">
     <End Role="table" Type="Self.table" Multiplicity="1" />
     <End Role="cart" Type="Self.cart" Multiplicity="*" />
@@ -162,6 +199,20 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
     <Parameter Name="table_id" Type="int" Mode="In" />
     <Parameter Name="user_id" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_cart_product_insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="cart_id" Type="int" Mode="In" />
+    <Parameter Name="product_id" Type="int" Mode="In" />
+    <Parameter Name="quantity" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_cart_product_product_readByCartIDAndLanguageID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="cart_id" Type="int" Mode="In" />
+    <Parameter Name="language_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_cart_product_updateByCartIDAndProductID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="cart_id" Type="int" Mode="In" />
+    <Parameter Name="product_id" Type="int" Mode="In" />
+    <Parameter Name="quantity" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_cart_readByTableIDAndUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
     <Parameter Name="table_id" Type="int" Mode="In" />
     <Parameter Name="user_id" Type="int" Mode="In" />
@@ -191,6 +242,14 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
     <EntitySet Name="language" EntityType="Self.language" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="table" EntityType="Self.table" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="cart_product" EntityType="Self.cart_product" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [cart_product].[cart_id] AS [cart_id], 
+    [cart_product].[product_id] AS [product_id], 
+    [cart_product].[quantity] AS [quantity], 
+    [cart_product].[total] AS [total]
+    FROM [dbo].[cart_product] AS [cart_product]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="category_language" EntityType="Self.category_language" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [category_language].[category_id] AS [category_id], 
@@ -206,6 +265,14 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
     [product_language].[product_description] AS [product_description]
     FROM [dbo].[product_language] AS [product_language]</DefiningQuery>
     </EntitySet>
+    <AssociationSet Name="FK_cart_product_cart" Association="Self.FK_cart_product_cart">
+      <End Role="cart" EntitySet="cart" />
+      <End Role="cart_product" EntitySet="cart_product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_cart_product_product" Association="Self.FK_cart_product_product">
+      <End Role="product" EntitySet="product" />
+      <End Role="cart_product" EntitySet="cart_product" />
+    </AssociationSet>
     <AssociationSet Name="FK_cart_table" Association="Self.FK_cart_table">
       <End Role="table" EntitySet="table" />
       <End Role="cart" EntitySet="cart" />

@@ -12,19 +12,14 @@ namespace WebApis
     using System;
     using System.Collections.Generic;
     
-    public partial class cart
+    public partial class cart_product
     {
-        public cart()
-        {
-            this.cart_product = new HashSet<cart_product>();
-        }
-    
         public int cart_id { get; set; }
-        public int table_id { get; set; }
-        public int user_id { get; set; }
-        public string cart_date { get; set; }
+        public int product_id { get; set; }
+        public int quantity { get; set; }
+        public Nullable<int> total { get; set; }
     
-        public virtual table table { get; set; }
-        public virtual ICollection<cart_product> cart_product { get; set; }
+        public virtual cart cart { get; set; }
+        public virtual product product { get; set; }
     }
 }

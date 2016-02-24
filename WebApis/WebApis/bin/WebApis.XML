@@ -489,17 +489,46 @@
             <param name="user_id"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApis.Controllers.cartsController.Insertcart(System.Int32,System.Int32)">
+        <member name="M:WebApis.Controllers.cartsController.Postcart(WebApis.cart)">
             <summary>
-             Insert into cart using table id and user id and return the result of the last inserted row
+            Insert into cart using table id and user id and return the result of the last inserted row
             </summary>
-            <param name="table_id"></param>
-            <param name="user_id"></param>
+            <param name="cart"></param>
             <returns></returns>
         </member>
         <member name="M:WebApis.Controllers.cartsController.Deletecart(System.Int32)">
             <summary>
             Delete the Cart based on the cart_id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.cart_productController.Getcart_product(System.Int32,System.Int32)">
+            <summary>
+            Get the list of all the products for a particulat cart based on the language selected
+            </summary>
+            <param name="cart_id"></param>
+            <param name="language_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.cart_productController.Putcart_product(System.Int32,WebApis.cart_product)">
+            <summary>
+            Update cart by using cart id, product id, and quantity
+            </summary>
+            <param name="id"></param>
+            <param name="cart_product"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.cart_productController.Postcart_product(WebApis.cart_product)">
+            <summary>
+            Insert a new product into the cart using cart id, product id, and quantity
+            </summary>
+            <param name="cart_product"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.cart_productController.Deletecart_product(System.Int32)">
+            <summary>
+            Delete product from the cart
             </summary>
             <param name="id"></param>
             <returns></returns>

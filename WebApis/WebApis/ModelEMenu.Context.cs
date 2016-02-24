@@ -35,6 +35,7 @@ namespace WebApis
         public virtual DbSet<product> products { get; set; }
         public virtual DbSet<product_language> product_language { get; set; }
         public virtual DbSet<cart> carts { get; set; }
+        public virtual DbSet<cart_product> cart_product { get; set; }
     
         public virtual ObjectResult<sp_language_readAll_Result> sp_language_readAll()
         {
@@ -168,6 +169,53 @@ namespace WebApis
                 new ObjectParameter("user_id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_cart_readByTableIDAndUserID_Result>("sp_cart_readByTableIDAndUserID", table_idParameter, user_idParameter);
+        }
+    
+        public virtual int sp_cart_product_insert(Nullable<int> cart_id, Nullable<int> product_id, Nullable<int> quantity)
+        {
+            var cart_idParameter = cart_id.HasValue ?
+                new ObjectParameter("cart_id", cart_id) :
+                new ObjectParameter("cart_id", typeof(int));
+    
+            var product_idParameter = product_id.HasValue ?
+                new ObjectParameter("product_id", product_id) :
+                new ObjectParameter("product_id", typeof(int));
+    
+            var quantityParameter = quantity.HasValue ?
+                new ObjectParameter("quantity", quantity) :
+                new ObjectParameter("quantity", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_cart_product_insert", cart_idParameter, product_idParameter, quantityParameter);
+        }
+    
+        public virtual ObjectResult<sp_cart_product_product_readByCartIDAndLanguageID_Result> sp_cart_product_product_readByCartIDAndLanguageID(Nullable<int> cart_id, Nullable<int> language_id)
+        {
+            var cart_idParameter = cart_id.HasValue ?
+                new ObjectParameter("cart_id", cart_id) :
+                new ObjectParameter("cart_id", typeof(int));
+    
+            var language_idParameter = language_id.HasValue ?
+                new ObjectParameter("language_id", language_id) :
+                new ObjectParameter("language_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_cart_product_product_readByCartIDAndLanguageID_Result>("sp_cart_product_product_readByCartIDAndLanguageID", cart_idParameter, language_idParameter);
+        }
+    
+        public virtual int sp_cart_product_updateByCartIDAndProductID(Nullable<int> cart_id, Nullable<int> product_id, Nullable<int> quantity)
+        {
+            var cart_idParameter = cart_id.HasValue ?
+                new ObjectParameter("cart_id", cart_id) :
+                new ObjectParameter("cart_id", typeof(int));
+    
+            var product_idParameter = product_id.HasValue ?
+                new ObjectParameter("product_id", product_id) :
+                new ObjectParameter("product_id", typeof(int));
+    
+            var quantityParameter = quantity.HasValue ?
+                new ObjectParameter("quantity", quantity) :
+                new ObjectParameter("quantity", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_cart_product_updateByCartIDAndProductID", cart_idParameter, product_idParameter, quantityParameter);
         }
     }
 }

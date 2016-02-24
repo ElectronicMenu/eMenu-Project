@@ -225,6 +225,9 @@
     <Compile Include="cart.cs">
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
+    <Compile Include="cart_product.cs">
+      <DependentUpon>ModelEMenu.tt</DependentUpon>
+    </Compile>
     <Compile Include="category.cs">
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
@@ -232,6 +235,7 @@
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\cartsController.cs" />
+    <Compile Include="Controllers\cart_productController.cs" />
     <Compile Include="Controllers\categoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\languagesController.cs" />
@@ -271,6 +275,9 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="sp_cart_insert_Result.cs">
+      <DependentUpon>ModelEMenu.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_cart_product_product_readByCartIDAndLanguageID_Result.cs">
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_cart_readByTableIDAndUserID_Result.cs">
