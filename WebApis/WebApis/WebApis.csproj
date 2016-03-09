@@ -283,6 +283,9 @@
     <Compile Include="sp_cart_readByTableIDAndUserID_Result.cs">
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_cart_readByTableID_Result.cs">
+      <DependentUpon>ModelEMenu.tt</DependentUpon>
+    </Compile>
     <Compile Include="sp_category_category_language_readAllByLangguageID_Result.cs">
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
@@ -368,6 +371,7 @@
     </Content>
     <Content Include="ModelEMenu.edmx.diagram">
       <DependentUpon>ModelEMenu.edmx</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="ModelEMenu.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

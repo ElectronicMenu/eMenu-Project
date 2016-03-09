@@ -76,7 +76,6 @@
     </AssociationSet>
     <FunctionImport Name="sp_cart_insert" ReturnType="Collection(hd_emenuModel.sp_cart_insert_Result)">
       <Parameter Name="table_id" Mode="In" Type="Int32" />
-      <Parameter Name="user_id" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="sp_cart_readByTableIDAndUserID" ReturnType="Collection(hd_emenuModel.sp_cart_readByTableIDAndUserID_Result)">
       <Parameter Name="table_id" Mode="In" Type="Int32" />
@@ -104,6 +103,9 @@
       <Parameter Name="cart_id" Mode="In" Type="Int32" />
       <Parameter Name="product_id" Mode="In" Type="Int32" />
       <Parameter Name="quantity" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_cart_readByTableID" ReturnType="Collection(hd_emenuModel.sp_cart_readByTableID_Result)">
+      <Parameter Name="table_id" Mode="In" Type="Int32" />
     </FunctionImport>
   </EntityContainer>
   <EntityType Name="language">
@@ -329,7 +331,6 @@
     </Key>
     <Property Name="cart_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="table_id" Type="Int32" Nullable="false" />
-    <Property Name="user_id" Type="Int32" Nullable="false" />
     <Property Name="cart_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="table" Relationship="hd_emenuModel.FK_cart_table" FromRole="cart" ToRole="table" />
     <NavigationProperty Name="cart_product" Relationship="hd_emenuModel.FK_cart_product_cart" FromRole="cart" ToRole="cart_product" />
@@ -407,5 +408,10 @@
     <Property Type="Double" Name="product_final_price" Nullable="true" />
     <Property Type="Int32" Name="quantity" Nullable="false" />
     <Property Type="Int32" Name="total" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_cart_readByTableID_Result">
+    <Property Type="Int32" Name="cart_id" Nullable="false" />
+    <Property Type="Int32" Name="table_id" Nullable="false" />
+    <Property Type="String" Name="cart_date" Nullable="true" MaxLength="50" />
   </ComplexType>
 </Schema>

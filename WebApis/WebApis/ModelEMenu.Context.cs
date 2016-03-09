@@ -145,17 +145,13 @@ namespace WebApis
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_product_readByProductIDAndLanguageID_Result>("sp_product_readByProductIDAndLanguageID", product_idParameter, language_idParameter);
         }
     
-        public virtual ObjectResult<sp_cart_insert_Result> sp_cart_insert(Nullable<int> table_id, Nullable<int> user_id)
+        public virtual ObjectResult<sp_cart_insert_Result> sp_cart_insert(Nullable<int> table_id)
         {
             var table_idParameter = table_id.HasValue ?
                 new ObjectParameter("table_id", table_id) :
                 new ObjectParameter("table_id", typeof(int));
     
-            var user_idParameter = user_id.HasValue ?
-                new ObjectParameter("user_id", user_id) :
-                new ObjectParameter("user_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_cart_insert_Result>("sp_cart_insert", table_idParameter, user_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_cart_insert_Result>("sp_cart_insert", table_idParameter);
         }
     
         public virtual ObjectResult<sp_cart_readByTableIDAndUserID_Result> sp_cart_readByTableIDAndUserID(Nullable<int> table_id, Nullable<int> user_id)
@@ -216,6 +212,15 @@ namespace WebApis
                 new ObjectParameter("quantity", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_cart_product_updateByCartIDAndProductID", cart_idParameter, product_idParameter, quantityParameter);
+        }
+    
+        public virtual ObjectResult<sp_cart_readByTableID_Result> sp_cart_readByTableID(Nullable<int> table_id)
+        {
+            var table_idParameter = table_id.HasValue ?
+                new ObjectParameter("table_id", table_id) :
+                new ObjectParameter("table_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_cart_readByTableID_Result>("sp_cart_readByTableID", table_idParameter);
         }
     }
 }

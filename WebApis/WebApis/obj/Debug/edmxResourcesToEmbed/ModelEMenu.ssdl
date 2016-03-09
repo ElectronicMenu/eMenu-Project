@@ -6,7 +6,6 @@
     </Key>
     <Property Name="cart_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="table_id" Type="int" Nullable="false" />
-    <Property Name="user_id" Type="int" Nullable="false" />
     <Property Name="cart_date" Type="varchar" MaxLength="50" />
   </EntityType>
   <!--Errors Found During Generation:
@@ -197,7 +196,6 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
   </Function>
   <Function Name="sp_cart_insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
     <Parameter Name="table_id" Type="int" Mode="In" />
-    <Parameter Name="user_id" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_cart_product_insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
     <Parameter Name="cart_id" Type="int" Mode="In" />
@@ -213,9 +211,8 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
     <Parameter Name="product_id" Type="int" Mode="In" />
     <Parameter Name="quantity" Type="int" Mode="In" />
   </Function>
-  <Function Name="sp_cart_readByTableIDAndUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+  <Function Name="sp_cart_readByTableID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
     <Parameter Name="table_id" Type="int" Mode="In" />
-    <Parameter Name="user_id" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_category_category_language_readAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu" />
   <Function Name="sp_category_category_language_readAllByLangguageID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">

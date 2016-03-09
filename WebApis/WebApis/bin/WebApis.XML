@@ -481,7 +481,7 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
-        <member name="M:WebApis.Controllers.cartsController.Getcart(System.Int32,System.Int32)">
+        <member name="M:WebApis.Controllers.cartsController.Getcart(System.Int32)">
             <summary>
             Get the cart details based on table id and user id 
             </summary>
@@ -491,7 +491,7 @@
         </member>
         <member name="M:WebApis.Controllers.cartsController.Postcart(WebApis.cart)">
             <summary>
-            Insert into cart using table id and user id and return the result of the last inserted row
+            Insert into cart using table id and return the result of the last inserted row
             </summary>
             <param name="cart"></param>
             <returns></returns>

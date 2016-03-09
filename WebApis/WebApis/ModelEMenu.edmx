@@ -11,7 +11,6 @@
           </Key>
           <Property Name="cart_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="table_id" Type="int" Nullable="false" />
-          <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="cart_date" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -202,7 +201,6 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
         </Function>
         <Function Name="sp_cart_insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
           <Parameter Name="table_id" Type="int" Mode="In" />
-          <Parameter Name="user_id" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_cart_product_insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
           <Parameter Name="cart_id" Type="int" Mode="In" />
@@ -218,9 +216,8 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
           <Parameter Name="product_id" Type="int" Mode="In" />
           <Parameter Name="quantity" Type="int" Mode="In" />
         </Function>
-        <Function Name="sp_cart_readByTableIDAndUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+        <Function Name="sp_cart_readByTableID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
           <Parameter Name="table_id" Type="int" Mode="In" />
-          <Parameter Name="user_id" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_category_category_language_readAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu" />
         <Function Name="sp_category_category_language_readAllByLangguageID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
@@ -382,8 +379,7 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
             <End Role="cart" EntitySet="carts" />
           </AssociationSet>
           <FunctionImport Name="sp_cart_insert" ReturnType="Collection(hd_emenuModel.sp_cart_insert_Result)">
-            <Parameter Name="table_id" Mode="In" Type="Int32" />
-            <Parameter Name="user_id" Mode="In" Type="Int32" />
+          <Parameter Name="table_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_cart_readByTableIDAndUserID" ReturnType="Collection(hd_emenuModel.sp_cart_readByTableIDAndUserID_Result)">
             <Parameter Name="table_id" Mode="In" Type="Int32" />
@@ -411,6 +407,9 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
             <Parameter Name="cart_id" Mode="In" Type="Int32" />
             <Parameter Name="product_id" Mode="In" Type="Int32" />
             <Parameter Name="quantity" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_cart_readByTableID" ReturnType="Collection(hd_emenuModel.sp_cart_readByTableID_Result)">
+          <Parameter Name="table_id" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="language">
@@ -636,7 +635,6 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
           </Key>
           <Property Name="cart_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="table_id" Type="Int32" Nullable="false" />
-          <Property Name="user_id" Type="Int32" Nullable="false" />
           <Property Name="cart_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="table" Relationship="hd_emenuModel.FK_cart_table" FromRole="cart" ToRole="table" />
           <NavigationProperty Name="cart_product" Relationship="hd_emenuModel.FK_cart_product_cart" FromRole="cart" ToRole="cart_product" />
@@ -714,6 +712,11 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
           <Property Type="Double" Name="product_final_price" Nullable="true" />
           <Property Type="Int32" Name="quantity" Nullable="false" />
           <Property Type="Int32" Name="total" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_cart_readByTableID_Result">
+          <Property Type="Int32" Name="cart_id" Nullable="false" />
+          <Property Type="Int32" Name="table_id" Nullable="false" />
+          <Property Type="String" Name="cart_date" Nullable="true" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -918,7 +921,6 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
             <EntityTypeMapping TypeName="hd_emenuModel.cart">
               <MappingFragment StoreEntitySet="cart">
                 <ScalarProperty Name="cart_date" ColumnName="cart_date" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="table_id" ColumnName="table_id" />
                 <ScalarProperty Name="cart_id" ColumnName="cart_id" />
               </MappingFragment>
@@ -927,16 +929,6 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
           <FunctionImportMapping FunctionImportName="sp_cart_insert" FunctionName="hd_emenuModel.Store.sp_cart_insert">
             <ResultMapping>
               <ComplexTypeMapping TypeName="hd_emenuModel.sp_cart_insert_Result">
-                <ScalarProperty Name="cart_id" ColumnName="cart_id" />
-                <ScalarProperty Name="table_id" ColumnName="table_id" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="cart_date" ColumnName="cart_date" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_cart_readByTableIDAndUserID" FunctionName="hd_emenuModel.Store.sp_cart_readByTableIDAndUserID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="hd_emenuModel.sp_cart_readByTableIDAndUserID_Result">
                 <ScalarProperty Name="cart_id" ColumnName="cart_id" />
                 <ScalarProperty Name="table_id" ColumnName="table_id" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
@@ -973,6 +965,15 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_cart_product_updateByCartIDAndProductID" FunctionName="hd_emenuModel.Store.sp_cart_product_updateByCartIDAndProductID" />
+          <FunctionImportMapping FunctionImportName="sp_cart_readByTableID" FunctionName="hd_emenuModel.Store.sp_cart_readByTableID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="hd_emenuModel.sp_cart_readByTableID_Result">
+                <ScalarProperty Name="cart_id" ColumnName="cart_id" />
+                <ScalarProperty Name="table_id" ColumnName="table_id" />
+                <ScalarProperty Name="cart_date" ColumnName="cart_date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

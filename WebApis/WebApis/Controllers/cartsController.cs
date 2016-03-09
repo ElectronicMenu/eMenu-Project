@@ -44,9 +44,9 @@ namespace WebApis.Controllers
         /// <param name="user_id"></param>
         /// <returns></returns>
         [ResponseType(typeof(cart))]
-        public dynamic Getcart(int table_id, int user_id)
+        public dynamic Getcart(int table_id)
         {
-            return new { cart = db.sp_cart_readByTableIDAndUserID(table_id, user_id) };
+            return new { cart = db.sp_cart_readByTableID(table_id) };
         }
 
         //// POST: api/carts?table_id={table_id}&user_id={user_id}
@@ -99,7 +99,7 @@ namespace WebApis.Controllers
 
         // POST: api/carts
         /// <summary>
-        /// Insert into cart using table id and user id and return the result of the last inserted row
+        /// Insert into cart using table id and return the result of the last inserted row
         /// </summary>
         /// <param name="cart"></param>
         /// <returns></returns>

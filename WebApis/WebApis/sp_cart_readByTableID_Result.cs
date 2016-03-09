@@ -10,20 +10,11 @@
 namespace WebApis
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class cart
+    public partial class sp_cart_readByTableID_Result
     {
-        public cart()
-        {
-            this.cart_product = new HashSet<cart_product>();
-        }
-    
         public int cart_id { get; set; }
         public int table_id { get; set; }
         public string cart_date { get; set; }
-    
-        public virtual table table { get; set; }
-        public virtual ICollection<cart_product> cart_product { get; set; }
     }
 }
