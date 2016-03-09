@@ -198,7 +198,6 @@
       <EntityTypeMapping TypeName="hd_emenuModel.cart">
         <MappingFragment StoreEntitySet="cart">
           <ScalarProperty Name="cart_date" ColumnName="cart_date" />
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
           <ScalarProperty Name="table_id" ColumnName="table_id" />
           <ScalarProperty Name="cart_id" ColumnName="cart_id" />
         </MappingFragment>
@@ -214,12 +213,40 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_cart_readByTableIDAndUserID" FunctionName="hd_emenuModel.Store.sp_cart_readByTableIDAndUserID">
+    <EntitySetMapping Name="cart_product">
+      <EntityTypeMapping TypeName="hd_emenuModel.cart_product">
+        <MappingFragment StoreEntitySet="cart_product">
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="cart_id" ColumnName="cart_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_cart_product_insert" FunctionName="hd_emenuModel.Store.sp_cart_product_insert" />
+    <FunctionImportMapping FunctionImportName="sp_cart_product_product_readByCartIDAndLanguageID" FunctionName="hd_emenuModel.Store.sp_cart_product_product_readByCartIDAndLanguageID">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="hd_emenuModel.sp_cart_readByTableIDAndUserID_Result">
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_cart_product_product_readByCartIDAndLanguageID_Result">
+          <ScalarProperty Name="product_name" ColumnName="product_name" />
+          <ScalarProperty Name="product_description" ColumnName="product_description" />
+          <ScalarProperty Name="product_image" ColumnName="product_image" />
+          <ScalarProperty Name="product_is_veg" ColumnName="product_is_veg" />
+          <ScalarProperty Name="product_is_active" ColumnName="product_is_active" />
+          <ScalarProperty Name="product_price" ColumnName="product_price" />
+          <ScalarProperty Name="product_discount_type" ColumnName="product_discount_type" />
+          <ScalarProperty Name="product_discount" ColumnName="product_discount" />
+          <ScalarProperty Name="product_final_price" ColumnName="product_final_price" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="total" ColumnName="total" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_cart_product_updateByCartIDAndProductID" FunctionName="hd_emenuModel.Store.sp_cart_product_updateByCartIDAndProductID" />
+    <FunctionImportMapping FunctionImportName="sp_cart_readByTableID" FunctionName="hd_emenuModel.Store.sp_cart_readByTableID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_cart_readByTableID_Result">
           <ScalarProperty Name="cart_id" ColumnName="cart_id" />
           <ScalarProperty Name="table_id" ColumnName="table_id" />
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
           <ScalarProperty Name="cart_date" ColumnName="cart_date" />
         </ComplexTypeMapping>
       </ResultMapping>

@@ -44,23 +44,23 @@ namespace WebApis.Controllers
         /// <param name="user_id"></param>
         /// <returns></returns>
         [ResponseType(typeof(cart))]
-        public dynamic Getcart(int table_id, int user_id)
+        public dynamic Getcart(int table_id)
         {
-            return new { cart = db.sp_cart_readByTableIDAndUserID(table_id, user_id) };
+            return new { cart = db.sp_cart_readByTableID(table_id) };
         }
 
-        // POST: api/carts?table_id={table_id}&user_id={user_id}
-        /// <summary>
-        ///  Insert into cart using table id and user id and return the result of the last inserted row
-        /// </summary>
-        /// <param name="table_id"></param>
-        /// <param name="user_id"></param>
-        /// <returns></returns>
-        [ResponseType(typeof(cart))]
-        public dynamic Insertcart(int table_id, int user_id)
-        {
-            return new { cart = db.sp_cart_insert(table_id,user_id) };
-        }
+        //// POST: api/carts?table_id={table_id}&user_id={user_id}
+        ///// <summary>
+        /////  Insert into cart using table id and user id and return the result of the last inserted row
+        ///// </summary>
+        ///// <param name="table_id"></param>
+        ///// <param name="user_id"></param>
+        ///// <returns></returns>
+        //[ResponseType(typeof(cart))]
+        //public dynamic Insertcart(int table_id, int user_id)
+        //{
+        //    return new { cart = db.sp_cart_insert(table_id,user_id) };
+        //}
         
         //// PUT: api/carts/5
         //[ResponseType(typeof(void))]
@@ -97,20 +97,25 @@ namespace WebApis.Controllers
         //    return StatusCode(HttpStatusCode.NoContent);
         //}
 
-        //// POST: api/carts
-        //[ResponseType(typeof(cart))]
-        //public async Task<IHttpActionResult> Postcart(cart cart)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+        // POST: api/carts
+        /// <summary>
+        /// Insert into cart using table id and return the result of the last inserted row
+        /// </summary>
+        /// <param name="cart"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(cart))]
+        public async Task<IHttpActionResult> Postcart(cart cart)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    db.carts.Add(cart);
-        //    await db.SaveChangesAsync();
+            db.carts.Add(cart);
+            await db.SaveChangesAsync();
 
-        //    return CreatedAtRoute("DefaultApi", new { id = cart.cart_id }, cart);
-        //}
+            return CreatedAtRoute("DefaultApi", new { id = cart.cart_id }, cart);
+        }
 
         // DELETE: api/carts/5
         /// <summary>
