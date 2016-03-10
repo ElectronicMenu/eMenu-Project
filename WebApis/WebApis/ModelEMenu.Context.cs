@@ -281,5 +281,31 @@ namespace WebApis
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_user_readByUsernameAndPassword_Result>("sp_user_readByUsernameAndPassword", user_usernameParameter, user_passwordParameter);
         }
+    
+        public virtual int sp_user_cart_insert(Nullable<int> user_id, Nullable<int> cart_id)
+        {
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(int));
+    
+            var cart_idParameter = cart_id.HasValue ?
+                new ObjectParameter("cart_id", cart_id) :
+                new ObjectParameter("cart_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_user_cart_insert", user_idParameter, cart_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_user_cart_readByUserIDAndCartID_Result> sp_user_cart_readByUserIDAndCartID(Nullable<int> user_id, Nullable<int> cart_id)
+        {
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(int));
+    
+            var cart_idParameter = cart_id.HasValue ?
+                new ObjectParameter("cart_id", cart_id) :
+                new ObjectParameter("cart_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_user_cart_readByUserIDAndCartID_Result>("sp_user_cart_readByUserIDAndCartID", user_idParameter, cart_idParameter);
+        }
     }
 }

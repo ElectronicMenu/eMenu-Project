@@ -290,5 +290,22 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <AssociationSetMapping Name="user_cart" TypeName="hd_emenuModel.user_cart" StoreEntitySet="user_cart">
+      <EndProperty Name="user">
+        <ScalarProperty Name="user_id" ColumnName="user_id" />
+      </EndProperty>
+      <EndProperty Name="cart">
+        <ScalarProperty Name="cart_id" ColumnName="cart_id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="sp_user_cart_insert" FunctionName="hd_emenuModel.Store.sp_user_cart_insert" />
+    <FunctionImportMapping FunctionImportName="sp_user_cart_readByUserIDAndCartID" FunctionName="hd_emenuModel.Store.sp_user_cart_readByUserIDAndCartID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_user_cart_readByUserIDAndCartID_Result">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="cart_id" ColumnName="cart_id" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

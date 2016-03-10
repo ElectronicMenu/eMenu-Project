@@ -124,6 +124,18 @@
       <Parameter Name="user_username" Mode="In" Type="String" />
       <Parameter Name="user_password" Mode="In" Type="String" />
     </FunctionImport>
+    <AssociationSet Name="user_cart" Association="hd_emenuModel.user_cart">
+      <End Role="cart" EntitySet="carts" />
+      <End Role="user" EntitySet="users" />
+    </AssociationSet>
+    <FunctionImport Name="sp_user_cart_insert">
+      <Parameter Name="user_id" Mode="In" Type="Int32" />
+      <Parameter Name="cart_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_user_cart_readByUserIDAndCartID" ReturnType="Collection(hd_emenuModel.sp_user_cart_readByUserIDAndCartID_Result)">
+      <Parameter Name="user_id" Mode="In" Type="Int32" />
+      <Parameter Name="cart_id" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="language">
     <Key>
@@ -351,6 +363,7 @@
     <Property Name="cart_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="table" Relationship="hd_emenuModel.FK_cart_table" FromRole="cart" ToRole="table" />
     <NavigationProperty Name="cart_product" Relationship="hd_emenuModel.FK_cart_product_cart" FromRole="cart" ToRole="cart_product" />
+    <NavigationProperty Name="users" Relationship="hd_emenuModel.user_cart" FromRole="cart" ToRole="user" />
   </EntityType>
   <Association Name="FK_cart_table">
     <End Type="hd_emenuModel.table" Role="table" Multiplicity="1" />
@@ -448,6 +461,7 @@
     <Property Name="user_verification_code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="user_date_of_birth" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="country_id" Type="Int32" />
+    <NavigationProperty Name="carts" Relationship="hd_emenuModel.user_cart" FromRole="user" ToRole="cart" />
   </EntityType>
   <ComplexType Name="sp_user_readByUsernameAndPassword_Result">
     <Property Type="Int32" Name="user_id" Nullable="false" />
@@ -463,5 +477,13 @@
     <Property Type="String" Name="user_verification_code" Nullable="false" MaxLength="50" />
     <Property Type="DateTime" Name="user_date_of_birth" Nullable="false" />
     <Property Type="Int32" Name="country_id" Nullable="true" />
+  </ComplexType>
+  <Association Name="user_cart">
+    <End Type="hd_emenuModel.cart" Role="cart" Multiplicity="*" />
+    <End Type="hd_emenuModel.user" Role="user" Multiplicity="*" />
+  </Association>
+  <ComplexType Name="sp_user_cart_readByUserIDAndCartID_Result">
+    <Property Type="Int32" Name="user_id" Nullable="false" />
+    <Property Type="Int32" Name="cart_id" Nullable="false" />
   </ComplexType>
 </Schema>

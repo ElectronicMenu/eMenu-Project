@@ -242,6 +242,7 @@
     <Compile Include="Controllers\productsController.cs" />
     <Compile Include="Controllers\tablesController.cs" />
     <Compile Include="Controllers\usersController.cs" />
+    <Compile Include="Controllers\user_cartController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -266,6 +267,7 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\User_CartModel.cs" />
     <Compile Include="product.cs">
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
@@ -321,6 +323,9 @@
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_table_readByTableNumberAndPassword_Result.cs">
+      <DependentUpon>ModelEMenu.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_user_cart_readByUserIDAndCartID_Result.cs">
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_user_readByUsernameAndPassword_Result.cs">
