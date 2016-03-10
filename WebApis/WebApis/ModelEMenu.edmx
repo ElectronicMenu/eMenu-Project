@@ -93,6 +93,24 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
           <Property Name="table_password" Type="nvarchar" MaxLength="50" />
           <Property Name="table_is_occupied" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_first_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_last_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="user_email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_email_verified" Type="bit" Nullable="false" />
+          <Property Name="user_registration_date" Type="nvarchar" MaxLength="50" />
+          <Property Name="user_verification_code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_date_of_birth" Type="date" Nullable="false" />
+          <Property Name="country_id" Type="int" />
+        </EntityType>
         <Association Name="FK_cart_product_cart">
           <End Role="cart" Type="Self.cart" Multiplicity="1" />
           <End Role="cart_product" Type="Self.cart_product" Multiplicity="*" />
@@ -238,12 +256,29 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
           <Parameter Name="product_id" Type="int" Mode="In" />
           <Parameter Name="language_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_user_insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+          <Parameter Name="user_username" Type="nvarchar" Mode="In" />
+          <Parameter Name="user_password" Type="nvarchar" Mode="In" />
+          <Parameter Name="user_first_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="user_last_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="user_gender" Type="nvarchar" Mode="In" />
+          <Parameter Name="user_email" Type="nvarchar" Mode="In" />
+          <Parameter Name="user_phone" Type="nvarchar" Mode="In" />
+          <Parameter Name="user_verification_code" Type="nvarchar" Mode="In" />
+          <Parameter Name="user_date_of_birth" Type="date" Mode="In" />
+          <Parameter Name="country_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_user_readByUsernameAndPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+          <Parameter Name="user_username" Type="nvarchar" Mode="In" />
+          <Parameter Name="user_password" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="hd_emenuModelStoreContainer">
           <EntitySet Name="cart" EntityType="Self.cart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="language" EntityType="Self.language" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="table" EntityType="Self.table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cart_product" EntityType="Self.cart_product" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [cart_product].[cart_id] AS [cart_id], 
@@ -410,6 +445,23 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
           </FunctionImport>
           <FunctionImport Name="sp_cart_readByTableID" ReturnType="Collection(hd_emenuModel.sp_cart_readByTableID_Result)">
           <Parameter Name="table_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="users" EntityType="hd_emenuModel.user" />
+          <FunctionImport Name="sp_user_insert">
+            <Parameter Name="user_username" Mode="In" Type="String" />
+            <Parameter Name="user_password" Mode="In" Type="String" />
+            <Parameter Name="user_first_name" Mode="In" Type="String" />
+            <Parameter Name="user_last_name" Mode="In" Type="String" />
+            <Parameter Name="user_gender" Mode="In" Type="String" />
+            <Parameter Name="user_email" Mode="In" Type="String" />
+            <Parameter Name="user_phone" Mode="In" Type="String" />
+            <Parameter Name="user_verification_code" Mode="In" Type="String" />
+            <Parameter Name="user_date_of_birth" Mode="In" Type="DateTime" />
+            <Parameter Name="country_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_user_readByUsernameAndPassword" ReturnType="Collection(hd_emenuModel.sp_user_readByUsernameAndPassword_Result)">
+            <Parameter Name="user_username" Mode="In" Type="String" />
+            <Parameter Name="user_password" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="language">
@@ -718,6 +770,39 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
           <Property Type="Int32" Name="table_id" Nullable="false" />
           <Property Type="String" Name="cart_date" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_first_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_last_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_phone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_email_verified" Type="Boolean" Nullable="false" />
+          <Property Name="user_registration_date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_verification_code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_date_of_birth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="country_id" Type="Int32" />
+        </EntityType>
+        <ComplexType Name="sp_user_readByUsernameAndPassword_Result">
+          <Property Type="Int32" Name="user_id" Nullable="false" />
+          <Property Type="String" Name="user_username" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="user_password" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="user_first_name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="user_last_name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="user_gender" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="user_email" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="user_phone" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="user_email_verified" Nullable="false" />
+          <Property Type="String" Name="user_registration_date" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="user_verification_code" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="user_date_of_birth" Nullable="false" />
+          <Property Type="Int32" Name="country_id" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -971,6 +1056,45 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
                 <ScalarProperty Name="cart_id" ColumnName="cart_id" />
                 <ScalarProperty Name="table_id" ColumnName="table_id" />
                 <ScalarProperty Name="cart_date" ColumnName="cart_date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="hd_emenuModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="country_id" ColumnName="country_id" />
+                <ScalarProperty Name="user_date_of_birth" ColumnName="user_date_of_birth" />
+                <ScalarProperty Name="user_verification_code" ColumnName="user_verification_code" />
+                <ScalarProperty Name="user_registration_date" ColumnName="user_registration_date" />
+                <ScalarProperty Name="user_email_verified" ColumnName="user_email_verified" />
+                <ScalarProperty Name="user_phone" ColumnName="user_phone" />
+                <ScalarProperty Name="user_email" ColumnName="user_email" />
+                <ScalarProperty Name="user_gender" ColumnName="user_gender" />
+                <ScalarProperty Name="user_last_name" ColumnName="user_last_name" />
+                <ScalarProperty Name="user_first_name" ColumnName="user_first_name" />
+                <ScalarProperty Name="user_password" ColumnName="user_password" />
+                <ScalarProperty Name="user_username" ColumnName="user_username" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_user_insert" FunctionName="hd_emenuModel.Store.sp_user_insert" />
+          <FunctionImportMapping FunctionImportName="sp_user_readByUsernameAndPassword" FunctionName="hd_emenuModel.Store.sp_user_readByUsernameAndPassword">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="hd_emenuModel.sp_user_readByUsernameAndPassword_Result">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="user_username" ColumnName="user_username" />
+                <ScalarProperty Name="user_password" ColumnName="user_password" />
+                <ScalarProperty Name="user_first_name" ColumnName="user_first_name" />
+                <ScalarProperty Name="user_last_name" ColumnName="user_last_name" />
+                <ScalarProperty Name="user_gender" ColumnName="user_gender" />
+                <ScalarProperty Name="user_email" ColumnName="user_email" />
+                <ScalarProperty Name="user_phone" ColumnName="user_phone" />
+                <ScalarProperty Name="user_email_verified" ColumnName="user_email_verified" />
+                <ScalarProperty Name="user_registration_date" ColumnName="user_registration_date" />
+                <ScalarProperty Name="user_verification_code" ColumnName="user_verification_code" />
+                <ScalarProperty Name="user_date_of_birth" ColumnName="user_date_of_birth" />
+                <ScalarProperty Name="country_id" ColumnName="country_id" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

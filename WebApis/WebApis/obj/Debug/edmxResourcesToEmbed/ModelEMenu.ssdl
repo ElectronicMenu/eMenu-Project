@@ -88,6 +88,24 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
     <Property Name="table_password" Type="nvarchar" MaxLength="50" />
     <Property Name="table_is_occupied" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_first_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_last_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_gender" Type="nvarchar" MaxLength="50" />
+    <Property Name="user_email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_email_verified" Type="bit" Nullable="false" />
+    <Property Name="user_registration_date" Type="nvarchar" MaxLength="50" />
+    <Property Name="user_verification_code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_date_of_birth" Type="date" Nullable="false" />
+    <Property Name="country_id" Type="int" />
+  </EntityType>
   <Association Name="FK_cart_product_cart">
     <End Role="cart" Type="Self.cart" Multiplicity="1" />
     <End Role="cart_product" Type="Self.cart_product" Multiplicity="*" />
@@ -233,12 +251,29 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
     <Parameter Name="product_id" Type="int" Mode="In" />
     <Parameter Name="language_id" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_user_insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="user_username" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_password" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_first_name" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_last_name" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_gender" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_email" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_phone" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_verification_code" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_date_of_birth" Type="date" Mode="In" />
+    <Parameter Name="country_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_user_readByUsernameAndPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="user_username" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_password" Type="nvarchar" Mode="In" />
+  </Function>
   <EntityContainer Name="hd_emenuModelStoreContainer">
     <EntitySet Name="cart" EntityType="Self.cart" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="language" EntityType="Self.language" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="table" EntityType="Self.table" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="cart_product" EntityType="Self.cart_product" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [cart_product].[cart_id] AS [cart_id], 

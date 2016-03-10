@@ -241,6 +241,7 @@
     <Compile Include="Controllers\languagesController.cs" />
     <Compile Include="Controllers\productsController.cs" />
     <Compile Include="Controllers\tablesController.cs" />
+    <Compile Include="Controllers\usersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -322,8 +323,14 @@
     <Compile Include="sp_table_readByTableNumberAndPassword_Result.cs">
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_user_readByUsernameAndPassword_Result.cs">
+      <DependentUpon>ModelEMenu.tt</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="table.cs">
+      <DependentUpon>ModelEMenu.tt</DependentUpon>
+    </Compile>
+    <Compile Include="user.cs">
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
   </ItemGroup>

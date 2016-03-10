@@ -610,5 +610,19 @@
             <param name="table"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApis.Controllers.usersController.Postuser(WebApis.user)">
+            <summary>
+            Insert new user into user table 
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.usersController.Getuser(WebApis.user)">
+            <summary>
+            Get the user details using username and password
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

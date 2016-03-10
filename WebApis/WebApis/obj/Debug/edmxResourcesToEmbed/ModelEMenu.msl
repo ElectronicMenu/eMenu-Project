@@ -251,5 +251,44 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="hd_emenuModel.user">
+        <MappingFragment StoreEntitySet="user">
+          <ScalarProperty Name="country_id" ColumnName="country_id" />
+          <ScalarProperty Name="user_date_of_birth" ColumnName="user_date_of_birth" />
+          <ScalarProperty Name="user_verification_code" ColumnName="user_verification_code" />
+          <ScalarProperty Name="user_registration_date" ColumnName="user_registration_date" />
+          <ScalarProperty Name="user_email_verified" ColumnName="user_email_verified" />
+          <ScalarProperty Name="user_phone" ColumnName="user_phone" />
+          <ScalarProperty Name="user_email" ColumnName="user_email" />
+          <ScalarProperty Name="user_gender" ColumnName="user_gender" />
+          <ScalarProperty Name="user_last_name" ColumnName="user_last_name" />
+          <ScalarProperty Name="user_first_name" ColumnName="user_first_name" />
+          <ScalarProperty Name="user_password" ColumnName="user_password" />
+          <ScalarProperty Name="user_username" ColumnName="user_username" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_user_insert" FunctionName="hd_emenuModel.Store.sp_user_insert" />
+    <FunctionImportMapping FunctionImportName="sp_user_readByUsernameAndPassword" FunctionName="hd_emenuModel.Store.sp_user_readByUsernameAndPassword">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_user_readByUsernameAndPassword_Result">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="user_username" ColumnName="user_username" />
+          <ScalarProperty Name="user_password" ColumnName="user_password" />
+          <ScalarProperty Name="user_first_name" ColumnName="user_first_name" />
+          <ScalarProperty Name="user_last_name" ColumnName="user_last_name" />
+          <ScalarProperty Name="user_gender" ColumnName="user_gender" />
+          <ScalarProperty Name="user_email" ColumnName="user_email" />
+          <ScalarProperty Name="user_phone" ColumnName="user_phone" />
+          <ScalarProperty Name="user_email_verified" ColumnName="user_email_verified" />
+          <ScalarProperty Name="user_registration_date" ColumnName="user_registration_date" />
+          <ScalarProperty Name="user_verification_code" ColumnName="user_verification_code" />
+          <ScalarProperty Name="user_date_of_birth" ColumnName="user_date_of_birth" />
+          <ScalarProperty Name="country_id" ColumnName="country_id" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>
