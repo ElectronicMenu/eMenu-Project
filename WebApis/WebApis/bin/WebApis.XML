@@ -624,5 +624,21 @@
             <param name="user"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApis.Controllers.user_cartController.Getuser_cart(System.Int32,System.Int32)">
+            <summary>
+            Get user_cart by user_id and cart_id
+            </summary>
+            <param name="user_id"></param>
+            <param name="cart_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.user_cartController.Postuser_cart(System.Int32,System.Int32)">
+            <summary>
+            Insert into cart using user_id and cart_id
+            </summary>
+            <param name="user_id"></param>
+            <param name="cart_id"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

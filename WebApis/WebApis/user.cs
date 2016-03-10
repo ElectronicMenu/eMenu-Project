@@ -14,6 +14,11 @@ namespace WebApis
     
     public partial class user
     {
+        public user()
+        {
+            this.carts = new HashSet<cart>();
+        }
+    
         public int user_id { get; set; }
         public string user_username { get; set; }
         public string user_password { get; set; }
@@ -27,5 +32,7 @@ namespace WebApis
         public string user_verification_code { get; set; }
         public System.DateTime user_date_of_birth { get; set; }
         public Nullable<int> country_id { get; set; }
+    
+        public virtual ICollection<cart> carts { get; set; }
     }
 }
