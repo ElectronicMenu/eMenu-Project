@@ -21,6 +21,7 @@
         <EntityTypeShape EntityType="hd_emenuModel.cart_product" Width="1.5" PointX="7.875" PointY="6.625" />
         <AssociationConnector Association="hd_emenuModel.FK_cart_product_cart" />
         <AssociationConnector Association="hd_emenuModel.FK_cart_product_product" />
+        <EntityTypeShape EntityType="hd_emenuModel.user" Width="1.5" PointX="0.75" PointY="9.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
