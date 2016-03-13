@@ -136,6 +136,20 @@
       <Parameter Name="user_id" Mode="In" Type="Int32" />
       <Parameter Name="cart_id" Mode="In" Type="Int32" />
     </FunctionImport>
+    <EntitySet Name="countries" EntityType="hd_emenuModel.country" />
+    <EntitySet Name="taxes" EntityType="hd_emenuModel.tax" />
+    <AssociationSet Name="FK_user_country" Association="hd_emenuModel.FK_user_country">
+      <End Role="country" EntitySet="countries" />
+      <End Role="user" EntitySet="users" />
+    </AssociationSet>
+    <FunctionImport Name="sp_Country_readAll" ReturnType="Collection(hd_emenuModel.sp_Country_readAll_Result)" />
+    <FunctionImport Name="sp_country_readById" ReturnType="Collection(hd_emenuModel.sp_country_readById_Result)">
+      <Parameter Name="country_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_tax_readAll" ReturnType="Collection(hd_emenuModel.sp_tax_readAll_Result)" />
+    <FunctionImport Name="sp_tax_readById" ReturnType="Collection(hd_emenuModel.sp_tax_readById_Result)">
+      <Parameter Name="tax_id" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="language">
     <Key>
@@ -462,6 +476,7 @@
     <Property Name="user_date_of_birth" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="country_id" Type="Int32" />
     <NavigationProperty Name="carts" Relationship="hd_emenuModel.user_cart" FromRole="user" ToRole="cart" />
+    <NavigationProperty Name="country" Relationship="hd_emenuModel.FK_user_country" FromRole="user" ToRole="country" />
   </EntityType>
   <ComplexType Name="sp_user_readByUsernameAndPassword_Result">
     <Property Type="Int32" Name="user_id" Nullable="false" />
@@ -485,5 +500,54 @@
   <ComplexType Name="sp_user_cart_readByUserIDAndCartID_Result">
     <Property Type="Int32" Name="user_id" Nullable="false" />
     <Property Type="Int32" Name="cart_id" Nullable="false" />
+  </ComplexType>
+  <EntityType Name="country">
+    <Key>
+      <PropertyRef Name="country_id" />
+    </Key>
+    <Property Name="country_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="country_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="country_code" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="country_is_active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="users" Relationship="hd_emenuModel.FK_user_country" FromRole="country" ToRole="user" />
+  </EntityType>
+  <EntityType Name="tax">
+    <Key>
+      <PropertyRef Name="tax_id" />
+    </Key>
+    <Property Name="tax_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tax_percentage" Type="Double" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_user_country">
+    <End Type="hd_emenuModel.country" Role="country" Multiplicity="0..1" />
+    <End Type="hd_emenuModel.user" Role="user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="country">
+        <PropertyRef Name="country_id" />
+      </Principal>
+      <Dependent Role="user">
+        <PropertyRef Name="country_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="sp_Country_readAll_Result">
+    <Property Type="Int32" Name="country_id" Nullable="false" />
+    <Property Type="String" Name="country_name" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="country_code" Nullable="false" MaxLength="5" />
+    <Property Type="Boolean" Name="country_is_active" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="sp_country_readById_Result">
+    <Property Type="Int32" Name="country_id" Nullable="false" />
+    <Property Type="String" Name="country_name" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="country_code" Nullable="false" MaxLength="5" />
+    <Property Type="Boolean" Name="country_is_active" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="sp_tax_readAll_Result">
+    <Property Type="Int32" Name="tax_id" Nullable="false" />
+    <Property Type="Double" Name="tax_percentage" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="sp_tax_readById_Result">
+    <Property Type="Int32" Name="tax_id" Nullable="false" />
+    <Property Type="Double" Name="tax_percentage" Nullable="false" />
   </ComplexType>
 </Schema>

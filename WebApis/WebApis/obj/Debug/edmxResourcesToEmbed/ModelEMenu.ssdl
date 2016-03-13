@@ -41,6 +41,15 @@ warning 6002: The table/view 'hd_emenu.dbo.category_language' does not have a pr
     <Property Name="language_id" Type="int" Nullable="false" />
     <Property Name="category_name" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
+  <EntityType Name="country">
+    <Key>
+      <PropertyRef Name="country_id" />
+    </Key>
+    <Property Name="country_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="country_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="country_code" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="country_is_active" Type="bit" Nullable="false" />
+  </EntityType>
   <EntityType Name="language">
     <Key>
       <PropertyRef Name="language_id" />
@@ -87,6 +96,13 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
     <Property Name="table_number" Type="int" Nullable="false" />
     <Property Name="table_password" Type="nvarchar" MaxLength="50" />
     <Property Name="table_is_occupied" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tax">
+    <Key>
+      <PropertyRef Name="tax_id" />
+    </Key>
+    <Property Name="tax_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tax_percentage" Type="float" Nullable="false" />
   </EntityType>
   <EntityType Name="user">
     <Key>
@@ -236,6 +252,22 @@ warning 6002: The table/view 'hd_emenu.hd_emenu.user_cart' does not have a prima
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_user_country">
+    <End Role="country" Type="Self.country" Multiplicity="0..1" />
+    <End Role="user" Type="Self.user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="country">
+        <PropertyRef Name="country_id" />
+      </Principal>
+      <Dependent Role="user">
+        <PropertyRef Name="country_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="sp_Country_readAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
+  <Function Name="sp_country_readById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi">
+    <Parameter Name="country_id" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_language_readAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
   <Function Name="sp_language_readAllActive" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
   <Function Name="sp_language_readByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi">
@@ -245,6 +277,10 @@ warning 6002: The table/view 'hd_emenu.hd_emenu.user_cart' does not have a prima
   <Function Name="sp_table_readByTableNumberAndPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi">
     <Parameter Name="table_number" Type="int" Mode="In" />
     <Parameter Name="table_password" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_tax_readAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
+  <Function Name="sp_tax_readById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi">
+    <Parameter Name="tax_id" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_user_cart_insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi">
     <Parameter Name="user_id" Type="int" Mode="In" />
@@ -312,9 +348,11 @@ warning 6002: The table/view 'hd_emenu.hd_emenu.user_cart' does not have a prima
   <EntityContainer Name="hd_emenuModelStoreContainer">
     <EntitySet Name="cart" EntityType="Self.cart" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="country" EntityType="Self.country" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="language" EntityType="Self.language" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="table" EntityType="Self.table" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tax" EntityType="Self.tax" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="cart_product" EntityType="Self.cart_product" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -384,6 +422,10 @@ warning 6002: The table/view 'hd_emenu.hd_emenu.user_cart' does not have a prima
     <AssociationSet Name="FK_user_cart_user" Association="Self.FK_user_cart_user">
       <End Role="user" EntitySet="user" />
       <End Role="user_cart" EntitySet="user_cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK_user_country" Association="Self.FK_user_country">
+      <End Role="country" EntitySet="country" />
+      <End Role="user" EntitySet="user" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

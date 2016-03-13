@@ -237,12 +237,17 @@
     <Compile Include="Controllers\cartsController.cs" />
     <Compile Include="Controllers\cart_productController.cs" />
     <Compile Include="Controllers\categoriesController.cs" />
+    <Compile Include="Controllers\countriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\languagesController.cs" />
     <Compile Include="Controllers\productsController.cs" />
     <Compile Include="Controllers\tablesController.cs" />
+    <Compile Include="Controllers\taxesController.cs" />
     <Compile Include="Controllers\usersController.cs" />
     <Compile Include="Controllers\user_cartController.cs" />
+    <Compile Include="country.cs">
+      <DependentUpon>ModelEMenu.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -304,6 +309,12 @@
     <Compile Include="sp_category_category_language_readByID_Result.cs">
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_Country_readAll_Result.cs">
+      <DependentUpon>ModelEMenu.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_country_readById_Result.cs">
+      <DependentUpon>ModelEMenu.tt</DependentUpon>
+    </Compile>
     <Compile Include="sp_language_readAllActive_Result.cs">
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
@@ -325,6 +336,12 @@
     <Compile Include="sp_table_readByTableNumberAndPassword_Result.cs">
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_tax_readAll_Result.cs">
+      <DependentUpon>ModelEMenu.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_tax_readById_Result.cs">
+      <DependentUpon>ModelEMenu.tt</DependentUpon>
+    </Compile>
     <Compile Include="sp_user_cart_readByUserIDAndCartID_Result.cs">
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
@@ -333,6 +350,9 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="table.cs">
+      <DependentUpon>ModelEMenu.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tax.cs">
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>
     <Compile Include="user.cs">

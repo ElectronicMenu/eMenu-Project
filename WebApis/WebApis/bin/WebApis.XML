@@ -561,6 +561,19 @@
             <param name="language_id"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApis.Controllers.countriesController.Getcountries">
+            <summary>
+            Get the list of all the countries
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.countriesController.Getcountry(System.Int32)">
+            <summary>
+            Get the details of the country using the country id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApis.Controllers.languagesController.Getlanguages">
             <summary>
             Get the list of all the languages
@@ -608,6 +621,19 @@
             Get the table details that matches the table number and password
             </summary>
             <param name="table"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.taxesController.Gettaxes">
+            <summary>
+            Get all the taxes from the taxes table
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.taxesController.Gettax(System.Int32)">
+            <summary>
+            Get the tax details using the tax id
+            </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:WebApis.Controllers.usersController.Postuser(WebApis.user)">

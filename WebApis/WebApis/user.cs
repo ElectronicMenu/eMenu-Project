@@ -34,5 +34,6 @@ namespace WebApis
         public Nullable<int> country_id { get; set; }
     
         public virtual ICollection<cart> carts { get; set; }
+        public virtual country country { get; set; }
     }
 }

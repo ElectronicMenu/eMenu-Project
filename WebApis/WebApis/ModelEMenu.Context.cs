@@ -37,6 +37,8 @@ namespace WebApis
         public virtual DbSet<cart> carts { get; set; }
         public virtual DbSet<cart_product> cart_product { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<country> countries { get; set; }
+        public virtual DbSet<tax> taxes { get; set; }
     
         public virtual ObjectResult<sp_language_readAll_Result> sp_language_readAll()
         {
@@ -306,6 +308,34 @@ namespace WebApis
                 new ObjectParameter("cart_id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_user_cart_readByUserIDAndCartID_Result>("sp_user_cart_readByUserIDAndCartID", user_idParameter, cart_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_Country_readAll_Result> sp_Country_readAll()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Country_readAll_Result>("sp_Country_readAll");
+        }
+    
+        public virtual ObjectResult<sp_country_readById_Result> sp_country_readById(Nullable<int> country_id)
+        {
+            var country_idParameter = country_id.HasValue ?
+                new ObjectParameter("country_id", country_id) :
+                new ObjectParameter("country_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_country_readById_Result>("sp_country_readById", country_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_tax_readAll_Result> sp_tax_readAll()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_tax_readAll_Result>("sp_tax_readAll");
+        }
+    
+        public virtual ObjectResult<sp_tax_readById_Result> sp_tax_readById(Nullable<int> tax_id)
+        {
+            var tax_idParameter = tax_id.HasValue ?
+                new ObjectParameter("tax_id", tax_id) :
+                new ObjectParameter("tax_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_tax_readById_Result>("sp_tax_readById", tax_idParameter);
         }
     }
 }
