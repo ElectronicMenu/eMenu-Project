@@ -147,7 +147,6 @@ C:\Users\Dhammi\Documents\GitHub\eMenu-Project\WebApis\WebApis\bin\Microsoft.Owi
 C:\Users\Dhammi\Documents\GitHub\eMenu-Project\WebApis\WebApis\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Dhammi\Documents\GitHub\eMenu-Project\WebApis\WebApis\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\Dhammi\Documents\GitHub\eMenu-Project\WebApis\WebApis\bin\System.Web.Http.Owin.xml
-C:\Users\Dhammi\Documents\GitHub\eMenu-Project\WebApis\WebApis\obj\Debug\WebApis.csprojResolveAssemblyReference.cache
 C:\Users\Dhammi\Documents\GitHub\eMenu-Project\WebApis\WebApis\obj\Debug\WebApis.dll
 C:\Users\Dhammi\Documents\GitHub\eMenu-Project\WebApis\WebApis\obj\Debug\WebApis.pdb
 C:\Users\Dhammi\Documents\GitHub\eMenu-Project\WebApis\WebApis\bin\WebApis.XML

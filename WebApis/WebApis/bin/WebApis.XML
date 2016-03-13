@@ -481,25 +481,120 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:WebApis.Controllers.cartsController.Getcart(System.Int32)">
+            <summary>
+            Get the cart details based on table id and user id 
+            </summary>
+            <param name="table_id"></param>
+            <param name="user_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.cartsController.Postcart(WebApis.cart)">
+            <summary>
+            Insert into cart using table id and return the result of the last inserted row
+            </summary>
+            <param name="cart"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.cartsController.Deletecart(System.Int32)">
+            <summary>
+            Delete the Cart based on the cart_id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.cart_productController.Getcart_product(System.Int32,System.Int32)">
+            <summary>
+            Get the list of all the products for a particulat cart based on the language selected
+            </summary>
+            <param name="cart_id"></param>
+            <param name="language_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.cart_productController.Putcart_product(System.Int32,WebApis.cart_product)">
+            <summary>
+            Update cart by using cart id, product id, and quantity
+            </summary>
+            <param name="id"></param>
+            <param name="cart_product"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.cart_productController.Postcart_product(WebApis.cart_product)">
+            <summary>
+            Insert a new product into the cart using cart id, product id, and quantity
+            </summary>
+            <param name="cart_product"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.cart_productController.Deletecart_product(System.Int32)">
+            <summary>
+            Delete product from the cart
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.categoriesController.Getcategories">
+            <summary>
+            Get the list of all the categories
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.categoriesController.Getcategories(System.Int32)">
+            <summary>
+            Get the list of all the categories based on the language ID
+            </summary>
+            <param name="language_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.categoriesController.Getcategory(System.Int32)">
+            <summary>
+             Get the category details that matches the id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.categoriesController.Getcategory(System.Int32,System.Int32)">
+            <summary>
+             Get the category details that matches the category id and language id
+            </summary>
+            <param name="category_id"></param>
+            <param name="language_id"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApis.Controllers.languagesController.Getlanguages">
             <summary>
             Get the list of all the languages
             </summary>
-            <param name="table"></param>
             <returns></returns>
         </member>
         <member name="M:WebApis.Controllers.languagesController.Getlanguages(System.Boolean)">
             <summary>
             Get the list of all the languages which are set active
             </summary>
-            <param name="table"></param>
+            <param name="active"></param>
             <returns></returns>
         </member>
         <member name="M:WebApis.Controllers.languagesController.Getlanguage(System.Int32)">
             <summary>
             Get the language details that matches the id
             </summary>
-            <param name="table"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.productsController.Getproducts(System.Int32,System.Int32)">
+            <summary>
+            Get the list of all active products based on the category ID and language ID
+            </summary>
+            <param name="category_id"></param>
+            <param name="language_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.productsController.Getproduct(System.Int32,System.Int32)">
+            <summary>
+            Get the product details based on product ID and language ID
+            </summary>
+            <param name="product_id"></param>
+            <param name="language_id"></param>
             <returns></returns>
         </member>
         <member name="M:WebApis.Controllers.tablesController.Gettables">
@@ -513,6 +608,36 @@
             Get the table details that matches the table number and password
             </summary>
             <param name="table"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.usersController.Postuser(WebApis.user)">
+            <summary>
+            Insert new user into user table 
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.usersController.Getuser(WebApis.user)">
+            <summary>
+            Get the user details using username and password
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.user_cartController.Getuser_cart(System.Int32,System.Int32)">
+            <summary>
+            Get user_cart by user_id and cart_id
+            </summary>
+            <param name="user_id"></param>
+            <param name="cart_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.user_cartController.Postuser_cart(System.Int32,System.Int32)">
+            <summary>
+            Insert into cart using user_id and cart_id
+            </summary>
+            <param name="user_id"></param>
+            <param name="cart_id"></param>
             <returns></returns>
         </member>
     </members>

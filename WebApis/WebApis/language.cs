@@ -14,10 +14,19 @@ namespace WebApis
     
     public partial class language
     {
+        public language()
+        {
+            this.category_language = new HashSet<category_language>();
+            this.product_language = new HashSet<product_language>();
+        }
+    
         public int language_id { get; set; }
         public string language_name { get; set; }
         public string language_short_name { get; set; }
         public string language_flag { get; set; }
         public bool language_is_active { get; set; }
+    
+        public virtual ICollection<category_language> category_language { get; set; }
+        public virtual ICollection<product_language> product_language { get; set; }
     }
 }

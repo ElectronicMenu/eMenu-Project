@@ -7,7 +7,23 @@
       <Diagram DiagramId="257c8c9396174b8e891b0fb58b868e07" Name="Diagram1">
         <EntityTypeShape EntityType="hd_emenuModel.table" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="hd_emenuModel.language" Width="1.5" PointX="3.375" PointY="0.75" />
-      </Diagram>
+        <EntityTypeShape EntityType="hd_emenuModel.category" Width="1.5" PointX="3.375" PointY="4" />
+        <EntityTypeShape EntityType="hd_emenuModel.category_language" Width="1.5" PointX="5.625" PointY="0.875" />
+        <AssociationConnector Association="hd_emenuModel.FK_category_language_category" />
+        <AssociationConnector Association="hd_emenuModel.FK_category_language_language" />
+        <EntityTypeShape EntityType="hd_emenuModel.product" Width="1.5" PointX="5.625" PointY="4.375" />
+        <EntityTypeShape EntityType="hd_emenuModel.product_language" Width="1.5" PointX="7.875" PointY="3.125" />
+        <AssociationConnector Association="hd_emenuModel.FK_product_category" />
+        <AssociationConnector Association="hd_emenuModel.FK_product_language_language" />
+        <AssociationConnector Association="hd_emenuModel.FK_product_language_product" />
+        <EntityTypeShape EntityType="hd_emenuModel.cart" Width="1.5" PointX="3" PointY="6.75" />
+        <AssociationConnector Association="hd_emenuModel.FK_cart_table" />
+        <EntityTypeShape EntityType="hd_emenuModel.cart_product" Width="1.5" PointX="7.875" PointY="6.625" />
+        <AssociationConnector Association="hd_emenuModel.FK_cart_product_cart" />
+        <AssociationConnector Association="hd_emenuModel.FK_cart_product_product" />
+        <EntityTypeShape EntityType="hd_emenuModel.user" Width="1.5" PointX="0.75" PointY="9.75" />
+        <AssociationConnector Association="hd_emenuModel.user_cart" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

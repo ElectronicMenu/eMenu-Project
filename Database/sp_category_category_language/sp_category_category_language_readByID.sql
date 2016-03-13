@@ -10,7 +10,7 @@ GO
 
 
 
-CREATE PROCEDURE [dhammi].[sp_category_category_language_readByID]
+CREATE PROCEDURE [dhammi].[sp_category_category_language_readByCategoryID]
 	@category_id int
 AS 
 BEGIN

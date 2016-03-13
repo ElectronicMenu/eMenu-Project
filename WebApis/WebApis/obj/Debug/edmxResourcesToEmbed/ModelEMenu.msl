@@ -75,5 +75,237 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_category_category_language_readAllByLangguageID" FunctionName="hd_emenuModel.Store.sp_category_category_language_readAllByLangguageID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_category_category_language_readAllByLangguageID_Result">
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+          <ScalarProperty Name="category_image" ColumnName="category_image" />
+          <ScalarProperty Name="category_icon" ColumnName="category_icon" />
+          <ScalarProperty Name="language_id" ColumnName="language_id" />
+          <ScalarProperty Name="category_name" ColumnName="category_name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="categories">
+      <EntityTypeMapping TypeName="hd_emenuModel.category">
+        <MappingFragment StoreEntitySet="category">
+          <ScalarProperty Name="category_icon" ColumnName="category_icon" />
+          <ScalarProperty Name="category_image" ColumnName="category_image" />
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="category_language">
+      <EntityTypeMapping TypeName="hd_emenuModel.category_language">
+        <MappingFragment StoreEntitySet="category_language">
+          <ScalarProperty Name="category_name" ColumnName="category_name" />
+          <ScalarProperty Name="language_id" ColumnName="language_id" />
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_category_category_language_readAll" FunctionName="hd_emenuModel.Store.sp_category_category_language_readAll">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_category_category_language_readAll_Result">
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+          <ScalarProperty Name="category_image" ColumnName="category_image" />
+          <ScalarProperty Name="category_icon" ColumnName="category_icon" />
+          <ScalarProperty Name="language_id" ColumnName="language_id" />
+          <ScalarProperty Name="category_name" ColumnName="category_name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_category_category_language_readByCategoryID" FunctionName="hd_emenuModel.Store.sp_category_category_language_readByCategoryID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_category_category_language_readByCategoryID_Result">
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+          <ScalarProperty Name="category_image" ColumnName="category_image" />
+          <ScalarProperty Name="category_icon" ColumnName="category_icon" />
+          <ScalarProperty Name="language_id" ColumnName="language_id" />
+          <ScalarProperty Name="category_name" ColumnName="category_name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_category_category_language_readByCategoryIDAndLanguageID" FunctionName="hd_emenuModel.Store.sp_category_category_language_readByCategoryIDAndLanguageID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_category_category_language_readByCategoryIDAndLanguageID_Result">
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+          <ScalarProperty Name="category_image" ColumnName="category_image" />
+          <ScalarProperty Name="category_icon" ColumnName="category_icon" />
+          <ScalarProperty Name="language_id" ColumnName="language_id" />
+          <ScalarProperty Name="category_name" ColumnName="category_name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="products">
+      <EntityTypeMapping TypeName="hd_emenuModel.product">
+        <MappingFragment StoreEntitySet="product">
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+          <ScalarProperty Name="product_final_price" ColumnName="product_final_price" />
+          <ScalarProperty Name="product_discount" ColumnName="product_discount" />
+          <ScalarProperty Name="product_discount_type" ColumnName="product_discount_type" />
+          <ScalarProperty Name="product_price" ColumnName="product_price" />
+          <ScalarProperty Name="product_is_active" ColumnName="product_is_active" />
+          <ScalarProperty Name="product_is_veg" ColumnName="product_is_veg" />
+          <ScalarProperty Name="product_image" ColumnName="product_image" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="product_language">
+      <EntityTypeMapping TypeName="hd_emenuModel.product_language">
+        <MappingFragment StoreEntitySet="product_language">
+          <ScalarProperty Name="product_description" ColumnName="product_description" />
+          <ScalarProperty Name="product_name" ColumnName="product_name" />
+          <ScalarProperty Name="language_id" ColumnName="language_id" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_product_readAllActiveByCategoryIDAndLanguageID" FunctionName="hd_emenuModel.Store.sp_product_readAllActiveByCategoryIDAndLanguageID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_product_readAllActiveByCategoryIDAndLanguageID_Result">
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="product_name" ColumnName="product_name" />
+          <ScalarProperty Name="product_description" ColumnName="product_description" />
+          <ScalarProperty Name="product_image" ColumnName="product_image" />
+          <ScalarProperty Name="product_is_veg" ColumnName="product_is_veg" />
+          <ScalarProperty Name="product_is_active" ColumnName="product_is_active" />
+          <ScalarProperty Name="product_price" ColumnName="product_price" />
+          <ScalarProperty Name="product_discount_type" ColumnName="product_discount_type" />
+          <ScalarProperty Name="product_discount" ColumnName="product_discount" />
+          <ScalarProperty Name="product_final_price" ColumnName="product_final_price" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_product_readByProductIDAndLanguageID" FunctionName="hd_emenuModel.Store.sp_product_readByProductIDAndLanguageID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_product_readByProductIDAndLanguageID_Result">
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="product_name" ColumnName="product_name" />
+          <ScalarProperty Name="product_description" ColumnName="product_description" />
+          <ScalarProperty Name="product_image" ColumnName="product_image" />
+          <ScalarProperty Name="product_is_veg" ColumnName="product_is_veg" />
+          <ScalarProperty Name="product_is_active" ColumnName="product_is_active" />
+          <ScalarProperty Name="product_price" ColumnName="product_price" />
+          <ScalarProperty Name="product_discount_type" ColumnName="product_discount_type" />
+          <ScalarProperty Name="product_discount" ColumnName="product_discount" />
+          <ScalarProperty Name="product_final_price" ColumnName="product_final_price" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="carts">
+      <EntityTypeMapping TypeName="hd_emenuModel.cart">
+        <MappingFragment StoreEntitySet="cart">
+          <ScalarProperty Name="cart_date" ColumnName="cart_date" />
+          <ScalarProperty Name="table_id" ColumnName="table_id" />
+          <ScalarProperty Name="cart_id" ColumnName="cart_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_cart_insert" FunctionName="hd_emenuModel.Store.sp_cart_insert">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_cart_insert_Result">
+          <ScalarProperty Name="cart_id" ColumnName="cart_id" />
+          <ScalarProperty Name="table_id" ColumnName="table_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="cart_date" ColumnName="cart_date" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="cart_product">
+      <EntityTypeMapping TypeName="hd_emenuModel.cart_product">
+        <MappingFragment StoreEntitySet="cart_product">
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="cart_id" ColumnName="cart_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_cart_product_insert" FunctionName="hd_emenuModel.Store.sp_cart_product_insert" />
+    <FunctionImportMapping FunctionImportName="sp_cart_product_product_readByCartIDAndLanguageID" FunctionName="hd_emenuModel.Store.sp_cart_product_product_readByCartIDAndLanguageID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_cart_product_product_readByCartIDAndLanguageID_Result">
+          <ScalarProperty Name="product_name" ColumnName="product_name" />
+          <ScalarProperty Name="product_description" ColumnName="product_description" />
+          <ScalarProperty Name="product_image" ColumnName="product_image" />
+          <ScalarProperty Name="product_is_veg" ColumnName="product_is_veg" />
+          <ScalarProperty Name="product_is_active" ColumnName="product_is_active" />
+          <ScalarProperty Name="product_price" ColumnName="product_price" />
+          <ScalarProperty Name="product_discount_type" ColumnName="product_discount_type" />
+          <ScalarProperty Name="product_discount" ColumnName="product_discount" />
+          <ScalarProperty Name="product_final_price" ColumnName="product_final_price" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="total" ColumnName="total" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_cart_product_updateByCartIDAndProductID" FunctionName="hd_emenuModel.Store.sp_cart_product_updateByCartIDAndProductID" />
+    <FunctionImportMapping FunctionImportName="sp_cart_readByTableID" FunctionName="hd_emenuModel.Store.sp_cart_readByTableID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_cart_readByTableID_Result">
+          <ScalarProperty Name="cart_id" ColumnName="cart_id" />
+          <ScalarProperty Name="table_id" ColumnName="table_id" />
+          <ScalarProperty Name="cart_date" ColumnName="cart_date" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="hd_emenuModel.user">
+        <MappingFragment StoreEntitySet="user">
+          <ScalarProperty Name="country_id" ColumnName="country_id" />
+          <ScalarProperty Name="user_date_of_birth" ColumnName="user_date_of_birth" />
+          <ScalarProperty Name="user_verification_code" ColumnName="user_verification_code" />
+          <ScalarProperty Name="user_registration_date" ColumnName="user_registration_date" />
+          <ScalarProperty Name="user_email_verified" ColumnName="user_email_verified" />
+          <ScalarProperty Name="user_phone" ColumnName="user_phone" />
+          <ScalarProperty Name="user_email" ColumnName="user_email" />
+          <ScalarProperty Name="user_gender" ColumnName="user_gender" />
+          <ScalarProperty Name="user_last_name" ColumnName="user_last_name" />
+          <ScalarProperty Name="user_first_name" ColumnName="user_first_name" />
+          <ScalarProperty Name="user_password" ColumnName="user_password" />
+          <ScalarProperty Name="user_username" ColumnName="user_username" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_user_insert" FunctionName="hd_emenuModel.Store.sp_user_insert" />
+    <FunctionImportMapping FunctionImportName="sp_user_readByUsernameAndPassword" FunctionName="hd_emenuModel.Store.sp_user_readByUsernameAndPassword">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_user_readByUsernameAndPassword_Result">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="user_username" ColumnName="user_username" />
+          <ScalarProperty Name="user_password" ColumnName="user_password" />
+          <ScalarProperty Name="user_first_name" ColumnName="user_first_name" />
+          <ScalarProperty Name="user_last_name" ColumnName="user_last_name" />
+          <ScalarProperty Name="user_gender" ColumnName="user_gender" />
+          <ScalarProperty Name="user_email" ColumnName="user_email" />
+          <ScalarProperty Name="user_phone" ColumnName="user_phone" />
+          <ScalarProperty Name="user_email_verified" ColumnName="user_email_verified" />
+          <ScalarProperty Name="user_registration_date" ColumnName="user_registration_date" />
+          <ScalarProperty Name="user_verification_code" ColumnName="user_verification_code" />
+          <ScalarProperty Name="user_date_of_birth" ColumnName="user_date_of_birth" />
+          <ScalarProperty Name="country_id" ColumnName="country_id" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <AssociationSetMapping Name="user_cart" TypeName="hd_emenuModel.user_cart" StoreEntitySet="user_cart">
+      <EndProperty Name="user">
+        <ScalarProperty Name="user_id" ColumnName="user_id" />
+      </EndProperty>
+      <EndProperty Name="cart">
+        <ScalarProperty Name="cart_id" ColumnName="cart_id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="sp_user_cart_insert" FunctionName="hd_emenuModel.Store.sp_user_cart_insert" />
+    <FunctionImportMapping FunctionImportName="sp_user_cart_readByUserIDAndCartID" FunctionName="hd_emenuModel.Store.sp_user_cart_readByUserIDAndCartID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_user_cart_readByUserIDAndCartID_Result">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="cart_id" ColumnName="cart_id" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

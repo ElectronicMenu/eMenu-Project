@@ -1,5 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="hd_emenuModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="cart">
+    <Key>
+      <PropertyRef Name="cart_id" />
+    </Key>
+    <Property Name="cart_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="table_id" Type="int" Nullable="false" />
+    <Property Name="cart_date" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'hd_emenu.dbo.cart_product' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="cart_product">
+    <Key>
+      <PropertyRef Name="cart_id" />
+      <PropertyRef Name="product_id" />
+      <PropertyRef Name="quantity" />
+    </Key>
+    <Property Name="cart_id" Type="int" Nullable="false" />
+    <Property Name="product_id" Type="int" Nullable="false" />
+    <Property Name="quantity" Type="int" Nullable="false" />
+    <Property Name="total" Type="int" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="category">
+    <Key>
+      <PropertyRef Name="category_id" />
+    </Key>
+    <Property Name="category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="category_image" Type="nvarchar" MaxLength="50" />
+    <Property Name="category_icon" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'hd_emenu.dbo.category_language' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="category_language">
+    <Key>
+      <PropertyRef Name="category_id" />
+      <PropertyRef Name="language_id" />
+      <PropertyRef Name="category_name" />
+    </Key>
+    <Property Name="category_id" Type="int" Nullable="false" />
+    <Property Name="language_id" Type="int" Nullable="false" />
+    <Property Name="category_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
   <EntityType Name="language">
     <Key>
       <PropertyRef Name="language_id" />
@@ -10,6 +51,34 @@
     <Property Name="language_flag" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="language_is_active" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="product">
+    <Key>
+      <PropertyRef Name="product_id" />
+    </Key>
+    <Property Name="product_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="product_image" Type="nvarchar" MaxLength="50" />
+    <Property Name="product_is_veg" Type="bit" Nullable="false" />
+    <Property Name="product_is_active" Type="bit" Nullable="false" />
+    <Property Name="product_price" Type="float" Nullable="false" />
+    <Property Name="product_discount_type" Type="int" Nullable="false" />
+    <Property Name="product_discount" Type="float" Nullable="false" />
+    <Property Name="product_final_price" Type="float" StoreGeneratedPattern="Computed" />
+    <Property Name="category_id" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="product_language">
+    <Key>
+      <PropertyRef Name="product_id" />
+      <PropertyRef Name="language_id" />
+      <PropertyRef Name="product_name" />
+      <PropertyRef Name="product_description" />
+    </Key>
+    <Property Name="product_id" Type="int" Nullable="false" />
+    <Property Name="language_id" Type="int" Nullable="false" />
+    <Property Name="product_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="product_description" Type="nvarchar" MaxLength="1000" Nullable="false" />
+  </EntityType>
   <EntityType Name="table">
     <Key>
       <PropertyRef Name="table_id" />
@@ -19,6 +88,154 @@
     <Property Name="table_password" Type="nvarchar" MaxLength="50" />
     <Property Name="table_is_occupied" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_first_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_last_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_gender" Type="nvarchar" MaxLength="50" />
+    <Property Name="user_email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_email_verified" Type="bit" Nullable="false" />
+    <Property Name="user_registration_date" Type="nvarchar" MaxLength="50" />
+    <Property Name="user_verification_code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_date_of_birth" Type="date" Nullable="false" />
+    <Property Name="country_id" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'hd_emenu.hd_emenu.user_cart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="user_cart">
+    <Key>
+      <PropertyRef Name="user_id" />
+      <PropertyRef Name="cart_id" />
+    </Key>
+    <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="cart_id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_cart_product_cart">
+    <End Role="cart" Type="Self.cart" Multiplicity="1" />
+    <End Role="cart_product" Type="Self.cart_product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cart">
+        <PropertyRef Name="cart_id" />
+      </Principal>
+      <Dependent Role="cart_product">
+        <PropertyRef Name="cart_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_cart_product_product">
+    <End Role="product" Type="Self.product" Multiplicity="1" />
+    <End Role="cart_product" Type="Self.cart_product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="cart_product">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_cart_table">
+    <End Role="table" Type="Self.table" Multiplicity="1" />
+    <End Role="cart" Type="Self.cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="table">
+        <PropertyRef Name="table_id" />
+      </Principal>
+      <Dependent Role="cart">
+        <PropertyRef Name="table_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_category_language_category">
+    <End Role="category" Type="Self.category" Multiplicity="1" />
+    <End Role="category_language" Type="Self.category_language" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category">
+        <PropertyRef Name="category_id" />
+      </Principal>
+      <Dependent Role="category_language">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_category_language_language">
+    <End Role="language" Type="Self.language" Multiplicity="1" />
+    <End Role="category_language" Type="Self.category_language" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="language">
+        <PropertyRef Name="language_id" />
+      </Principal>
+      <Dependent Role="category_language">
+        <PropertyRef Name="language_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_product_category">
+    <End Role="category" Type="Self.category" Multiplicity="1" />
+    <End Role="product" Type="Self.product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category">
+        <PropertyRef Name="category_id" />
+      </Principal>
+      <Dependent Role="product">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_product_language_language">
+    <End Role="language" Type="Self.language" Multiplicity="1" />
+    <End Role="product_language" Type="Self.product_language" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="language">
+        <PropertyRef Name="language_id" />
+      </Principal>
+      <Dependent Role="product_language">
+        <PropertyRef Name="language_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_product_language_product">
+    <End Role="product" Type="Self.product" Multiplicity="1" />
+    <End Role="product_language" Type="Self.product_language" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="product_language">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_user_cart_cart">
+    <End Role="cart" Type="Self.cart" Multiplicity="1" />
+    <End Role="user_cart" Type="Self.user_cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cart">
+        <PropertyRef Name="cart_id" />
+      </Principal>
+      <Dependent Role="user_cart">
+        <PropertyRef Name="cart_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_user_cart_user">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="user_cart" Type="Self.user_cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="user_cart">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Function Name="sp_language_readAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
   <Function Name="sp_language_readAllActive" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
   <Function Name="sp_language_readByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi">
@@ -29,8 +246,144 @@
     <Parameter Name="table_number" Type="int" Mode="In" />
     <Parameter Name="table_password" Type="nvarchar" Mode="In" />
   </Function>
+  <Function Name="sp_user_cart_insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi">
+    <Parameter Name="user_id" Type="int" Mode="In" />
+    <Parameter Name="cart_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_user_cart_readByUserIDAndCartID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi">
+    <Parameter Name="user_id" Type="int" Mode="In" />
+    <Parameter Name="cart_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_cart_insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="table_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_cart_product_insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="cart_id" Type="int" Mode="In" />
+    <Parameter Name="product_id" Type="int" Mode="In" />
+    <Parameter Name="quantity" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_cart_product_product_readByCartIDAndLanguageID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="cart_id" Type="int" Mode="In" />
+    <Parameter Name="language_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_cart_product_updateByCartIDAndProductID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="cart_id" Type="int" Mode="In" />
+    <Parameter Name="product_id" Type="int" Mode="In" />
+    <Parameter Name="quantity" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_cart_readByTableID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="table_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_category_category_language_readAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu" />
+  <Function Name="sp_category_category_language_readAllByLangguageID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="language_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_category_category_language_readByCategoryID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="category_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_category_category_language_readByCategoryIDAndLanguageID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="category_id" Type="int" Mode="In" />
+    <Parameter Name="language_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_product_readAllActiveByCategoryIDAndLanguageID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="category_id" Type="int" Mode="In" />
+    <Parameter Name="language_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_product_readByProductIDAndLanguageID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="product_id" Type="int" Mode="In" />
+    <Parameter Name="language_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_user_insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="user_username" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_password" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_first_name" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_last_name" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_gender" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_email" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_phone" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_verification_code" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_date_of_birth" Type="date" Mode="In" />
+    <Parameter Name="country_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_user_readByUsernameAndPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+    <Parameter Name="user_username" Type="nvarchar" Mode="In" />
+    <Parameter Name="user_password" Type="nvarchar" Mode="In" />
+  </Function>
   <EntityContainer Name="hd_emenuModelStoreContainer">
+    <EntitySet Name="cart" EntityType="Self.cart" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="language" EntityType="Self.language" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="table" EntityType="Self.table" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="cart_product" EntityType="Self.cart_product" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [cart_product].[cart_id] AS [cart_id], 
+    [cart_product].[product_id] AS [product_id], 
+    [cart_product].[quantity] AS [quantity], 
+    [cart_product].[total] AS [total]
+    FROM [dbo].[cart_product] AS [cart_product]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="category_language" EntityType="Self.category_language" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [category_language].[category_id] AS [category_id], 
+    [category_language].[language_id] AS [language_id], 
+    [category_language].[category_name] AS [category_name]
+    FROM [dbo].[category_language] AS [category_language]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="product_language" EntityType="Self.product_language" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [product_language].[product_id] AS [product_id], 
+    [product_language].[language_id] AS [language_id], 
+    [product_language].[product_name] AS [product_name], 
+    [product_language].[product_description] AS [product_description]
+    FROM [dbo].[product_language] AS [product_language]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="user_cart" EntityType="Self.user_cart" store:Type="Tables" store:Schema="hd_emenu">
+      <DefiningQuery>SELECT 
+    [user_cart].[user_id] AS [user_id], 
+    [user_cart].[cart_id] AS [cart_id]
+    FROM [hd_emenu].[user_cart] AS [user_cart]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_cart_product_cart" Association="Self.FK_cart_product_cart">
+      <End Role="cart" EntitySet="cart" />
+      <End Role="cart_product" EntitySet="cart_product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_cart_product_product" Association="Self.FK_cart_product_product">
+      <End Role="product" EntitySet="product" />
+      <End Role="cart_product" EntitySet="cart_product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_cart_table" Association="Self.FK_cart_table">
+      <End Role="table" EntitySet="table" />
+      <End Role="cart" EntitySet="cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK_category_language_category" Association="Self.FK_category_language_category">
+      <End Role="category" EntitySet="category" />
+      <End Role="category_language" EntitySet="category_language" />
+    </AssociationSet>
+    <AssociationSet Name="FK_category_language_language" Association="Self.FK_category_language_language">
+      <End Role="language" EntitySet="language" />
+      <End Role="category_language" EntitySet="category_language" />
+    </AssociationSet>
+    <AssociationSet Name="FK_product_category" Association="Self.FK_product_category">
+      <End Role="category" EntitySet="category" />
+      <End Role="product" EntitySet="product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_product_language_language" Association="Self.FK_product_language_language">
+      <End Role="language" EntitySet="language" />
+      <End Role="product_language" EntitySet="product_language" />
+    </AssociationSet>
+    <AssociationSet Name="FK_product_language_product" Association="Self.FK_product_language_product">
+      <End Role="product" EntitySet="product" />
+      <End Role="product_language" EntitySet="product_language" />
+    </AssociationSet>
+    <AssociationSet Name="FK_user_cart_cart" Association="Self.FK_user_cart_cart">
+      <End Role="cart" EntitySet="cart" />
+      <End Role="user_cart" EntitySet="user_cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK_user_cart_user" Association="Self.FK_user_cart_user">
+      <End Role="user" EntitySet="user" />
+      <End Role="user_cart" EntitySet="user_cart" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>
