@@ -594,6 +594,35 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApis.Controllers.ordersController.Getorder(System.Int32)">
+            <summary>
+            Get the order details using order id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.ordersController.Postorder(WebApis.order)">
+            <summary>
+            Insert into order table using user_id and table_id
+            </summary>
+            <param name="order"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.order_detailsController.Getorder_details(System.Int32)">
+            <summary>
+            Get the order details for a particular order using the order id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.order_detailsController.Postorder_details(System.Int32,System.Int32)">
+            <summary>
+            Insert into order_details using cart_id and order_id
+            </summary>
+            <param name="cart_id"></param>
+            <param name="order_id"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApis.Controllers.productsController.Getproducts(System.Int32,System.Int32)">
             <summary>
             Get the list of all active products based on the category ID and language ID

@@ -12,16 +12,14 @@ namespace WebApis
     using System;
     using System.Collections.Generic;
     
-    public partial class tax
+    public partial class order_details
     {
-        public tax()
-        {
-            this.orders = new HashSet<order>();
-        }
+        public int order_id { get; set; }
+        public int product_id { get; set; }
+        public double quantity { get; set; }
+        public Nullable<double> total { get; set; }
     
-        public int tax_id { get; set; }
-        public double tax_percentage { get; set; }
-    
-        public virtual ICollection<order> orders { get; set; }
+        public virtual order order { get; set; }
+        public virtual product product { get; set; }
     }
 }

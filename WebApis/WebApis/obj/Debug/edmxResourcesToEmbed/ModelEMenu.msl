@@ -361,5 +361,35 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="orders">
+      <EntityTypeMapping TypeName="hd_emenuModel.order">
+        <MappingFragment StoreEntitySet="order">
+          <ScalarProperty Name="order_grand_total" ColumnName="order_grand_total" />
+          <ScalarProperty Name="tax_id" ColumnName="tax_id" />
+          <ScalarProperty Name="order_discount" ColumnName="order_discount" />
+          <ScalarProperty Name="order_discount_type" ColumnName="order_discount_type" />
+          <ScalarProperty Name="order_total" ColumnName="order_total" />
+          <ScalarProperty Name="order_is_completed" ColumnName="order_is_completed" />
+          <ScalarProperty Name="order_is_verified" ColumnName="order_is_verified" />
+          <ScalarProperty Name="order_date_created" ColumnName="order_date_created" />
+          <ScalarProperty Name="order_billing_number" ColumnName="order_billing_number" />
+          <ScalarProperty Name="table_id" ColumnName="table_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="order_details">
+      <EntityTypeMapping TypeName="hd_emenuModel.order_details">
+        <MappingFragment StoreEntitySet="order_details">
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_order_details_insertByCartIDAndOrderID" FunctionName="hd_emenuModel.Store.sp_order_details_insertByCartIDAndOrderID" />
+    <FunctionImportMapping FunctionImportName="sp_order_insertByUserIDAndTableID" FunctionName="hd_emenuModel.Store.sp_order_insertByUserIDAndTableID" />
   </EntityContainerMapping>
 </Mapping>

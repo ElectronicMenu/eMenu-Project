@@ -240,6 +240,8 @@
     <Compile Include="Controllers\countriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\languagesController.cs" />
+    <Compile Include="Controllers\ordersController.cs" />
+    <Compile Include="Controllers\order_detailsController.cs" />
     <Compile Include="Controllers\productsController.cs" />
     <Compile Include="Controllers\tablesController.cs" />
     <Compile Include="Controllers\taxesController.cs" />
@@ -273,6 +275,12 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\User_CartModel.cs" />
+    <Compile Include="order.cs">
+      <DependentUpon>ModelEMenu.tt</DependentUpon>
+    </Compile>
+    <Compile Include="order_details.cs">
+      <DependentUpon>ModelEMenu.tt</DependentUpon>
+    </Compile>
     <Compile Include="product.cs">
       <DependentUpon>ModelEMenu.tt</DependentUpon>
     </Compile>

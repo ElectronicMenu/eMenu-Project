@@ -9,6 +9,7 @@
     <Property Name="table_password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="table_is_occupied" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="carts" Relationship="hd_emenuModel.FK_cart_table" FromRole="table" ToRole="cart" />
+    <NavigationProperty Name="orders" Relationship="hd_emenuModel.FK_order_table" FromRole="table" ToRole="order" />
   </EntityType>
   <EntityContainer Name="hd_emenuEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="tables" EntityType="Self.table" />
@@ -149,6 +150,36 @@
     <FunctionImport Name="sp_tax_readAll" ReturnType="Collection(hd_emenuModel.sp_tax_readAll_Result)" />
     <FunctionImport Name="sp_tax_readById" ReturnType="Collection(hd_emenuModel.sp_tax_readById_Result)">
       <Parameter Name="tax_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="orders" EntityType="hd_emenuModel.order" />
+    <EntitySet Name="order_details" EntityType="hd_emenuModel.order_details" />
+    <AssociationSet Name="FK_order_details_order" Association="hd_emenuModel.FK_order_details_order">
+      <End Role="order" EntitySet="orders" />
+      <End Role="order_details" EntitySet="order_details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_order_table" Association="hd_emenuModel.FK_order_table">
+      <End Role="table" EntitySet="tables" />
+      <End Role="order" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_order_tax" Association="hd_emenuModel.FK_order_tax">
+      <End Role="tax" EntitySet="taxes" />
+      <End Role="order" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_order_user" Association="hd_emenuModel.FK_order_user">
+      <End Role="user" EntitySet="users" />
+      <End Role="order" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_order_details_product" Association="hd_emenuModel.FK_order_details_product">
+      <End Role="product" EntitySet="products" />
+      <End Role="order_details" EntitySet="order_details" />
+    </AssociationSet>
+    <FunctionImport Name="sp_order_details_insertByCartIDAndOrderID">
+      <Parameter Name="cart_id" Mode="In" Type="Int32" />
+      <Parameter Name="order_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_order_insertByUserIDAndTableID">
+      <Parameter Name="user_id" Mode="In" Type="Int32" />
+      <Parameter Name="table_id" Mode="In" Type="Int32" />
     </FunctionImport>
   </EntityContainer>
   <EntityType Name="language">
@@ -293,6 +324,7 @@
     <NavigationProperty Name="category" Relationship="hd_emenuModel.FK_product_category" FromRole="product" ToRole="category" />
     <NavigationProperty Name="product_language" Relationship="hd_emenuModel.FK_product_language_product" FromRole="product" ToRole="product_language" />
     <NavigationProperty Name="cart_product" Relationship="hd_emenuModel.FK_cart_product_product" FromRole="product" ToRole="cart_product" />
+    <NavigationProperty Name="order_details" Relationship="hd_emenuModel.FK_order_details_product" FromRole="product" ToRole="order_details" />
   </EntityType>
   <EntityType Name="product_language">
     <Key>
@@ -477,6 +509,7 @@
     <Property Name="country_id" Type="Int32" />
     <NavigationProperty Name="carts" Relationship="hd_emenuModel.user_cart" FromRole="user" ToRole="cart" />
     <NavigationProperty Name="country" Relationship="hd_emenuModel.FK_user_country" FromRole="user" ToRole="country" />
+    <NavigationProperty Name="orders" Relationship="hd_emenuModel.FK_order_user" FromRole="user" ToRole="order" />
   </EntityType>
   <ComplexType Name="sp_user_readByUsernameAndPassword_Result">
     <Property Type="Int32" Name="user_id" Nullable="false" />
@@ -517,6 +550,7 @@
     </Key>
     <Property Name="tax_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="tax_percentage" Type="Double" Nullable="false" />
+    <NavigationProperty Name="orders" Relationship="hd_emenuModel.FK_order_tax" FromRole="tax" ToRole="order" />
   </EntityType>
   <Association Name="FK_user_country">
     <End Type="hd_emenuModel.country" Role="country" Multiplicity="0..1" />
@@ -550,4 +584,98 @@
     <Property Type="Int32" Name="tax_id" Nullable="false" />
     <Property Type="Double" Name="tax_percentage" Nullable="false" />
   </ComplexType>
+  <EntityType Name="order">
+    <Key>
+      <PropertyRef Name="order_id" />
+    </Key>
+    <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="table_id" Type="Int32" Nullable="false" />
+    <Property Name="order_billing_number" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="order_date_created" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="order_is_verified" Type="Boolean" />
+    <Property Name="order_is_completed" Type="Boolean" Nullable="false" />
+    <Property Name="order_total" Type="Double" Nullable="false" />
+    <Property Name="order_discount_type" Type="Int32" Nullable="false" />
+    <Property Name="order_discount" Type="Double" Nullable="false" />
+    <Property Name="tax_id" Type="Int32" Nullable="false" />
+    <Property Name="order_grand_total" Type="Double" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="order_details" Relationship="hd_emenuModel.FK_order_details_order" FromRole="order" ToRole="order_details" />
+    <NavigationProperty Name="table" Relationship="hd_emenuModel.FK_order_table" FromRole="order" ToRole="table" />
+    <NavigationProperty Name="tax" Relationship="hd_emenuModel.FK_order_tax" FromRole="order" ToRole="tax" />
+    <NavigationProperty Name="user" Relationship="hd_emenuModel.FK_order_user" FromRole="order" ToRole="user" />
+  </EntityType>
+  <EntityType Name="order_details">
+    <Key>
+      <PropertyRef Name="order_id" />
+      <PropertyRef Name="product_id" />
+      <PropertyRef Name="quantity" />
+    </Key>
+    <Property Name="order_id" Type="Int32" Nullable="false" />
+    <Property Name="product_id" Type="Int32" Nullable="false" />
+    <Property Name="quantity" Type="Double" Nullable="false" />
+    <Property Name="total" Type="Double" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="order" Relationship="hd_emenuModel.FK_order_details_order" FromRole="order_details" ToRole="order" />
+    <NavigationProperty Name="product" Relationship="hd_emenuModel.FK_order_details_product" FromRole="order_details" ToRole="product" />
+  </EntityType>
+  <Association Name="FK_order_details_order">
+    <End Type="hd_emenuModel.order" Role="order" Multiplicity="1" />
+    <End Type="hd_emenuModel.order_details" Role="order_details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="order">
+        <PropertyRef Name="order_id" />
+      </Principal>
+      <Dependent Role="order_details">
+        <PropertyRef Name="order_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_order_table">
+    <End Type="hd_emenuModel.table" Role="table" Multiplicity="1" />
+    <End Type="hd_emenuModel.order" Role="order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="table">
+        <PropertyRef Name="table_id" />
+      </Principal>
+      <Dependent Role="order">
+        <PropertyRef Name="table_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_order_tax">
+    <End Type="hd_emenuModel.tax" Role="tax" Multiplicity="1" />
+    <End Type="hd_emenuModel.order" Role="order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tax">
+        <PropertyRef Name="tax_id" />
+      </Principal>
+      <Dependent Role="order">
+        <PropertyRef Name="tax_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_order_user">
+    <End Type="hd_emenuModel.user" Role="user" Multiplicity="1" />
+    <End Type="hd_emenuModel.order" Role="order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="order">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_order_details_product">
+    <End Type="hd_emenuModel.product" Role="product" Multiplicity="1" />
+    <End Type="hd_emenuModel.order_details" Role="order_details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="order_details">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

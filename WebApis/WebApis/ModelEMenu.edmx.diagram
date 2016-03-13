@@ -26,6 +26,13 @@
         <EntityTypeShape EntityType="hd_emenuModel.country" Width="1.5" PointX="3.75" PointY="9.875" />
         <EntityTypeShape EntityType="hd_emenuModel.tax" Width="1.5" PointX="0.75" PointY="3.75" />
         <AssociationConnector Association="hd_emenuModel.FK_user_country" />
+        <EntityTypeShape EntityType="hd_emenuModel.order" Width="1.5" PointX="6" PointY="10.25" />
+        <EntityTypeShape EntityType="hd_emenuModel.order_details" Width="1.5" PointX="8.25" PointY="10.25" />
+        <AssociationConnector Association="hd_emenuModel.FK_order_details_order" />
+        <AssociationConnector Association="hd_emenuModel.FK_order_table" />
+        <AssociationConnector Association="hd_emenuModel.FK_order_tax" />
+        <AssociationConnector Association="hd_emenuModel.FK_order_user" />
+        <AssociationConnector Association="hd_emenuModel.FK_order_details_product" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
