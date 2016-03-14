@@ -17,6 +17,7 @@ namespace WebApis
         public user()
         {
             this.carts = new HashSet<cart>();
+            this.orders = new HashSet<order>();
         }
     
         public int user_id { get; set; }
@@ -34,5 +35,7 @@ namespace WebApis
         public Nullable<int> country_id { get; set; }
     
         public virtual ICollection<cart> carts { get; set; }
+        public virtual country country { get; set; }
+        public virtual ICollection<order> orders { get; set; }
     }
 }

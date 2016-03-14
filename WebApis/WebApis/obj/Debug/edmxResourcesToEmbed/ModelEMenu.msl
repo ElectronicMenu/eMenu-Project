@@ -307,5 +307,89 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="countries">
+      <EntityTypeMapping TypeName="hd_emenuModel.country">
+        <MappingFragment StoreEntitySet="country">
+          <ScalarProperty Name="country_is_active" ColumnName="country_is_active" />
+          <ScalarProperty Name="country_code" ColumnName="country_code" />
+          <ScalarProperty Name="country_name" ColumnName="country_name" />
+          <ScalarProperty Name="country_id" ColumnName="country_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="taxes">
+      <EntityTypeMapping TypeName="hd_emenuModel.tax">
+        <MappingFragment StoreEntitySet="tax">
+          <ScalarProperty Name="tax_percentage" ColumnName="tax_percentage" />
+          <ScalarProperty Name="tax_id" ColumnName="tax_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_Country_readAll" FunctionName="hd_emenuModel.Store.sp_Country_readAll">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_Country_readAll_Result">
+          <ScalarProperty Name="country_id" ColumnName="country_id" />
+          <ScalarProperty Name="country_name" ColumnName="country_name" />
+          <ScalarProperty Name="country_code" ColumnName="country_code" />
+          <ScalarProperty Name="country_is_active" ColumnName="country_is_active" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_country_readById" FunctionName="hd_emenuModel.Store.sp_country_readById">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_country_readById_Result">
+          <ScalarProperty Name="country_id" ColumnName="country_id" />
+          <ScalarProperty Name="country_name" ColumnName="country_name" />
+          <ScalarProperty Name="country_code" ColumnName="country_code" />
+          <ScalarProperty Name="country_is_active" ColumnName="country_is_active" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_tax_readAll" FunctionName="hd_emenuModel.Store.sp_tax_readAll">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_tax_readAll_Result">
+          <ScalarProperty Name="tax_id" ColumnName="tax_id" />
+          <ScalarProperty Name="tax_percentage" ColumnName="tax_percentage" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_tax_readById" FunctionName="hd_emenuModel.Store.sp_tax_readById">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="hd_emenuModel.sp_tax_readById_Result">
+          <ScalarProperty Name="tax_id" ColumnName="tax_id" />
+          <ScalarProperty Name="tax_percentage" ColumnName="tax_percentage" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="orders">
+      <EntityTypeMapping TypeName="hd_emenuModel.order">
+        <MappingFragment StoreEntitySet="order">
+          <ScalarProperty Name="order_grand_total" ColumnName="order_grand_total" />
+          <ScalarProperty Name="tax_id" ColumnName="tax_id" />
+          <ScalarProperty Name="order_discount" ColumnName="order_discount" />
+          <ScalarProperty Name="order_discount_type" ColumnName="order_discount_type" />
+          <ScalarProperty Name="order_total" ColumnName="order_total" />
+          <ScalarProperty Name="order_is_completed" ColumnName="order_is_completed" />
+          <ScalarProperty Name="order_is_verified" ColumnName="order_is_verified" />
+          <ScalarProperty Name="order_date_created" ColumnName="order_date_created" />
+          <ScalarProperty Name="order_billing_number" ColumnName="order_billing_number" />
+          <ScalarProperty Name="table_id" ColumnName="table_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="order_details">
+      <EntityTypeMapping TypeName="hd_emenuModel.order_details">
+        <MappingFragment StoreEntitySet="order_details">
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_order_details_insertByCartIDAndOrderID" FunctionName="hd_emenuModel.Store.sp_order_details_insertByCartIDAndOrderID" />
+    <FunctionImportMapping FunctionImportName="sp_order_insertByUserIDAndTableID" FunctionName="hd_emenuModel.Store.sp_order_insertByUserIDAndTableID" />
   </EntityContainerMapping>
 </Mapping>

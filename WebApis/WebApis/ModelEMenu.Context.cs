@@ -37,6 +37,10 @@ namespace WebApis
         public virtual DbSet<cart> carts { get; set; }
         public virtual DbSet<cart_product> cart_product { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<country> countries { get; set; }
+        public virtual DbSet<tax> taxes { get; set; }
+        public virtual DbSet<order> orders { get; set; }
+        public virtual DbSet<order_details> order_details { get; set; }
     
         public virtual ObjectResult<sp_language_readAll_Result> sp_language_readAll()
         {
@@ -306,6 +310,60 @@ namespace WebApis
                 new ObjectParameter("cart_id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_user_cart_readByUserIDAndCartID_Result>("sp_user_cart_readByUserIDAndCartID", user_idParameter, cart_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_Country_readAll_Result> sp_Country_readAll()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Country_readAll_Result>("sp_Country_readAll");
+        }
+    
+        public virtual ObjectResult<sp_country_readById_Result> sp_country_readById(Nullable<int> country_id)
+        {
+            var country_idParameter = country_id.HasValue ?
+                new ObjectParameter("country_id", country_id) :
+                new ObjectParameter("country_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_country_readById_Result>("sp_country_readById", country_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_tax_readAll_Result> sp_tax_readAll()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_tax_readAll_Result>("sp_tax_readAll");
+        }
+    
+        public virtual ObjectResult<sp_tax_readById_Result> sp_tax_readById(Nullable<int> tax_id)
+        {
+            var tax_idParameter = tax_id.HasValue ?
+                new ObjectParameter("tax_id", tax_id) :
+                new ObjectParameter("tax_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_tax_readById_Result>("sp_tax_readById", tax_idParameter);
+        }
+    
+        public virtual int sp_order_details_insertByCartIDAndOrderID(Nullable<int> cart_id, Nullable<int> order_id)
+        {
+            var cart_idParameter = cart_id.HasValue ?
+                new ObjectParameter("cart_id", cart_id) :
+                new ObjectParameter("cart_id", typeof(int));
+    
+            var order_idParameter = order_id.HasValue ?
+                new ObjectParameter("order_id", order_id) :
+                new ObjectParameter("order_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_order_details_insertByCartIDAndOrderID", cart_idParameter, order_idParameter);
+        }
+    
+        public virtual int sp_order_insertByUserIDAndTableID(Nullable<int> user_id, Nullable<int> table_id)
+        {
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(int));
+    
+            var table_idParameter = table_id.HasValue ?
+                new ObjectParameter("table_id", table_id) :
+                new ObjectParameter("table_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_order_insertByUserIDAndTableID", user_idParameter, table_idParameter);
         }
     }
 }

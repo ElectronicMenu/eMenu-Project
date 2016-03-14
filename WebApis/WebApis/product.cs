@@ -18,6 +18,7 @@ namespace WebApis
         {
             this.product_language = new HashSet<product_language>();
             this.cart_product = new HashSet<cart_product>();
+            this.order_details = new HashSet<order_details>();
         }
     
         public int product_id { get; set; }
@@ -33,5 +34,6 @@ namespace WebApis
         public virtual category category { get; set; }
         public virtual ICollection<product_language> product_language { get; set; }
         public virtual ICollection<cart_product> cart_product { get; set; }
+        public virtual ICollection<order_details> order_details { get; set; }
     }
 }
