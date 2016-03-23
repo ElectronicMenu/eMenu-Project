@@ -63,7 +63,7 @@ namespace DBClasses
 
         public DataSet getdata(string strsql)
         {
-            SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["con1"].ToString());
+            SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SQLDbConnection"].ToString());
             DataSet ds = new DataSet();
             SqlCommand cmd = new SqlCommand(strsql, con);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -73,7 +73,7 @@ namespace DBClasses
 
         public int changedata(string strsql)
         {
-            SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["con1"].ToString());
+            SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SQLDbConnection"].ToString());
             SqlCommand cmd = new SqlCommand(strsql, con);
             if (con.State == ConnectionState.Closed)
             {

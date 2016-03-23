@@ -14,17 +14,17 @@
 </head>
 <body>
 
-    <button>Get result</button>
+    
     <form id="form1" runat="server">
     <div>
     
         
-          <asp:GridView ID="GridViewSample" runat="server" AutoGenerateColumns="False" Font-Names="Verdana"
+          <asp:GridView ID="GridViewCategory" runat="server" AutoGenerateColumns="False" Font-Names="Verdana"
             AllowPaging="true" ShowFooter="true" PageSize="5" Width="75%"
             BorderColor="#CCCCCC" BorderStyle="Solid" BorderWidth="1px" 
-        DataKeyNames="category_id" onrowediting="GridViewSample_RowEditing" 
-    onrowcommand="GridViewSample_RowCommand" 
-    onrowdeleting="GridViewSample_RowDeleting" OnRowCancelingEdit ="GridViewSample_RowCancelEditing" OnRowUpdating="GridViewSample_RowUpdating">
+        DataKeyNames="category_id" onrowediting="GridViewCategory_RowEditing" 
+    onrowcommand="GridViewCategory_RowCommand" 
+    onrowdeleting="GridViewCategory_RowDeleting" OnRowCancelingEdit ="GridViewCategory_RowCancelEditing" OnRowUpdating="GridViewCategory_RowUpdating">
 
                    <AlternatingRowStyle BackColor="#FFD4BA" />
             <FooterStyle BorderColor="#CCCCCC" BorderStyle="Solid" BorderWidth="1px" />
@@ -35,8 +35,7 @@
                 BorderWidth="1px" />
             <Columns>
 
-
-                <asp:TemplateField HeaderText="Category ID" Visible="true" HeaderStyle-Width="10%" >
+                <asp:TemplateField HeaderText="Category ID" Visible="false" HeaderStyle-Width="10%" >
                     <ItemTemplate>
                         <asp:Label ID="lblcategoryID" DataField="category_id" runat="server" Text='<%#Eval("category_id") %>'></asp:Label>
                     </ItemTemplate>
@@ -108,8 +107,6 @@
                     </ItemTemplate>
                     <EditItemTemplate>
                         <asp:LinkButton ID="btnUpdate" Text="Update" runat="server" CommandName="Update" />
-                    </EditItemTemplate>
-                    <EditItemTemplate>
                         <asp:LinkButton ID="btnCancel" Text="Cancel" runat="server" CommandName="Cancel" />
                     </EditItemTemplate>
                     <FooterTemplate>
