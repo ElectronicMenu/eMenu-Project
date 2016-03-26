@@ -16,7 +16,7 @@ namespace DBClasses
         }
         public int changedataProc(string strprocname, SqlParameter[] param)
         {
-            SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["con1"].ToString());
+            SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SQLDbConnection"].ToString());
             SqlCommand cmd = new SqlCommand(strprocname, con);
             if (con.State == ConnectionState.Closed)
             {
@@ -40,7 +40,7 @@ namespace DBClasses
 
         public DataSet getdataProc(string strprocname, SqlParameter[] param)
         {
-            SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["con1"].ToString());
+            SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SQLDbConnection"].ToString());
 
 
             DataSet ds = new DataSet();

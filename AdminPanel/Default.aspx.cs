@@ -27,24 +27,11 @@ namespace Emenu
 
         public void LoadData()
         {
-            string constr = ConfigurationManager.ConnectionStrings["SQLDbConnection"].ConnectionString;
-            using (SqlConnection con = new SqlConnection(constr))
-            {
-                using (SqlCommand cmd = new SqlCommand("SELECT category_id,category_image,category_icon FROM category"))
-                {
-                    using (SqlDataAdapter sda = new SqlDataAdapter())
-                    {
-                        cmd.Connection = con;
-                        sda.SelectCommand = cmd;
-                        using (DataTable dt = new DataTable())
-                        {
-                            sda.Fill(dt);
-                            GridViewCategory.DataSource = dt;
-                            GridViewCategory.DataBind();
-                        }
-                    }
-                }
-            }
+                    DataSet ds = new DataSet();
+                    SqlParameter[] sp1 = new SqlParameter[0];
+                    ds = gs.getdataProc("hd_emenu.sp_category_category_language_readAll", sp1);
+                    GridViewCategory.DataSource = ds;
+                    GridViewCategory.DataBind();                      
         }
 
 
@@ -60,8 +47,38 @@ namespace Emenu
         {
             if (e.CommandName.Equals("Insert"))
             {
-                var cat_id = GridViewCategory.DataKeys[e.RowIndex].Value; // Getting the primary key value from gridview
 
+                GridViewRow row = (GridViewRow)(((Control)e.CommandSource).NamingContainer);
+
+                //Getting Text box values
+                TextBox txtAddCategoryImage = row.FindControl("txtAddCategoryImage") as TextBox;
+                TextBox txtAddCategoryIcon = row.FindControl("txtAddCategoryIcon") as TextBox;
+                TextBox txtAddCategoryName = row.FindControl("txtAddCategoryName") as TextBox;
+                TextBox txtAddLanguageID = row.FindControl("txtAddLanguageID") as TextBox;
+
+                DataSet ds = new DataSet();
+                SqlParameter[] sp1 = new SqlParameter[4];
+                sp1[0] = new SqlParameter("@category_image", txtAddCategoryImage.Text.Trim());
+                sp1[1] = new SqlParameter("@category_icon", txtAddCategoryIcon.Text.Trim());
+                sp1[2] = new SqlParameter("@language_id", txtAddLanguageID.Text.Trim());
+                sp1[3] = new SqlParameter("@category_name", txtAddCategoryName.Text.Trim());
+
+                int i = gs.changedataProc("hd_emenu.sp_category_category_language_insert", sp1);
+                /*
+                string query = "update category set category_image = '" + txtEditCategoryImage.Text.Trim() + "', category_icon = '" + txtEditCategoryIcon.Text.Trim() + "' where category_id ='"+ cat_id +"' ";
+                int i = gs.changedata(sp_category_category_language_insert);
+                */
+                if (i>0)
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Success", "alert('Record Inserted succesfully');", true);
+                  
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Success", "alert('Error ocurred while Inserting');", true);
+                }
+
+                LoadData();
             }
         }
 
@@ -69,9 +86,18 @@ namespace Emenu
         {
             var cat_id = GridViewCategory.DataKeys[e.RowIndex].Value; // Getting the primary key value from gridview
 
+            DataSet ds = new DataSet();
+            SqlParameter[] sp1 = new SqlParameter[1];
+            sp1[0] = new SqlParameter("@category_id", cat_id);
+            int i = gs.changedataProc("hd_emenu.sp_category_category_language_deleteByID", sp1);
+
+            /*
             string query = "DELETE FROM category where category_id ='" + cat_id + "' ";
+            sp_category_category_language_deleteByID
             int i = gs.changedata(query);
-            if (i == 1)
+            */
+
+            if (i>0)
             {
                 ScriptManager.RegisterStartupScript(this, GetType(), "Success", "alert('Record Deleted succesfully');", true);            
             }
@@ -99,11 +125,28 @@ namespace Emenu
             //Getting Text box values
             TextBox txtEditCategoryImage = row.FindControl("txtEditCategoryImage") as TextBox;
             TextBox txtEditCategoryIcon = row.FindControl("txtEditCategoryIcon") as TextBox;
-           
+            TextBox txtEditCategoryName = row.FindControl("txtEditCategoryName") as TextBox;
+            TextBox txtEditLanguageID = row.FindControl("txtEditLanguageID") as TextBox;
 
-            string query = "update category set category_image = '" + txtEditCategoryImage.Text.Trim() + "', category_icon = '" + txtEditCategoryIcon.Text.Trim() + "' where category_id ='"+ cat_id +"' ";
-            int i = gs.changedata(query);
-            if(i == 1)
+            /*
+            DataSet ds = new DataSet();
+            SqlParameter[] sp1 = new SqlParameter[4];
+            sp1[0] = new SqlParameter("@category_image", txtEditCategoryImage.Text.Trim());
+            sp1[1] = new SqlParameter("@category_icon", txtEditCategoryIcon.Text.Trim());
+            sp1[2] = new SqlParameter("@language_id", txtEditLanguageID.Text.Trim());
+            sp1[3] = new SqlParameter("@category_name", txtEditCategoryName.Text.Trim());
+            
+
+            int i = gs.changedataProc("sp_category_category_language_insert", sp1);
+            */
+            
+            string query1 = "update category set category_image = '" + txtEditCategoryImage.Text.Trim() + "', category_icon = '" + txtEditCategoryIcon.Text.Trim() + "' where category_id ='"+ cat_id +"' ";
+            string query2 = "update category_language set category_name = '" + txtEditCategoryName.Text.Trim() + "', language_id = '" + txtEditLanguageID.Text.Trim() + "' where category_id ='" + cat_id + "' ";
+
+            int i = gs.changedata(query1);
+            int j = gs.changedata(query2);
+            
+            if (i == 1 && j ==1)
             {
                 ScriptManager.RegisterStartupScript(this, GetType(), "Success", "alert('Record Updated succesfully');", true);
                 GridViewCategory.EditIndex = -1;
@@ -113,6 +156,12 @@ namespace Emenu
                 ScriptManager.RegisterStartupScript(this, GetType(), "Success", "alert('Error ocurred while updating');", true);
             }
 
+            LoadData();
+        }
+
+        protected void GridViewCategory_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewCategory.PageIndex = e.NewPageIndex;
             LoadData();
         }
     }
