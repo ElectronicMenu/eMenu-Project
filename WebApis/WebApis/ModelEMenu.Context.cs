@@ -20,7 +20,7 @@ namespace WebApis
         public hd_emenuEntities()
             : base("name=hd_emenuEntities")
         {
-            Database.Connection.ConnectionString = Database.Connection.ConnectionString.Replace("**********", "password");
+            Database.Connection.ConnectionString = Database.Connection.ConnectionString.Replace("**********", "Gorkha527");
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
