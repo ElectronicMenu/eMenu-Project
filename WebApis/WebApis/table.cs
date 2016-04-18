@@ -17,6 +17,7 @@ namespace WebApis
         public table()
         {
             this.carts = new HashSet<cart>();
+            this.orders = new HashSet<order>();
         }
     
         public int table_id { get; set; }
@@ -25,5 +26,6 @@ namespace WebApis
         public bool table_is_occupied { get; set; }
     
         public virtual ICollection<cart> carts { get; set; }
+        public virtual ICollection<order> orders { get; set; }
     }
 }

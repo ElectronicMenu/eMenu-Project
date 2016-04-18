@@ -561,6 +561,19 @@
             <param name="language_id"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApis.Controllers.countriesController.Getcountries">
+            <summary>
+            Get the list of all the countries
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.countriesController.Getcountry(System.Int32)">
+            <summary>
+            Get the details of the country using the country id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApis.Controllers.languagesController.Getlanguages">
             <summary>
             Get the list of all the languages
@@ -579,6 +592,35 @@
             Get the language details that matches the id
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.ordersController.Getorder(System.Int32)">
+            <summary>
+            Get the order details using order id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.ordersController.Postorder(WebApis.order)">
+            <summary>
+            Insert into order table using user_id and table_id
+            </summary>
+            <param name="order"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.order_detailsController.Getorder_details(System.Int32)">
+            <summary>
+            Get the order details for a particular order using the order id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.order_detailsController.Postorder_details(System.Int32,System.Int32)">
+            <summary>
+            Insert into order_details using cart_id and order_id
+            </summary>
+            <param name="cart_id"></param>
+            <param name="order_id"></param>
             <returns></returns>
         </member>
         <member name="M:WebApis.Controllers.productsController.Getproducts(System.Int32,System.Int32)">
@@ -608,6 +650,19 @@
             Get the table details that matches the table number and password
             </summary>
             <param name="table"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.taxesController.Gettaxes">
+            <summary>
+            Get all the taxes from the taxes table
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApis.Controllers.taxesController.Gettax(System.Int32)">
+            <summary>
+            Get the tax details using the tax id
+            </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:WebApis.Controllers.usersController.Postuser(WebApis.user)">

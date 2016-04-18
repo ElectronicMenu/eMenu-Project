@@ -46,6 +46,15 @@ warning 6002: The table/view 'hd_emenu.dbo.category_language' does not have a pr
           <Property Name="language_id" Type="int" Nullable="false" />
           <Property Name="category_name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="country">
+          <Key>
+            <PropertyRef Name="country_id" />
+          </Key>
+          <Property Name="country_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="country_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="country_code" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="country_is_active" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="language">
           <Key>
             <PropertyRef Name="language_id" />
@@ -55,6 +64,36 @@ warning 6002: The table/view 'hd_emenu.dbo.category_language' does not have a pr
           <Property Name="language_short_name" Type="nvarchar" MaxLength="5" Nullable="false" />
           <Property Name="language_flag" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="language_is_active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="table_id" Type="int" Nullable="false" />
+          <Property Name="order_billing_number" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="order_date_created" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="order_is_verified" Type="bit" />
+          <Property Name="order_is_completed" Type="bit" Nullable="false" />
+          <Property Name="order_total" Type="float" Nullable="false" />
+          <Property Name="order_discount_type" Type="int" Nullable="false" />
+          <Property Name="order_discount" Type="float" Nullable="false" />
+          <Property Name="tax_id" Type="int" Nullable="false" />
+          <Property Name="order_grand_total" Type="float" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'hd_emenu.dbo.order_details' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="order_details">
+          <Key>
+            <PropertyRef Name="order_id" />
+            <PropertyRef Name="product_id" />
+            <PropertyRef Name="quantity" />
+          </Key>
+          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="product_id" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="float" Nullable="false" />
+          <Property Name="total" Type="float" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="product">
           <Key>
@@ -92,6 +131,13 @@ warning 6002: The table/view 'hd_emenu.dbo.product_language' does not have a pri
           <Property Name="table_number" Type="int" Nullable="false" />
           <Property Name="table_password" Type="nvarchar" MaxLength="50" />
           <Property Name="table_is_occupied" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tax">
+          <Key>
+            <PropertyRef Name="tax_id" />
+          </Key>
+          <Property Name="tax_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tax_percentage" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -181,6 +227,66 @@ warning 6002: The table/view 'hd_emenu.hd_emenu.user_cart' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_order_details_order">
+          <End Role="order" Type="Self.order" Multiplicity="1" />
+          <End Role="order_details" Type="Self.order_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="order_details">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_order_details_product">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="order_details" Type="Self.order_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="order_details">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_order_table">
+          <End Role="table" Type="Self.table" Multiplicity="1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="table">
+              <PropertyRef Name="table_id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="table_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_order_tax">
+          <End Role="tax" Type="Self.tax" Multiplicity="1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tax">
+              <PropertyRef Name="tax_id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="tax_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_order_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_product_category">
           <End Role="category" Type="Self.category" Multiplicity="1" />
           <End Role="product" Type="Self.product" Multiplicity="*" />
@@ -241,6 +347,22 @@ warning 6002: The table/view 'hd_emenu.hd_emenu.user_cart' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_user_country">
+          <End Role="country" Type="Self.country" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="country_id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="country_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_Country_readAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
+        <Function Name="sp_country_readById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi">
+          <Parameter Name="country_id" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_language_readAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
         <Function Name="sp_language_readAllActive" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
         <Function Name="sp_language_readByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi">
@@ -250,6 +372,10 @@ warning 6002: The table/view 'hd_emenu.hd_emenu.user_cart' does not have a prima
         <Function Name="sp_table_readByTableNumberAndPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi">
           <Parameter Name="table_number" Type="int" Mode="In" />
           <Parameter Name="table_password" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_tax_readAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi" />
+        <Function Name="sp_tax_readById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi">
+          <Parameter Name="tax_id" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_user_cart_insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dhammi">
           <Parameter Name="user_id" Type="int" Mode="In" />
@@ -290,6 +416,14 @@ warning 6002: The table/view 'hd_emenu.hd_emenu.user_cart' does not have a prima
           <Parameter Name="category_id" Type="int" Mode="In" />
           <Parameter Name="language_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_order_details_insertByCartIDAndOrderID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+          <Parameter Name="cart_id" Type="int" Mode="In" />
+          <Parameter Name="order_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_order_insertByUserIDAndTableID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
+          <Parameter Name="user_id" Type="int" Mode="In" />
+          <Parameter Name="table_id" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_product_readAllActiveByCategoryIDAndLanguageID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="hd_emenu">
           <Parameter Name="category_id" Type="int" Mode="In" />
           <Parameter Name="language_id" Type="int" Mode="In" />
@@ -317,9 +451,12 @@ warning 6002: The table/view 'hd_emenu.hd_emenu.user_cart' does not have a prima
         <EntityContainer Name="hd_emenuModelStoreContainer">
           <EntitySet Name="cart" EntityType="Self.cart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="country" EntityType="Self.country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="language" EntityType="Self.language" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="order" EntityType="Self.order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="table" EntityType="Self.table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tax" EntityType="Self.tax" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cart_product" EntityType="Self.cart_product" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -335,6 +472,14 @@ warning 6002: The table/view 'hd_emenu.hd_emenu.user_cart' does not have a prima
     [category_language].[language_id] AS [language_id], 
     [category_language].[category_name] AS [category_name]
     FROM [dbo].[category_language] AS [category_language]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="order_details" EntityType="Self.order_details" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [order_details].[order_id] AS [order_id], 
+    [order_details].[product_id] AS [product_id], 
+    [order_details].[quantity] AS [quantity], 
+    [order_details].[total] AS [total]
+    FROM [dbo].[order_details] AS [order_details]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="product_language" EntityType="Self.product_language" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -370,6 +515,26 @@ warning 6002: The table/view 'hd_emenu.hd_emenu.user_cart' does not have a prima
             <End Role="language" EntitySet="language" />
             <End Role="category_language" EntitySet="category_language" />
           </AssociationSet>
+          <AssociationSet Name="FK_order_details_order" Association="Self.FK_order_details_order">
+            <End Role="order" EntitySet="order" />
+            <End Role="order_details" EntitySet="order_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_order_details_product" Association="Self.FK_order_details_product">
+            <End Role="product" EntitySet="product" />
+            <End Role="order_details" EntitySet="order_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_order_table" Association="Self.FK_order_table">
+            <End Role="table" EntitySet="table" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_order_tax" Association="Self.FK_order_tax">
+            <End Role="tax" EntitySet="tax" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_order_user" Association="Self.FK_order_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
           <AssociationSet Name="FK_product_category" Association="Self.FK_product_category">
             <End Role="category" EntitySet="category" />
             <End Role="product" EntitySet="product" />
@@ -390,6 +555,10 @@ warning 6002: The table/view 'hd_emenu.hd_emenu.user_cart' does not have a prima
             <End Role="user" EntitySet="user" />
             <End Role="user_cart" EntitySet="user_cart" />
           </AssociationSet>
+          <AssociationSet Name="FK_user_country" Association="Self.FK_user_country">
+            <End Role="country" EntitySet="country" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -404,6 +573,7 @@ warning 6002: The table/view 'hd_emenu.hd_emenu.user_cart' does not have a prima
           <Property Name="table_password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="table_is_occupied" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="carts" Relationship="hd_emenuModel.FK_cart_table" FromRole="table" ToRole="cart" />
+          <NavigationProperty Name="orders" Relationship="hd_emenuModel.FK_order_table" FromRole="table" ToRole="order" />
         </EntityType>
         <EntityContainer Name="hd_emenuEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tables" EntityType="Self.table" />
@@ -530,6 +700,50 @@ warning 6002: The table/view 'hd_emenu.hd_emenu.user_cart' does not have a prima
           <FunctionImport Name="sp_user_cart_readByUserIDAndCartID" ReturnType="Collection(hd_emenuModel.sp_user_cart_readByUserIDAndCartID_Result)">
             <Parameter Name="user_id" Mode="In" Type="Int32" />
             <Parameter Name="cart_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="countries" EntityType="hd_emenuModel.country" />
+          <EntitySet Name="taxes" EntityType="hd_emenuModel.tax" />
+          <AssociationSet Name="FK_user_country" Association="hd_emenuModel.FK_user_country">
+            <End Role="country" EntitySet="countries" />
+            <End Role="user" EntitySet="users" />
+          </AssociationSet>
+          <FunctionImport Name="sp_Country_readAll" ReturnType="Collection(hd_emenuModel.sp_Country_readAll_Result)" />
+          <FunctionImport Name="sp_country_readById" ReturnType="Collection(hd_emenuModel.sp_country_readById_Result)">
+          <Parameter Name="country_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_tax_readAll" ReturnType="Collection(hd_emenuModel.sp_tax_readAll_Result)" />
+          <FunctionImport Name="sp_tax_readById" ReturnType="Collection(hd_emenuModel.sp_tax_readById_Result)">
+          <Parameter Name="tax_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="orders" EntityType="hd_emenuModel.order" />
+          <EntitySet Name="order_details" EntityType="hd_emenuModel.order_details" />
+          <AssociationSet Name="FK_order_details_order" Association="hd_emenuModel.FK_order_details_order">
+            <End Role="order" EntitySet="orders" />
+            <End Role="order_details" EntitySet="order_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_order_table" Association="hd_emenuModel.FK_order_table">
+            <End Role="table" EntitySet="tables" />
+            <End Role="order" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_order_tax" Association="hd_emenuModel.FK_order_tax">
+            <End Role="tax" EntitySet="taxes" />
+            <End Role="order" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_order_user" Association="hd_emenuModel.FK_order_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="order" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_order_details_product" Association="hd_emenuModel.FK_order_details_product">
+            <End Role="product" EntitySet="products" />
+            <End Role="order_details" EntitySet="order_details" />
+          </AssociationSet>
+          <FunctionImport Name="sp_order_details_insertByCartIDAndOrderID">
+            <Parameter Name="cart_id" Mode="In" Type="Int32" />
+            <Parameter Name="order_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_order_insertByUserIDAndTableID">
+            <Parameter Name="user_id" Mode="In" Type="Int32" />
+            <Parameter Name="table_id" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="language">
@@ -674,6 +888,7 @@ warning 6002: The table/view 'hd_emenu.hd_emenu.user_cart' does not have a prima
           <NavigationProperty Name="category" Relationship="hd_emenuModel.FK_product_category" FromRole="product" ToRole="category" />
           <NavigationProperty Name="product_language" Relationship="hd_emenuModel.FK_product_language_product" FromRole="product" ToRole="product_language" />
           <NavigationProperty Name="cart_product" Relationship="hd_emenuModel.FK_cart_product_product" FromRole="product" ToRole="cart_product" />
+          <NavigationProperty Name="order_details" Relationship="hd_emenuModel.FK_order_details_product" FromRole="product" ToRole="order_details" />
         </EntityType>
         <EntityType Name="product_language">
           <Key>
@@ -857,6 +1072,8 @@ warning 6002: The table/view 'hd_emenu.hd_emenu.user_cart' does not have a prima
           <Property Name="user_date_of_birth" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="country_id" Type="Int32" />
           <NavigationProperty Name="carts" Relationship="hd_emenuModel.user_cart" FromRole="user" ToRole="cart" />
+          <NavigationProperty Name="country" Relationship="hd_emenuModel.FK_user_country" FromRole="user" ToRole="country" />
+          <NavigationProperty Name="orders" Relationship="hd_emenuModel.FK_order_user" FromRole="user" ToRole="order" />
         </EntityType>
         <ComplexType Name="sp_user_readByUsernameAndPassword_Result">
           <Property Type="Int32" Name="user_id" Nullable="false" />
@@ -881,6 +1098,150 @@ warning 6002: The table/view 'hd_emenu.hd_emenu.user_cart' does not have a prima
           <Property Type="Int32" Name="user_id" Nullable="false" />
           <Property Type="Int32" Name="cart_id" Nullable="false" />
         </ComplexType>
+        <EntityType Name="country">
+          <Key>
+            <PropertyRef Name="country_id" />
+          </Key>
+          <Property Name="country_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="country_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="country_code" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="country_is_active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="hd_emenuModel.FK_user_country" FromRole="country" ToRole="user" />
+        </EntityType>
+        <EntityType Name="tax">
+          <Key>
+            <PropertyRef Name="tax_id" />
+          </Key>
+          <Property Name="tax_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tax_percentage" Type="Double" Nullable="false" />
+          <NavigationProperty Name="orders" Relationship="hd_emenuModel.FK_order_tax" FromRole="tax" ToRole="order" />
+        </EntityType>
+        <Association Name="FK_user_country">
+          <End Type="hd_emenuModel.country" Role="country" Multiplicity="0..1" />
+          <End Type="hd_emenuModel.user" Role="user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="country_id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="country_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_Country_readAll_Result">
+          <Property Type="Int32" Name="country_id" Nullable="false" />
+          <Property Type="String" Name="country_name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="country_code" Nullable="false" MaxLength="5" />
+          <Property Type="Boolean" Name="country_is_active" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_country_readById_Result">
+          <Property Type="Int32" Name="country_id" Nullable="false" />
+          <Property Type="String" Name="country_name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="country_code" Nullable="false" MaxLength="5" />
+          <Property Type="Boolean" Name="country_is_active" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_tax_readAll_Result">
+          <Property Type="Int32" Name="tax_id" Nullable="false" />
+          <Property Type="Double" Name="tax_percentage" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_tax_readById_Result">
+          <Property Type="Int32" Name="tax_id" Nullable="false" />
+          <Property Type="Double" Name="tax_percentage" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="table_id" Type="Int32" Nullable="false" />
+          <Property Name="order_billing_number" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="order_date_created" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="order_is_verified" Type="Boolean" />
+          <Property Name="order_is_completed" Type="Boolean" Nullable="false" />
+          <Property Name="order_total" Type="Double" Nullable="false" />
+          <Property Name="order_discount_type" Type="Int32" Nullable="false" />
+          <Property Name="order_discount" Type="Double" Nullable="false" />
+          <Property Name="tax_id" Type="Int32" Nullable="false" />
+          <Property Name="order_grand_total" Type="Double" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="order_details" Relationship="hd_emenuModel.FK_order_details_order" FromRole="order" ToRole="order_details" />
+          <NavigationProperty Name="table" Relationship="hd_emenuModel.FK_order_table" FromRole="order" ToRole="table" />
+          <NavigationProperty Name="tax" Relationship="hd_emenuModel.FK_order_tax" FromRole="order" ToRole="tax" />
+          <NavigationProperty Name="user" Relationship="hd_emenuModel.FK_order_user" FromRole="order" ToRole="user" />
+        </EntityType>
+        <EntityType Name="order_details">
+          <Key>
+            <PropertyRef Name="order_id" />
+            <PropertyRef Name="product_id" />
+            <PropertyRef Name="quantity" />
+          </Key>
+          <Property Name="order_id" Type="Int32" Nullable="false" />
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Double" Nullable="false" />
+          <Property Name="total" Type="Double" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="order" Relationship="hd_emenuModel.FK_order_details_order" FromRole="order_details" ToRole="order" />
+          <NavigationProperty Name="product" Relationship="hd_emenuModel.FK_order_details_product" FromRole="order_details" ToRole="product" />
+        </EntityType>
+        <Association Name="FK_order_details_order">
+          <End Type="hd_emenuModel.order" Role="order" Multiplicity="1" />
+          <End Type="hd_emenuModel.order_details" Role="order_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="order_details">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_order_table">
+          <End Type="hd_emenuModel.table" Role="table" Multiplicity="1" />
+          <End Type="hd_emenuModel.order" Role="order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="table">
+              <PropertyRef Name="table_id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="table_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_order_tax">
+          <End Type="hd_emenuModel.tax" Role="tax" Multiplicity="1" />
+          <End Type="hd_emenuModel.order" Role="order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tax">
+              <PropertyRef Name="tax_id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="tax_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_order_user">
+          <End Type="hd_emenuModel.user" Role="user" Multiplicity="1" />
+          <End Type="hd_emenuModel.order" Role="order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_order_details_product">
+          <End Type="hd_emenuModel.product" Role="product" Multiplicity="1" />
+          <End Type="hd_emenuModel.order_details" Role="order_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="order_details">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1193,6 +1554,90 @@ warning 6002: The table/view 'hd_emenu.hd_emenu.user_cart' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="countries">
+            <EntityTypeMapping TypeName="hd_emenuModel.country">
+              <MappingFragment StoreEntitySet="country">
+                <ScalarProperty Name="country_is_active" ColumnName="country_is_active" />
+                <ScalarProperty Name="country_code" ColumnName="country_code" />
+                <ScalarProperty Name="country_name" ColumnName="country_name" />
+                <ScalarProperty Name="country_id" ColumnName="country_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="taxes">
+            <EntityTypeMapping TypeName="hd_emenuModel.tax">
+              <MappingFragment StoreEntitySet="tax">
+                <ScalarProperty Name="tax_percentage" ColumnName="tax_percentage" />
+                <ScalarProperty Name="tax_id" ColumnName="tax_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_Country_readAll" FunctionName="hd_emenuModel.Store.sp_Country_readAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="hd_emenuModel.sp_Country_readAll_Result">
+                <ScalarProperty Name="country_id" ColumnName="country_id" />
+                <ScalarProperty Name="country_name" ColumnName="country_name" />
+                <ScalarProperty Name="country_code" ColumnName="country_code" />
+                <ScalarProperty Name="country_is_active" ColumnName="country_is_active" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_country_readById" FunctionName="hd_emenuModel.Store.sp_country_readById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="hd_emenuModel.sp_country_readById_Result">
+                <ScalarProperty Name="country_id" ColumnName="country_id" />
+                <ScalarProperty Name="country_name" ColumnName="country_name" />
+                <ScalarProperty Name="country_code" ColumnName="country_code" />
+                <ScalarProperty Name="country_is_active" ColumnName="country_is_active" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_tax_readAll" FunctionName="hd_emenuModel.Store.sp_tax_readAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="hd_emenuModel.sp_tax_readAll_Result">
+                <ScalarProperty Name="tax_id" ColumnName="tax_id" />
+                <ScalarProperty Name="tax_percentage" ColumnName="tax_percentage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_tax_readById" FunctionName="hd_emenuModel.Store.sp_tax_readById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="hd_emenuModel.sp_tax_readById_Result">
+                <ScalarProperty Name="tax_id" ColumnName="tax_id" />
+                <ScalarProperty Name="tax_percentage" ColumnName="tax_percentage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="hd_emenuModel.order">
+              <MappingFragment StoreEntitySet="order">
+                <ScalarProperty Name="order_grand_total" ColumnName="order_grand_total" />
+                <ScalarProperty Name="tax_id" ColumnName="tax_id" />
+                <ScalarProperty Name="order_discount" ColumnName="order_discount" />
+                <ScalarProperty Name="order_discount_type" ColumnName="order_discount_type" />
+                <ScalarProperty Name="order_total" ColumnName="order_total" />
+                <ScalarProperty Name="order_is_completed" ColumnName="order_is_completed" />
+                <ScalarProperty Name="order_is_verified" ColumnName="order_is_verified" />
+                <ScalarProperty Name="order_date_created" ColumnName="order_date_created" />
+                <ScalarProperty Name="order_billing_number" ColumnName="order_billing_number" />
+                <ScalarProperty Name="table_id" ColumnName="table_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="order_details">
+            <EntityTypeMapping TypeName="hd_emenuModel.order_details">
+              <MappingFragment StoreEntitySet="order_details">
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_order_details_insertByCartIDAndOrderID" FunctionName="hd_emenuModel.Store.sp_order_details_insertByCartIDAndOrderID" />
+          <FunctionImportMapping FunctionImportName="sp_order_insertByUserIDAndTableID" FunctionName="hd_emenuModel.Store.sp_order_insertByUserIDAndTableID" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
