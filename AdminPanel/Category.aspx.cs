@@ -10,28 +10,26 @@ using System.Data.SqlClient;
 using DBClasses;
 using System.Configuration;
 
-namespace Emenu
+namespace Electronic_Menu
 {
-    public partial class Default : System.Web.UI.Page
+    public partial class Category : System.Web.UI.Page
     {
         General gs = new General();
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (!Page.IsPostBack)
             {
                 LoadData();
                 //tbl1.Visible = false;
             }
         }
-
         public void LoadData()
         {
-                    DataSet ds = new DataSet();
-                    SqlParameter[] sp1 = new SqlParameter[0];
-                    ds = gs.getdataProc("hd_emenu.sp_category_category_language_readAll", sp1);
-                    GridViewCategory.DataSource = ds;
-                    GridViewCategory.DataBind();                      
+            DataSet ds = new DataSet();
+            SqlParameter[] sp1 = new SqlParameter[0];
+            ds = gs.getdataProc("hd_emenu.sp_category_category_language_readAll", sp1);
+            GridViewCategory.DataSource = ds;
+            GridViewCategory.DataBind();
         }
 
 
@@ -40,7 +38,7 @@ namespace Emenu
             GridViewCategory.EditIndex = e.NewEditIndex;
             LoadData();
             ViewState["uid"] = GridViewCategory.DataKeys[e.NewEditIndex].Value;
-            
+
 
         }
         protected void GridViewCategory_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -49,7 +47,7 @@ namespace Emenu
             {
 
                 GridViewRow row = (GridViewRow)(((Control)e.CommandSource).NamingContainer);
-                int i=0;
+                int i = 0;
                 //Getting Text box values
                 TextBox txtAddCategoryImage = row.FindControl("txtAddCategoryImage") as TextBox;
                 TextBox txtAddCategoryIcon = row.FindControl("txtAddCategoryIcon") as TextBox;
@@ -60,16 +58,16 @@ namespace Emenu
                 DataSet dataset = new DataSet();
                 dataset = gs.getdata(query);
 
-                if(dataset.Tables[0].Rows.Count > 0)
-                { 
+                if (dataset.Tables[0].Rows.Count > 0)
+                {
                     string cate_img = dataset.Tables[0].Rows[0]["category_image"].ToString();
                     string cate_icon = dataset.Tables[0].Rows[0]["category_icon"].ToString();
                     string cate_id = dataset.Tables[0].Rows[0]["category_id"].ToString();
-                    string insertquery = "insert into category_language (category_id, language_id, category_name)  VALUES ('" + cate_id + "' , '" +  txtAddLanguageID.Text.Trim() + "', '" + txtAddCategoryName.Text.Trim() + "');";
+                    string insertquery = "insert into category_language (category_id, language_id, category_name)  VALUES ('" + cate_id + "' , '" + txtAddLanguageID.Text.Trim() + "', '" + txtAddCategoryName.Text.Trim() + "');";
                     i = gs.changedata(insertquery);
                 }
                 else
-                { 
+                {
                     DataSet ds = new DataSet();
                     SqlParameter[] sp1 = new SqlParameter[4];
                     sp1[0] = new SqlParameter("@category_image", txtAddCategoryImage.Text.Trim());
@@ -84,10 +82,10 @@ namespace Emenu
                 string query = "update category set category_image = '" + txtEditCategoryImage.Text.Trim() + "', category_icon = '" + txtEditCategoryIcon.Text.Trim() + "' where category_id ='"+ cat_id +"' ";
                 int i = gs.changedata(sp_category_category_language_insert);
                 */
-                if (i>0)
+                if (i > 0)
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "Success", "alert('Record Inserted succesfully');", true);
-                  
+
                 }
                 else
                 {
@@ -113,9 +111,9 @@ namespace Emenu
             int i = gs.changedata(query);
             */
 
-            if (i>0)
+            if (i > 0)
             {
-                ScriptManager.RegisterStartupScript(this, GetType(), "Success", "alert('Record Deleted succesfully');", true);            
+                ScriptManager.RegisterStartupScript(this, GetType(), "Success", "alert('Record Deleted succesfully');", true);
             }
             else
             {
@@ -155,14 +153,14 @@ namespace Emenu
 
             int i = gs.changedataProc("sp_category_category_language_insert", sp1);
             */
-            
-            string query1 = "update category set category_image = '" + txtEditCategoryImage.Text.Trim() + "', category_icon = '" + txtEditCategoryIcon.Text.Trim() + "' where category_id ='"+ cat_id +"' ";
+
+            string query1 = "update category set category_image = '" + txtEditCategoryImage.Text.Trim() + "', category_icon = '" + txtEditCategoryIcon.Text.Trim() + "' where category_id ='" + cat_id + "' ";
             string query2 = "update category_language set category_name = '" + txtEditCategoryName.Text.Trim() + "', language_id = '" + txtEditLanguageID.Text.Trim() + "' where category_id ='" + cat_id + "' ";
 
             int i = gs.changedata(query1);
             int j = gs.changedata(query2);
-            
-            if (i == 1 && j ==1)
+
+            if (i == 1 || j == 1)
             {
                 ScriptManager.RegisterStartupScript(this, GetType(), "Success", "alert('Record Updated succesfully');", true);
                 GridViewCategory.EditIndex = -1;
@@ -180,5 +178,7 @@ namespace Emenu
             GridViewCategory.PageIndex = e.NewPageIndex;
             LoadData();
         }
+
     }
+
 }

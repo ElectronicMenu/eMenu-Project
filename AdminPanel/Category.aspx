@@ -1,42 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Emenu.Default" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Category.aspx.cs" Inherits="Electronic_Menu.Category" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>
-
-    </title>
-             <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-        <script>
-       
-        </script> 
-    <link href="css/StyleSheet.css" rel="stylesheet" />
-</head>
-<body>
-    <div id="header">
-        <h1>Admin Panel</h1>
-        <p>Welcome Admin</p>
-    </div>
-
-    <div id="nav">
-        <h3>Tables</h3>
-        <a href="Default.aspx">Category</a><br/> 
-        <a href="#">Cart</a><br/>
-        <a href="#">Cart Products</a><br/>
-        <a href="#">Order</a><br/>
-        <a href="#">Order Details</a><br/>
-        <a href="#">Country</a><br/>
-        <a href="#">Language</a><br/>
-        <a href="#">Product</a><br/>
-        <a href="#">Product Language</a><br/>
-        <a href="#">Tax</a><br />
-    </div>
-    
-    <div id="section">
-    <form id="form1" runat="server">
-       
-          <asp:GridView ID="GridViewCategory" runat="server" AutoGenerateColumns="False" Font-Names="Verdana"
+       <asp:GridView ID="GridViewCategory" runat="server" AutoGenerateColumns="False" Font-Names="Verdana"
             AllowPaging="true" ShowFooter="true" PageSize="5" Width="75%"
             BorderColor="#CCCCCC" BorderStyle="Solid" BorderWidth="1px" 
         DataKeyNames="category_id" onrowediting="GridViewCategory_RowEditing" OnPageIndexChanging="GridViewCategory_PageIndexChanging"
@@ -168,12 +135,6 @@
 
             </Columns>
         </asp:GridView>
-         </form>
-    </div>
 
-    <div id="footer">
-Copyright © COMP313 Team 5
-</div>
-   
-</body>
-</html>
+
+</asp:Content>
