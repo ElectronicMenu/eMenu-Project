@@ -1,0 +1,24 @@
+
+<html>
+    <head>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $("button").click(function () {
+                    $.getJSON('http://emenu.azurewebsites.net/api/languages',
+
+                    function (data) {
+                      alert(JSON.stringify(data));
+                    });
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <button>Get result</button>
+    </body>
+</html>
+
+
+

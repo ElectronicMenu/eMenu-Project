@@ -1,0 +1,47 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.master.cs" Inherits="Electronic_Menu.MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+     <title></title>
+     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script>
+       
+        </script> 
+    <link href="css/StyleSheet.css" rel="stylesheet" />
+   
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+     <div id="header">
+        <h1>Admin Panel</h1>
+        <p>Welcome Admin</p>  
+    </div>
+
+    <div id="nav">
+        <h3>Tables</h3>
+        <a href="Category.aspx">Category</a><br />
+        <a href="Cart.aspx">Cart</a><br/>
+        <a href="#">Cart Products</a><br/>
+        <a href="#">Order</a><br/>
+        <a href="#">Order Details</a><br/>
+        <a href="#">Country</a><br/>
+        <a href="#">Language</a><br/>
+        <a href="#">Product</a><br/>
+        <a href="table.aspx">Table</a><br/>
+        <a href="tax.aspx">Tax</a><br />
+    </div>
+    <form id="form1" runat="server">
+    <div id="section">
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+    <div id="footer">
+Copyright © COMP313 Team 5
+</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+﻿body {
+}
+
+#header {
+    background-color:black;
+    color:white;
+    text-align:center;
+    padding:5px;
+}
+#nav {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:400px;
+    width:150px;
+    text-align:match-parent;
+    float:left;
+    padding:5px;	      
+}
+#section {
+    width:350px;
+    float:left;
+    padding:10px;	 	 
+}
+#footer {
+        background-color:black;
+    color:white;
+    text-align:center;
+   padding:5px;	 	 
+    clear:both;
+    bottom : 0;
+    margin-top : 40px;
+}
+.p   {
+        text-shadow: 5px 6px 4px #69AAFF;
+    }
+
+
