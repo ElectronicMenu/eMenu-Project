@@ -19,6 +19,10 @@ namespace Electronic_Menu
         {
             if (!Page.IsPostBack)
             {
+                if(Session["username"] != null)
+                { 
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Success", "alert('Welcome " + Session["username"].ToString() + "');", true);
+                }
                 LoadData();
                 //tbl1.Visible = false;
             }
