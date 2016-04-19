@@ -50,12 +50,9 @@ namespace Electronic_Menu
                 int i = 0;
                 //Getting Text box values
                 TextBox txtAddtax_percentage = row.FindControl("txtAddtax_percentage") as TextBox;
-                
+                float a = float.Parse(txtAddtax_percentage.Text.Trim());
 
-                String insertquery = @"INSERT INTO [dbo].[tax]
-           (tax_percentage)
-     VALUES
-           ('"" + txtAddtax_percentage.Text.Trim() + ""')";
+                String insertquery = "INSERT INTO [dbo].[tax] (tax_percentage) VALUES ('" + a + "')";
 
                 DataSet ds = new DataSet();
 

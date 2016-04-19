@@ -148,19 +148,30 @@
 
            
                 
-                <asp:TemplateField HeaderText="Edit/Delete" HeaderStyle-Width="15%">
+                 <asp:TemplateField HeaderText="Edit/Delete" HeaderStyle-Width="15%">
                     <ItemTemplate>
-                        <asp:LinkButton ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" />
+                        <center>
+                       <%-- <asp:LinkButton ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" />--%>
+                        <asp:ImageButton ID="btnEdit" ImageUrl="~/images/edit.png" CommandName="Edit" runat="server" />
+               
                         <span onclick="return confirm('Are you sure want to delete?')">
-                            <asp:LinkButton ID="btnDelete" Text="Delete" runat="server" CommandName="Delete" />
+                           <%-- <asp:LinkButton ID="btnDelete" Text="Delete" runat="server" CommandName="Delete" />--%>
+                            <asp:ImageButton ID="btnDelete" ImageUrl="~/images/delete.png" CommandName="Delete" runat="server" />
                         </span>
+                            </center>
                     </ItemTemplate>
                     <EditItemTemplate>
-                        <asp:LinkButton ID="btnUpdate" Text="Update" runat="server" CommandName="Update" />
-                        <asp:LinkButton ID="btnCancel" Text="Cancel" runat="server" CommandName="Cancel" />
+                        <center>
+                       <%-- <asp:LinkButton ID="btnUpdate" Text="Update" runat="server" CommandName="Update" />--%>
+                         <asp:ImageButton ID="btnUpdate" ImageUrl="~/images/update.png" CommandName="Update" runat="server" />
+                   
+                      <%--  <asp:LinkButton ID="btnCancel" Text="Cancel" runat="server" CommandName="Cancel" />--%>
+                         <asp:ImageButton ID="btnCancel" ImageUrl="~/images/cancel.png" CommandName="Cancel" runat="server" />
+                   </center>
                     </EditItemTemplate>
                     <FooterTemplate>
-                        <asp:Button ID="btnInsertRecord" runat="server" Text="Add" CommandName="Insert" />
+                        <%--<asp:Button ID="btnInsertRecord" runat="server" Text="Add" CommandName="Insert" />--%>
+                     <center> <asp:ImageButton ID="btnInsertRecord" ImageUrl="~/images/add.png" CommandName="Insert" runat="server" /></center>
                     </FooterTemplate>
                     <HeaderStyle Width="15%"></HeaderStyle>
                 </asp:TemplateField>

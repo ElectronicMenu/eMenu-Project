@@ -15,25 +15,33 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
+    <form id="form1" runat="server">
      <div id="header">
         <h1>Admin Panel</h1>
-        <p>Welcome Admin</p>  
-    </div>
+         <p>Welcome <asp:Label ForeColor="White" ID="WelcomeUser" runat="server" Text=""></asp:Label></p>
+         <p id ="welcome">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <asp:LinkButton ID="LogoutLink" runat="server" onclick="LogoutLink_Click" 
+                    Visible="False">Logout</asp:LinkButton>
+             <asp:ImageButton ID="LogoutL" ImageUrl="~/images/logout.png" onclick="LogoutLink_Click" runat="server" />
 
+             &nbsp;</p> 
+
+    </div>
+     
     <div id="nav">
         <h3>Tables</h3>
         <a href="Category.aspx">Category</a><br />
         <a href="Cart.aspx">Cart</a><br/>
         <a href="#">Cart Products</a><br/>
-        <a href="#">Order</a><br/>
+        <a href="User.aspx">User</a><br/>
         <a href="#">Order Details</a><br/>
-        <a href="#">Country</a><br/>
-        <a href="#">Language</a><br/>
-        <a href="#">Product</a><br/>
-        <a href="table.aspx">Table</a><br/>
         <a href="tax.aspx">Tax</a><br />
+        <a href="#">Country</a><br/>
+         <a href="table.aspx">Table</a><br/>
+        <a href="#">Language</a><br/>
+        <a href="#">Product</a><br />
+       
     </div>
-    <form id="form1" runat="server">
     <div id="section">
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         

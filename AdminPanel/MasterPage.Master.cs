@@ -11,7 +11,34 @@ namespace Electronic_Menu
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+                if(!Page.IsPostBack)
+            { 
+                if (Session["username"] != null)
+                {
+                    WelcomeUser.Text = Session["username"].ToString();
+                }
+                else
+                {
+                    Response.Redirect("login.aspx");
+                }
 
+                if (!Page.IsPostBack)
+                {
+                    
+                }
+            }
+        }
+
+        protected void LogoutLink_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        protected void LogoutLink_Click(object sender, ImageClickEventArgs e)
+        {
+            Session.Clear();
+            Session.RemoveAll();
+            Response.Redirect("login.aspx");
         }
     }
 }

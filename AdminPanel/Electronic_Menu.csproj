@@ -67,9 +67,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Category.aspx" />
+    <Content Include="images\add.jpe" />
+    <Content Include="images\add.png" />
+    <Content Include="images\cancel.png" />
+    <Content Include="images\delete.jpg" />
+    <Content Include="images\delete.png" />
+    <Content Include="images\edit.png" />
+    <Content Include="images\logout.jpg" />
+    <Content Include="images\logout.png" />
+    <Content Include="images\update.png" />
+    <Content Include="images\updatedelete.png" />
+    <Content Include="login.aspx" />
     <Content Include="packages.config" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="MasterPage.Master" />
+    <None Include="Properties\PublishProfiles\Comp308 - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -112,6 +124,13 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="General.cs" />
+    <Compile Include="login.aspx.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="login.aspx.designer.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MasterPage.Master.cs">
       <DependentUpon>MasterPage.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
